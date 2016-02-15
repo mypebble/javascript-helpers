@@ -8,6 +8,7 @@ module.exports = {
       commonjs: 'jquery'
     },
     markdown: true,
+    commonmark: true,
     accounting: true,
     moment: true,
     backbone: true,
@@ -20,7 +21,7 @@ module.exports = {
         loader: 'underscore-template-loader'
       },
       {
-        test: /\.json/,
+        test: /\.json$/,
         loader: 'json-loader'
       },
       {

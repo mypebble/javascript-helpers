@@ -1,10 +1,10 @@
 /** The Grant Modal */
 import Marionette from 'backbone.marionette';
-import markdown from 'markdown';
 import moment from 'moment';
 
 import {ProjectLayout} from './project';
 import {ModalBehavior} from '../../modals/behaviors';
+import {markdown} from '../../markdown/util';
 
 
 const TitleView = Marionette.LayoutView.extend({
@@ -53,7 +53,7 @@ const GrantDetailView = Marionette.LayoutView.extend({
         }
       );
     },
-    renderMarkdown: markdown.markdown.toHTML
+    renderMarkdown: markdown.toHTML
   },
 
   regions: {

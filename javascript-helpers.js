@@ -60,6 +60,15 @@ module.exports =
 	  }
 	});
 
+	var _util = __webpack_require__(10);
+
+	Object.defineProperty(exports, 'markdown', {
+	  enumerable: true,
+	  get: function get() {
+	    return _util.markdown;
+	  }
+	});
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -70,22 +79,20 @@ module.exports =
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _markdown = __webpack_require__(3);
-
-	var _markdown2 = _interopRequireDefault(_markdown);
-
-	var _moment = __webpack_require__(4);
+	var _moment = __webpack_require__(3);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _project = __webpack_require__(5);
+	var _project = __webpack_require__(4);
 
-	var _behaviors = __webpack_require__(10);
+	var _behaviors = __webpack_require__(9);
+
+	var _util = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var TitleView = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(11),
+	  template: __webpack_require__(12),
 	  className: 'body-title',
 	  modelEvents: {
 	    sync: 'render'
@@ -97,7 +104,7 @@ module.exports =
 	  tagName: 'a',
 	  className: 'btn btn-block btn-modal-option text-favourite save-grant',
 
-	  template: __webpack_require__(12),
+	  template: __webpack_require__(13),
 
 	  modelEvents: {
 	    'change:is_saved': 'render'
@@ -110,7 +117,7 @@ module.exports =
 	      behaviorClass: _behaviors.ModalBehavior
 	    }
 	  },
-	  template: __webpack_require__(13),
+	  template: __webpack_require__(14),
 
 	  templateHelpers: {
 	    fromNow: function fromNow(deadline) {
@@ -126,7 +133,7 @@ module.exports =
 	        sameElse: 'DD/MM/YYYY'
 	      });
 	    },
-	    renderMarkdown: _markdown2.default.markdown.toHTML
+	    renderMarkdown: _util.markdown.toHTML
 	  },
 
 	  regions: {
@@ -205,16 +212,10 @@ module.exports =
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = require("markdown");
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
 	module.exports = require("moment");
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
@@ -224,7 +225,7 @@ module.exports =
 	});
 	exports.ProjectLayout = undefined;
 
-	var _accounting = __webpack_require__(7);
+	var _accounting = __webpack_require__(6);
 
 	var _accounting2 = _interopRequireDefault(_accounting);
 
@@ -236,7 +237,7 @@ module.exports =
 
 	var ProjectRow = _backbone2.default.LayoutView.extend({
 	  tagName: 'tr',
-	  template: __webpack_require__(8),
+	  template: __webpack_require__(7),
 
 	  ui: {
 	    checkbox: '.toggle-project'
@@ -295,7 +296,7 @@ module.exports =
 
 	var ProjectLayout = exports.ProjectLayout = _backbone2.default.CompositeView.extend({
 	  className: 'modal-footer-save-to',
-	  template: __webpack_require__(9),
+	  template: __webpack_require__(8),
 	  childView: ProjectRow,
 	  childViewContainer: 'tbody',
 
@@ -364,10 +365,10 @@ module.exports =
 	    }
 	  }
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -1921,13 +1922,13 @@ module.exports =
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = require("accounting");
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1951,10 +1952,10 @@ module.exports =
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -1966,7 +1967,7 @@ module.exports =
 	};
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2048,7 +2049,39 @@ module.exports =
 	module.exports = ModalBehavior;
 
 /***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.markdown = undefined;
+
+	var _commonmark = __webpack_require__(11);
+
+	var _commonmark2 = _interopRequireDefault(_commonmark);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var markdown = exports.markdown = {
+	  toHTML: function toHTML(mdText) {
+	    var reader = new _commonmark2.default.Parser();
+	    var writer = new _commonmark2.default.HtmlRenderer({ safe: true, smart: true });
+	    var parsed = reader.parse(mdText);
+	    return writer.render(parsed);
+	  }
+	};
+
+/***/ },
 /* 11 */
+/***/ function(module, exports) {
+
+	module.exports = require("commonmark");
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -2068,10 +2101,10 @@ module.exports =
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -2089,7 +2122,7 @@ module.exports =
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -2117,7 +2150,7 @@ module.exports =
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }
 /******/ ]);
