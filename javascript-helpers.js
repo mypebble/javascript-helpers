@@ -1,4 +1,4 @@
-var Arro =
+module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -66,9 +66,9 @@ var Arro =
 
 	'use strict';
 
-	var _marionette = __webpack_require__(2);
+	var _backbone = __webpack_require__(2);
 
-	var _marionette2 = _interopRequireDefault(_marionette);
+	var _backbone2 = _interopRequireDefault(_backbone);
 
 	var _markdown = __webpack_require__(3);
 
@@ -84,7 +84,7 @@ var Arro =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var TitleView = _marionette2.default.LayoutView.extend({
+	var TitleView = _backbone2.default.LayoutView.extend({
 	  template: __webpack_require__(11),
 	  className: 'body-title',
 	  modelEvents: {
@@ -93,7 +93,7 @@ var Arro =
 	}); /** The Grant Modal */
 
 
-	var StarView = _marionette2.default.LayoutView.extend({
+	var StarView = _backbone2.default.LayoutView.extend({
 	  tagName: 'a',
 	  className: 'btn btn-block btn-modal-option text-favourite save-grant',
 
@@ -104,7 +104,7 @@ var Arro =
 	  }
 	});
 
-	var GrantDetailView = _marionette2.default.LayoutView.extend({
+	var GrantDetailView = _backbone2.default.LayoutView.extend({
 	  behaviors: {
 	    modal: {
 	      behaviorClass: _behaviors.ModalBehavior
@@ -199,19 +199,19 @@ var Arro =
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = undefined;
+	module.exports = require("backbone.marionette");
 
 /***/ },
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = undefined;
+	module.exports = require("markdown");
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = undefined;
+	module.exports = require("moment");
 
 /***/ },
 /* 5 */
@@ -228,13 +228,13 @@ var Arro =
 
 	var _accounting2 = _interopRequireDefault(_accounting);
 
-	var _marionette = __webpack_require__(2);
+	var _backbone = __webpack_require__(2);
 
-	var _marionette2 = _interopRequireDefault(_marionette);
+	var _backbone2 = _interopRequireDefault(_backbone);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ProjectRow = _marionette2.default.LayoutView.extend({
+	var ProjectRow = _backbone2.default.LayoutView.extend({
 	  tagName: 'tr',
 	  template: __webpack_require__(8),
 
@@ -293,7 +293,7 @@ var Arro =
 	  }
 	});
 
-	var ProjectLayout = exports.ProjectLayout = _marionette2.default.CompositeView.extend({
+	var ProjectLayout = exports.ProjectLayout = _backbone2.default.CompositeView.extend({
 	  className: 'modal-footer-save-to',
 	  template: __webpack_require__(9),
 	  childView: ProjectRow,
@@ -1924,7 +1924,7 @@ var Arro =
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = undefined;
+	module.exports = require("accounting");
 
 /***/ },
 /* 8 */
@@ -1971,9 +1971,9 @@ var Arro =
 
 	'use strict';
 
-	var _marionette = __webpack_require__(2);
+	var _backbone = __webpack_require__(2);
 
-	var _marionette2 = _interopRequireDefault(_marionette);
+	var _backbone2 = _interopRequireDefault(_backbone);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1992,7 +1992,7 @@ var Arro =
 	        clean-up in any parent views.
 	        If the confirm button is clicked, the confirm:action is fired
 	*/
-	var ModalBehavior = _marionette2.default.Behavior.extend({
+	var ModalBehavior = _backbone2.default.Behavior.extend({
 	  defaults: {
 	    backdrop: 'static'
 	  },

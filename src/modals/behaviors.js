@@ -1,4 +1,4 @@
-import Marionette from 'marionette';
+import Marionette from 'backbone.marionette';
 
 /** Turn a given view into a modal that can be modified.
     This behavior automatically turns a view into a modal that must be closed

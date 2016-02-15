@@ -11,9 +11,7 @@ module.exports = {
     accounting: true,
     moment: true,
     backbone: true,
-    marionette: {
-      commonjs: 'backbone.marionette'
-    }
+    'backbone.marionette': true
   },
   module: {
     loaders: [
