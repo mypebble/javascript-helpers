@@ -4,6 +4,7 @@
   "description": "A collection of helpers and widgets for our JS front end applications",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "test": "mocha test/**.js"
   },
   "repository": {
@@ -16,14 +17,17 @@
     "url": "https://github.com/mypebble/javascript-helpers/issues"
   },
   "homepage": "https://github.com/mypebble/javascript-helpers#readme",
-  "dependencies": {
+  "devDependencies": {
+    "accounting": "^0.4.1",
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.2",
     "backbone": "^1.2.3",
     "backbone.babysitter": "^0.1.10",
     "backbone.marionette": "^2.4.4",
     "backbone.radio": "^1.0.2",
-    "underscore": "^1.8.3"
-  },
-  "devDependencies": {
+    "markdown": "^0.5.0",
+    "moment": "^2.11.2",
+    "underscore": "^1.8.3",
     "webpack": "^1.12.13"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "globals" : {
+    "document": false,
+    "require": false,
+    "module": false,
+    "_": false,
+    "__dirname": false,
+    "console": false,
+    "window": false,
+    "exports": false
+  },
+  "esversion": 6,
+  "strict": "implied",
+  "unused": true,
+  "curly": true
+}
