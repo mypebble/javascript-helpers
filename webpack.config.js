@@ -3,7 +3,13 @@ var webpack = require('webpack');
 module.exports = {
   entry: './src/index.js',
   externals: {
-    'jquery': '$'
+    jquery: '$',
+    markdown: 'markdown',
+    accounting: 'accounting',
+    moment: 'moment',
+    backbone: 'backbone',
+    marionette: 'backbone.marionette',
+    bootstrap: 'bootstrap'
   },
   module: {
     loaders: [
@@ -27,7 +33,9 @@ module.exports = {
   },
   output: {
     path: __dirname,
-    filename: 'javascript-helpers.js'
+    filename: 'javascript-helpers.js',
+    libraryTarget: 'var',
+    library: 'Arro'
   },
   plugins: [
     new webpack.ProvidePlugin({

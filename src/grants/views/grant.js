@@ -1,5 +1,5 @@
 /** The Grant Modal */
-import Marionette from 'backbone.marionette';
+import Marionette from 'marionette';
 import markdown from 'markdown';
 import moment from 'moment';
 

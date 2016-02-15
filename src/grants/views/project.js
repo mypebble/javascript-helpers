@@ -1,5 +1,5 @@
 import accounting from 'accounting';
-import Marionette from 'backbone.marionette';
+import Marionette from 'marionette';
 
 
 var ProjectRow = Marionette.LayoutView.extend({
