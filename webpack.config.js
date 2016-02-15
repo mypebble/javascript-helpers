@@ -3,13 +3,33 @@ var webpack = require('webpack');
 module.exports = {
   entry: './src/index.js',
   externals: {
-    jquery: '$',
-    markdown: 'markdown',
-    accounting: 'accounting',
-    moment: 'moment',
-    backbone: 'backbone',
-    marionette: 'backbone.marionette',
-    bootstrap: 'bootstrap'
+    jquery: {
+      global: '$',
+      commonjs: 'jquery'
+    },
+    markdown: {
+      global: 'markdown',
+      commonjs: 'markdown'
+    },
+    accounting: {
+      global: 'accounting',
+      commonjs: 'accounting'
+    },
+    moment: {
+      global: 'moment',
+      commonjs: 'moment'
+    },
+    backbone: {
+      global: 'Backbone',
+      commonjs: 'backbone'
+    },
+    marionette: {
+      global: 'Backbone.Marionette',
+      commonjs: 'backbone.marionette'
+    },
+    bootstrap: {
+      commonjs: 'bootstrap'
+    }
   },
   module: {
     loaders: [
