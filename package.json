@@ -2,7 +2,7 @@
   "name": "javascript-helpers",
   "version": "0.0.1",
   "description": "A collection of helpers and widgets for our JS front end applications",
-  "main": "index.js",
+  "main": "javascript-helpers.js",
   "scripts": {
     "build": "webpack",
     "test": "mocha test/**.js"
