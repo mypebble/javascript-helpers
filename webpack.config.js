@@ -7,28 +7,12 @@ module.exports = {
       global: '$',
       commonjs: 'jquery'
     },
-    markdown: {
-      global: 'markdown',
-      commonjs: 'markdown'
-    },
-    accounting: {
-      global: 'accounting',
-      commonjs: 'accounting'
-    },
-    moment: {
-      global: 'moment',
-      commonjs: 'moment'
-    },
-    backbone: {
-      global: 'Backbone',
-      commonjs: 'backbone'
-    },
+    markdown: true,
+    accounting: true,
+    moment: true,
+    backbone: true,
     marionette: {
-      global: 'Backbone.Marionette',
       commonjs: 'backbone.marionette'
-    },
-    bootstrap: {
-      commonjs: 'bootstrap'
     }
   },
   module: {
@@ -54,7 +38,7 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'javascript-helpers.js',
-    libraryTarget: 'var',
+    libraryTarget: 'commonjs2',
     library: 'Arro'
   },
   plugins: [
