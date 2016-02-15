@@ -4,7 +4,7 @@ import Marionette from 'backbone.marionette';
 
 var ProjectRow = Marionette.LayoutView.extend({
   tagName: 'tr',
-  template: require('templates/grants/project/row.jst'),
+  template: require('../templates/project/row.html'),
 
   ui: {
     checkbox: '.toggle-project'
@@ -66,7 +66,7 @@ var ProjectRow = Marionette.LayoutView.extend({
 
 export const ProjectLayout = Marionette.CompositeView.extend({
   className: 'modal-footer-save-to',
-  template: require('templates/grants/project/layout.jst'),
+  template: require('../templates/project/layout.html'),
   childView: ProjectRow,
   childViewContainer: 'tbody',
 

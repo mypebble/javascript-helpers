@@ -14,6 +14,14 @@ module.exports = {
       {
         test: /\.json/,
         loader: 'json-loader'
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel', // 'babel-loader' is also a legal name to reference
+        query: {
+          presets: ['es2015']
+        }
       }
     ]
   },
@@ -28,9 +36,6 @@ module.exports = {
   ],
   resolve: {
     modulesDirectories: [__dirname + '/node_modules'],
-    root: __dirname + '/app'
-  },
-  resolveLoader: {
-    root: __dirname + '/node_modules'
+    root: __dirname + '/src'
   }
 };

@@ -3,11 +3,12 @@ import Marionette from 'backbone.marionette';
 import markdown from 'markdown';
 import moment from 'moment';
 
-const {ProjectLayout} = require('./project');
+import {ProjectLayout} from './project';
+import {ModalBehavior} from '../../modals/behaviors';
 
 
 const TitleView = Marionette.LayoutView.extend({
-  template: require('templates/grants/grant_title.jst'),
+  template: require('../templates/grant_title.html'),
   className: 'body-title',
   modelEvents: {
     sync: 'render'
@@ -19,7 +20,7 @@ const StarView = Marionette.LayoutView.extend({
   tagName: 'a',
   className: 'btn btn-block btn-modal-option text-favourite save-grant',
 
-  template: require('templates/grants/detail_star.jst'),
+  template: require('../templates/detail_star.html'),
 
   modelEvents: {
     'change:is_saved': 'render'
@@ -30,10 +31,10 @@ const StarView = Marionette.LayoutView.extend({
 const GrantDetailView = Marionette.LayoutView.extend({
   behaviors: {
     modal: {
-      behaviorClass: require('behaviors/modal')
+      behaviorClass: ModalBehavior
     }
   },
-  template: require('templates/grants/detail.jst'),
+  template: require('../templates/detail.html'),
 
   templateHelpers: {
     fromNow: function(deadline) {
