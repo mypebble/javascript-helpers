@@ -1,0 +1,29 @@
+{
+  "name": "javascript-helpers",
+  "version": "0.0.1",
+  "description": "A collection of helpers and widgets for our JS front end applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mypebble/javascript-helpers.git"
+  },
+  "author": "Pebble",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/mypebble/javascript-helpers/issues"
+  },
+  "homepage": "https://github.com/mypebble/javascript-helpers#readme",
+  "dependencies": {
+    "backbone": "^1.2.3",
+    "backbone.babysitter": "^0.1.10",
+    "backbone.marionette": "^2.4.4",
+    "backbone.radio": "^1.0.2",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "webpack": "^1.12.13"
+  }
+}
