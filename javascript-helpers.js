@@ -53,57 +53,111 @@ module.exports =
 
 	var _behaviors = __webpack_require__(1);
 
-	Object.defineProperty(exports, 'GrantModal', {
-	  enumerable: true,
-	  get: function get() {
-	    return _behaviors.GrantModal;
-	  }
-	});
-
-	var _grant = __webpack_require__(3);
-
-	Object.defineProperty(exports, 'GrantView', {
-	  enumerable: true,
-	  get: function get() {
-	    return _grant.GrantView;
-	  }
-	});
-
-	var _behaviors2 = __webpack_require__(4);
-
-	Object.defineProperty(exports, 'ModalBehavior', {
-	  enumerable: true,
-	  get: function get() {
-	    return _behaviors2.ModalBehavior;
-	  }
-	});
-
-	var _util = __webpack_require__(7);
-
-	var _loop = function _loop(_key2) {
-	  if (_key2 === "default") return 'continue';
-	  Object.defineProperty(exports, _key2, {
+	var _loop = function _loop(_key7) {
+	  if (_key7 === "default") return 'continue';
+	  Object.defineProperty(exports, _key7, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util[_key2];
+	      return _behaviors[_key7];
 	    }
 	  });
 	};
 
-	for (var _key2 in _util) {
-	  var _ret = _loop(_key2);
+	for (var _key7 in _behaviors) {
+	  var _ret = _loop(_key7);
 
 	  if (_ret === 'continue') continue;
 	}
 
-	var _util2 = __webpack_require__(5);
+	var _grant = __webpack_require__(3);
 
-	Object.defineProperty(exports, 'markdown', {
-	  enumerable: true,
-	  get: function get() {
-	    return _util2.markdown;
-	  }
-	});
+	var _loop2 = function _loop2(_key8) {
+	  if (_key8 === "default") return 'continue';
+	  Object.defineProperty(exports, _key8, {
+	    enumerable: true,
+	    get: function get() {
+	      return _grant[_key8];
+	    }
+	  });
+	};
+
+	for (var _key8 in _grant) {
+	  var _ret2 = _loop2(_key8);
+
+	  if (_ret2 === 'continue') continue;
+	}
+
+	var _behaviors2 = __webpack_require__(4);
+
+	var _loop3 = function _loop3(_key9) {
+	  if (_key9 === "default") return 'continue';
+	  Object.defineProperty(exports, _key9, {
+	    enumerable: true,
+	    get: function get() {
+	      return _behaviors2[_key9];
+	    }
+	  });
+	};
+
+	for (var _key9 in _behaviors2) {
+	  var _ret3 = _loop3(_key9);
+
+	  if (_ret3 === 'continue') continue;
+	}
+
+	var _util = __webpack_require__(7);
+
+	var _loop4 = function _loop4(_key10) {
+	  if (_key10 === "default") return 'continue';
+	  Object.defineProperty(exports, _key10, {
+	    enumerable: true,
+	    get: function get() {
+	      return _util[_key10];
+	    }
+	  });
+	};
+
+	for (var _key10 in _util) {
+	  var _ret4 = _loop4(_key10);
+
+	  if (_ret4 === 'continue') continue;
+	}
+
+	var _util2 = __webpack_require__(13);
+
+	var _loop5 = function _loop5(_key11) {
+	  if (_key11 === "default") return 'continue';
+	  Object.defineProperty(exports, _key11, {
+	    enumerable: true,
+	    get: function get() {
+	      return _util2[_key11];
+	    }
+	  });
+	};
+
+	for (var _key11 in _util2) {
+	  var _ret5 = _loop5(_key11);
+
+	  if (_ret5 === 'continue') continue;
+	}
+
+	var _util3 = __webpack_require__(5);
+
+	var _loop6 = function _loop6(_key12) {
+	  if (_key12 === "default") return 'continue';
+	  Object.defineProperty(exports, _key12, {
+	    enumerable: true,
+	    get: function get() {
+	      return _util3[_key12];
+	    }
+	  });
+	};
+
+	for (var _key12 in _util3) {
+	  var _ret6 = _loop6(_key12);
+
+	  if (_ret6 === 'continue') continue;
+	}
 
 /***/ },
 /* 1 */
@@ -483,6 +537,43 @@ module.exports =
 	return __p;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.formatAmount = formatAmount;
+	exports.formatNumber = formatNumber;
+
+	var _accounting = __webpack_require__(14);
+
+	var _accounting2 = _interopRequireDefault(_accounting);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function formatAmount(amount, places) {
+	  var options = {
+	    precision: places || 2,
+	    thousand: ',',
+	    symbol: '£ '
+	  };
+	  return _accounting2.default.formatMoney(amount, options);
+	}
+
+	function formatNumber(amount, precision) {
+	  return _accounting2.default.formatNumber(amount, precision || 2, ',');
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = require("accounting");
 
 /***/ }
 /******/ ]);
