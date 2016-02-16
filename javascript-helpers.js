@@ -51,21 +51,48 @@ module.exports =
 	  value: true
 	});
 
-	var _grant = __webpack_require__(1);
+	var _behaviors = __webpack_require__(1);
+
+	Object.defineProperty(exports, 'GrantModal', {
+	  enumerable: true,
+	  get: function get() {
+	    return _behaviors.GrantModal;
+	  }
+	});
+
+	var _grant = __webpack_require__(3);
 
 	Object.defineProperty(exports, 'GrantView', {
 	  enumerable: true,
 	  get: function get() {
-	    return _grant.GrantLayout;
+	    return _grant.GrantView;
 	  }
 	});
 
-	var _util = __webpack_require__(10);
+	var _behaviors2 = __webpack_require__(4);
+
+	Object.defineProperty(exports, 'ModalBehavior', {
+	  enumerable: true,
+	  get: function get() {
+	    return _behaviors2.ModalBehavior;
+	  }
+	});
+
+	var _util = __webpack_require__(7);
+
+	Object.defineProperty(exports, 'fromNow', {
+	  enumerable: true,
+	  get: function get() {
+	    return _util.fromNow;
+	  }
+	});
+
+	var _util2 = __webpack_require__(5);
 
 	Object.defineProperty(exports, 'markdown', {
 	  enumerable: true,
 	  get: function get() {
-	    return _util.markdown;
+	    return _util2.markdown;
 	  }
 	});
 
@@ -75,132 +102,32 @@ module.exports =
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.GrantModal = undefined;
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _moment = __webpack_require__(3);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _project = __webpack_require__(4);
-
-	var _behaviors = __webpack_require__(9);
-
-	var _util = __webpack_require__(10);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var TitleView = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(12),
-	  className: 'body-title',
-	  modelEvents: {
-	    sync: 'render'
-	  }
-	}); /** The Grant Modal */
-
-
-	var StarView = _backbone2.default.LayoutView.extend({
-	  tagName: 'a',
-	  className: 'btn btn-block btn-modal-option text-favourite save-grant',
-
-	  template: __webpack_require__(13),
-
-	  modelEvents: {
-	    'change:is_saved': 'render'
-	  }
-	});
-
-	var GrantDetailView = _backbone2.default.LayoutView.extend({
-	  behaviors: {
-	    modal: {
-	      behaviorClass: _behaviors.ModalBehavior
-	    }
-	  },
-	  template: __webpack_require__(14),
-
-	  templateHelpers: {
-	    fromNow: function fromNow(deadline) {
-	      if (!deadline) {
-	        return 'No Deadline';
-	      }
-	      return (0, _moment2.default)(deadline).calendar(null, {
-	        sameDay: '[Today]',
-	        nextDay: '[Tomorrow]',
-	        nextWeek: 'dddd',
-	        lastDay: '[Yesterday]',
-	        lastWeek: '[Last] dddd',
-	        sameElse: 'DD/MM/YYYY'
-	      });
-	    },
-	    renderMarkdown: _util.markdown.toHTML
-	  },
-
-	  regions: {
-	    project: '.save-project-hook',
-	    star: '.star-hook',
-	    title: '.title-hook'
-	  },
-
+	var GrantModal = exports.GrantModal = _backbone2.default.Behavior.extend({
 	  ui: {
 	    detail: '.grant-detail',
-	    expand: '.read-more',
-	    toggleProject: '.add-project',
-	    save: '.save-grant'
+	    expand: '.read-more'
 	  },
 
 	  events: {
-	    'click @ui.toggleProject': 'toggleProject',
-	    'click @ui.expand': 'expandDialog',
-	    'click @ui.save': 'saveGrant'
-	  },
-
-	  modelEvents: {
-	    sync: 'closeProject'
-	  },
-
-	  onShow: function onShow() {
-	    var starView = new StarView({
-	      model: this.model
-	    });
-	    var title = new TitleView({
-	      model: this.model
-	    });
-
-	    this.showChildView('star', starView);
-	    this.showChildView('title', title);
-	  },
-
-	  saveGrant: function saveGrant() {
-	    this.model.starGrant();
+	    'click @ui.expand': 'expandDialog'
 	  },
 
 	  expandDialog: function expandDialog() {
 	    this.ui.detail.removeClass('hide');
 	    this.ui.expand.addClass('hide');
-	  },
-
-	  toggleProject: function toggleProject() {
-	    var projectRegion = this.getRegion('project');
-
-	    if (projectRegion.hasView()) {
-	      this.closeProject();
-	    } else {
-	      var projectView = new _project.ProjectLayout({
-	        collection: this.getOption('projects'),
-	        model: this.model
-	      });
-	      this.showChildView('project', projectView);
-	    }
-	  },
-
-	  closeProject: function closeProject() {
-	    var projectRegion = this.getRegion('project');
-	    projectRegion.reset();
 	  }
 	});
-
-	module.exports = GrantDetailView;
 
 /***/ },
 /* 2 */
@@ -210,24 +137,97 @@ module.exports =
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("moment");
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.GrantView = exports.FooterView = exports.TitleView = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _behaviors = __webpack_require__(4);
+
+	var _util = __webpack_require__(5);
+
+	var _util2 = __webpack_require__(7);
+
+	var _behaviors2 = __webpack_require__(1);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TitleView = exports.TitleView = _backbone2.default.LayoutView.extend({
+	  template: __webpack_require__(9),
+	  className: 'body-title',
+	  modelEvents: {
+	    sync: 'render'
+	  }
+	}); /** The Grant Modal */
+
+
+	var FooterView = exports.FooterView = _backbone2.default.LayoutView.extend({
+	  tagName: 'ul',
+	  className: 'row list-unstyled list-inline list-facts-three',
+	  template: __webpack_require__(11)
+	});
+
+	var GrantView = exports.GrantView = _backbone2.default.LayoutView.extend({
+	  behaviors: {
+	    modal: {
+	      behaviorClass: _behaviors.ModalBehavior
+	    },
+	    grant: {
+	      behaviorClass: _behaviors2.GrantModal
+	    }
+	  },
+	  template: __webpack_require__(12),
+
+	  templateHelpers: {
+	    fromNow: _util2.fromNow,
+	    renderMarkdown: _util.markdown.toHTML
+	  },
+
+	  regions: {
+	    title: '.title-hook',
+	    footer: '.footer-hook'
+	  },
+
+	  onRender: function onRender() {
+	    this.showTitle();
+	    this.showFooter();
+	  },
+
+	  showTitle: function showTitle() {
+	    var title = new TitleView({
+	      model: this.model
+	    });
+
+	    this.showChildView('title', title);
+	  },
+
+	  showFooter: function showFooter() {
+	    var footer = new FooterView({
+	      model: this.model
+	    });
+
+	    this.showChildView('footer', footer);
+	  }
+	});
 
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.ProjectLayout = undefined;
-
-	var _accounting = __webpack_require__(6);
-
-	var _accounting2 = _interopRequireDefault(_accounting);
+	exports.ModalBehavior = undefined;
 
 	var _backbone = __webpack_require__(2);
 
@@ -235,140 +235,168 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ProjectRow = _backbone2.default.LayoutView.extend({
-	  tagName: 'tr',
-	  template: __webpack_require__(7),
+	/** Turn a given view into a modal that can be modified.
+	    This behavior automatically turns a view into a modal that must be closed
+	    by clicking the abandon button.
 
-	  ui: {
-	    checkbox: '.toggle-project'
-	  },
-
-	  events: {
-	    'change @ui.checkbox': 'toggleProject'
-	  },
-
-	  modelEvents: {
-	    'add:project': 'triggerProjectUpdated',
-	    'remove:project': 'triggerProjectUpdated'
-	  },
-
-	  onRender: function onRender() {
-	    if (this.model.isSelected(this.getOption('grant'))) {
-	      this.$el.addClass('selected');
-	    } else {
-	      this.$el.removeClass('selected');
-	    }
-	  },
-
-	  templateHelpers: function templateHelpers() {
-	    var model = this.model;
-	    var grant = this.getOption('grant');
-
-	    return {
-	      getChecked: function getChecked() {
-	        return model.isSelected(grant) ? 'checked' : '';
-	      },
-	      formatAmount: function formatAmount(amount) {
-	        var options = {
-	          precision: 2,
-	          thousand: ',',
-	          symbol: '£ '
-	        };
-	        return _accounting2.default.formatMoney(amount, options);
-	      }
-	    };
-	  },
-
-	  toggleProject: function toggleProject() {
-	    var grant = this.getOption('grant');
-
-	    if (this.model.isSelected(grant)) {
-	      this.model.removeFromProject(grant);
-	    } else {
-	      this.model.addToProject(grant);
-	    }
-	  },
-
-	  triggerProjectUpdated: function triggerProjectUpdated() {
-	    this.triggerMethod('project:updated');
-	  }
-	});
-
-	var ProjectLayout = exports.ProjectLayout = _backbone2.default.CompositeView.extend({
-	  className: 'modal-footer-save-to',
-	  template: __webpack_require__(8),
-	  childView: ProjectRow,
-	  childViewContainer: 'tbody',
-
-	  childViewOptions: function childViewOptions() {
-	    return {
-	      grant: this.model
-	    };
+	    Templates:
+	      The template must contain the close-modal class on all buttons that can
+	      close this modal.
+	    Triggers:
+	        To close the modal, you must fire the close:modal trigger so it can
+	        clean itself up properly.
+	        Once the close:modal is completed, this behavior fires the
+	        close:modal:complete trigger which you can listen to to apply additional
+	        clean-up in any parent views.
+	        If the confirm button is clicked, the confirm:action is fired
+	*/
+	var ModalBehavior = exports.ModalBehavior = _backbone2.default.Behavior.extend({
+	  defaults: {
+	    backdrop: 'static'
 	  },
 
 	  ui: {
-	    saveProject: '.save-project'
+	    wrapper: '.modal-hook',
+	    close: '.close-modal',
+	    confirm: '.confirm-modal'
+	  },
+
+	  triggers: {
+	    'hidden.bs.modal @ui.wrapper': 'destroy:modal',
+	    'click @ui.close': 'close:modal'
 	  },
 
 	  events: {
-	    'click @ui.saveProject': 'saveProjectStatus'
+	    'click @ui.confirm': 'fireConfirmTrigger'
 	  },
 
-	  onChildviewProjectUpdated: function onChildviewProjectUpdated() {
-	    this.render();
+	  /** Cause the dialog box to be displayed on-screen.
+	  */
+	  onAttach: function onAttach() {
+	    this._guardedModal(this.ui.wrapper, this._getModalOptions());
 	  },
 
-	  saveProjectStatus: function saveProjectStatus() {
-	    var model = this.model;
-	    var project = model.get('project');
+	  onCloseModal: function onCloseModal() {
+	    this._guardedModal(this.ui.wrapper, 'hide');
+	  },
 
-	    var modelOptions = {
-	      xhrFields: { withCredentials: true },
-	      headers: { 'X-CSRFToken': this.collection.at(0).get('csrf_token') }
+	  onDestroyModal: function onDestroyModal() {
+	    this.view.triggerMethod('close:modal:complete');
+	  },
+
+	  fireConfirmTrigger: function fireConfirmTrigger() {
+	    this.view.triggerMethod('confirm:action');
+	  },
+
+	  _getModalOptions: function _getModalOptions() {
+	    return {
+	      backdrop: this.getOption('backdrop')
 	    };
+	  },
 
-	    this.model.save({ project: model.get('project') }, { patch: true });
-	    var slug = model.get('slug');
-
-	    var toClear = this.collection.filter(function (projectModel) {
-	      var grants = projectModel.get('attached_grants');
-
-	      if (projectModel.id === project.id) {
-	        return false;
-	      }
-
-	      if (!grants.length) {
-	        return false;
-	      }
-
-	      var withProject = grants.where({ slug: slug });
-	      return withProject.length;
-	    });
-
-	    _.each(toClear, function (projectModel) {
-	      var deleteGrant = model.getGrantForDelete(projectModel.get('grant_url'));
-	      var grants = projectModel.get('attached_grants');
-	      grants.remove(slug);
-	      deleteGrant.destroy(modelOptions);
-	    });
-
-	    if (project) {
-	      var projectModel = this.collection.filter(function (pm) {
-	        return window.location.protocol + pm.get('url') == project.canonical_url;
-	      })[0];
-
-	      var grant = model.getArroGrant(projectModel.get('grant_url'));
-	      var grants = projectModel.get('attached_grants');
-	      grants.add(model.pick('title', 'url', 'image_url', 'slug', 'award', 'grant_difficulty', 'time_to_complete', 'deadline'));
-
-	      grant.save({}, modelOptions);
+	  _guardedModal: function _guardedModal(selector, options) {
+	    if (selector.modal) {
+	      selector.modal(options);
+	    } else {
+	      console.warn('Bootstrap modal is not available');
 	    }
 	  }
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.markdown = undefined;
+
+	var _commonmark = __webpack_require__(6);
+
+	var _commonmark2 = _interopRequireDefault(_commonmark);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var markdown = exports.markdown = {
+	  toHTML: function toHTML(mdText) {
+	    var reader = new _commonmark2.default.Parser();
+	    var writer = new _commonmark2.default.HtmlRenderer({ safe: true, smart: true });
+	    var parsed = reader.parse(mdText);
+	    return writer.render(parsed);
+	  }
+	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = require("commonmark");
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.fromNow = fromNow;
+
+	var _moment = __webpack_require__(8);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function fromNow(futureDate) {
+	  if (!futureDate) {
+	    return 'No Deadline';
+	  }
+	  return (0, _moment2.default)(futureDate).calendar(null, {
+	    sameDay: '[Today]',
+	    nextDay: '[Tomorrow]',
+	    nextWeek: 'dddd',
+	    lastDay: '[Yesterday]',
+	    lastWeek: '[Last] dddd',
+	    sameElse: 'DD/MM/YYYY'
+	  });
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("moment");
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<img src="'+
+	((__t=( image_url ))==null?'':_.escape(__t))+
+	'">\n<div class="title">'+
+	((__t=( title ))==null?'':_.escape(__t))+
+	'</div>\n';
+	 if (project) { 
+	__p+='\n<span class="label label-info">'+
+	((__t=( project.title ))==null?'':_.escape(__t))+
+	'</span>\n';
+	 } 
+	__p+='\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
@@ -1922,207 +1950,19 @@ module.exports =
 
 
 /***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	module.exports = require("accounting");
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<td class="check">\n  <div class="form-group">\n    <div class="checkbox checkbox-primary">\n      <input type="checkbox" class="toggle-project" id="select-'+
-	((__t=( id ))==null?'':_.escape(__t))+
-	'"\n        '+
-	((__t=( getChecked() ))==null?'':_.escape(__t))+
-	' />\n      <label for="select-'+
-	((__t=( id ))==null?'':_.escape(__t))+
-	'"></label>\n    </div>\n  </div>\n</td>\n<td class="title">\n    <span class="initials icon-project">'+
-	((__t=( code ))==null?'':_.escape(__t))+
-	'</span>\n    '+
-	((__t=( name ))==null?'':_.escape(__t))+
-	'\n</td>\n<td class="value-progress">\n  <span>'+
-	((__t=( formatAmount(total_raised) ))==null?'':_.escape(__t))+
-	'</span> / '+
-	((__t=( formatAmount(cost) ))==null?'':_.escape(__t))+
-	'\n</td>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<hr />\n\n<div class="body-title m-t-md">\n  <div class="title">Add to Project</div>\n  <span class="block">\n    <p>Which Project(s) would you like this grant to be saved to?</p>\n  </span>\n</div>\n\n<table class="table table-vam table-hover table-bordered">\n  <thead>\n    <tr>\n      <th></th>\n      <th>Active Projects</th>\n      <th class="value-progress">Funding Target</th>\n    </tr>\n  </thead>\n  <tbody></tbody>\n</table>\n\n<button class="btn btn-add m-t-md save-project">Save Project</button>\n';
-	}
-	return __p;
-	};
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _backbone = __webpack_require__(2);
-
-	var _backbone2 = _interopRequireDefault(_backbone);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/** Turn a given view into a modal that can be modified.
-	    This behavior automatically turns a view into a modal that must be closed
-	    by clicking the abandon button.
-
-	    Templates:
-	      The template must contain the close-modal class on all buttons that can
-	      close this modal.
-	    Triggers:
-	        To close the modal, you must fire the close:modal trigger so it can
-	        clean itself up properly.
-	        Once the close:modal is completed, this behavior fires the
-	        close:modal:complete trigger which you can listen to to apply additional
-	        clean-up in any parent views.
-	        If the confirm button is clicked, the confirm:action is fired
-	*/
-	var ModalBehavior = _backbone2.default.Behavior.extend({
-	  defaults: {
-	    backdrop: 'static'
-	  },
-
-	  ui: {
-	    wrapper: '.modal-hook',
-	    close: '.close-modal',
-	    confirm: '.confirm-modal'
-	  },
-
-	  triggers: {
-	    'hidden.bs.modal @ui.wrapper': 'destroy:modal',
-	    'click @ui.close': 'close:modal'
-	  },
-
-	  events: {
-	    'click @ui.confirm': 'fireConfirmTrigger'
-	  },
-
-	  /** Cause the dialog box to be displayed on-screen.
-	  */
-	  onAttach: function onAttach() {
-	    this._guardedModal(this.ui.wrapper, this._getModalOptions());
-	  },
-
-	  onCloseModal: function onCloseModal() {
-	    this._guardedModal(this.ui.wrapper, 'hide');
-	  },
-
-	  onDestroyModal: function onDestroyModal() {
-	    this.view.triggerMethod('close:modal:complete');
-	  },
-
-	  fireConfirmTrigger: function fireConfirmTrigger() {
-	    this.view.triggerMethod('confirm:action');
-	  },
-
-	  _getModalOptions: function _getModalOptions() {
-	    return {
-	      backdrop: this.getOption('backdrop')
-	    };
-	  },
-
-	  _guardedModal: function _guardedModal(selector, options) {
-	    if (selector.modal) {
-	      selector.modal(options);
-	    } else {
-	      console.warn('Bootstrap modal is not available');
-	    }
-	  }
-	});
-
-	module.exports = ModalBehavior;
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.markdown = undefined;
-
-	var _commonmark = __webpack_require__(11);
-
-	var _commonmark2 = _interopRequireDefault(_commonmark);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var markdown = exports.markdown = {
-	  toHTML: function toHTML(mdText) {
-	    var reader = new _commonmark2.default.Parser();
-	    var writer = new _commonmark2.default.HtmlRenderer({ safe: true, smart: true });
-	    var parsed = reader.parse(mdText);
-	    return writer.render(parsed);
-	  }
-	};
-
-/***/ },
 /* 11 */
 /***/ function(module, exports) {
 
-	module.exports = require("commonmark");
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<img src="'+
-	((__t=( image_url ))==null?'':_.escape(__t))+
-	'">\n<div class="title">'+
-	((__t=( title ))==null?'':_.escape(__t))+
-	'</div>\n';
-	 if (project) { 
-	__p+='\n<span class="label label-info">'+
-	((__t=( project.title ))==null?'':_.escape(__t))+
-	'</span>\n';
-	 } 
-	__p+='\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
 	module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='';
-	 if (is_saved) { 
-	__p+='\n<i class="fa fa-star"></i>\n<span class="block">REMOVE FROM STARRED</span>\n';
-	 } else { 
-	__p+='\n<i class="fa fa-star-o"></i>\n<span class="block">ADD TO STARRED</span>\n';
-	 } 
-	__p+='\n';
+	__p+='<li class="col-lg-4 col-md-4 col-sm-4 col-offset-sm-4 col-offset-md-4">\n  <a class="btn btn-block btn-modal-option text-danger close-modal">\n    <i class="fa fa-times"></i> <span class="block">Close</span>\n  </a>\n</li>\n';
 	}
 	return __p;
 	};
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -2146,11 +1986,11 @@ module.exports =
 	((__t=( renderMarkdown(what_will_i_get) ))==null?'':__t)+
 	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  '+
 	((__t=( renderMarkdown(now_what) ))==null?'':__t)+
-	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer">\n        <ul class="row list-unstyled list-inline list-facts-three">\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <a class="btn btn-block btn-modal-option text-danger close-modal">\n              <i class="fa fa-times"></i> <span class="block">Close</span>\n            </a>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4 rating star-hook"></li>\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <button class="btn btn-block btn-modal-option text-success add-project">\n              <i class="fa fa-plus"></i>\n              <span class="block">Add to Project</span>\n            </button>\n          </li>\n        </ul>\n\n        <div class="save-project-hook"></div>\n      </div>\n    </div>\n  </div>\n</div>\n';
+	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer footer-hook">\n        <div class="save-project-hook"></div>\n      </div>\n    </div>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }
 /******/ ]);

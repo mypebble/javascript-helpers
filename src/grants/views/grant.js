@@ -31,7 +31,7 @@ export const GrantView = Marionette.LayoutView.extend({
       behaviorClass: GrantModal
     }
   },
-  template: require('../templates/detail.html'),
+  template: require('../templates/detail/layout.html'),
 
   templateHelpers: {
     fromNow: fromNow,
