@@ -80,12 +80,21 @@ module.exports =
 
 	var _util = __webpack_require__(7);
 
-	Object.defineProperty(exports, 'fromNow', {
-	  enumerable: true,
-	  get: function get() {
-	    return _util.fromNow;
-	  }
-	});
+	var _loop = function _loop(_key2) {
+	  if (_key2 === "default") return 'continue';
+	  Object.defineProperty(exports, _key2, {
+	    enumerable: true,
+	    get: function get() {
+	      return _util[_key2];
+	    }
+	  });
+	};
+
+	for (var _key2 in _util) {
+	  var _ret = _loop(_key2);
+
+	  if (_ret === 'continue') continue;
+	}
 
 	var _util2 = __webpack_require__(5);
 

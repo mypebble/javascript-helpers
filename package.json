@@ -1,10 +1,11 @@
 {
   "name": "javascript-helpers",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "A collection of helpers and widgets for our JS front end applications",
   "main": "javascript-helpers.js",
   "scripts": {
     "build": "webpack",
+    "watch": "webpack -w",
     "test": "mocha test/**.js"
   },
   "repository": {

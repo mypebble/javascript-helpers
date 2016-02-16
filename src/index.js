@@ -5,5 +5,5 @@ export {GrantView} from './grants/views/grant';
 
 export {ModalBehavior} from './modals/behaviors';
 
-export {fromNow} from './date/util';
+export * from './date/util';
 export {markdown} from './markdown/util';
