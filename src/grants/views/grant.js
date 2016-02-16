@@ -1,125 +1,66 @@
 /** The Grant Modal */
 import Marionette from 'backbone.marionette';
-import moment from 'moment';
 
-import {ProjectLayout} from './project';
 import {ModalBehavior} from '../../modals/behaviors';
 import {markdown} from '../../markdown/util';
+import {fromNow} from '../../date/util';
+
+import {GrantModal} from '../behaviors';
 
 
-const TitleView = Marionette.LayoutView.extend({
-  template: require('../templates/grant_title.html'),
+export const TitleView = Marionette.LayoutView.extend({
+  template: require('../templates/detail/title.html'),
   className: 'body-title',
   modelEvents: {
     sync: 'render'
   }
 });
 
-
-const StarView = Marionette.LayoutView.extend({
-  tagName: 'a',
-  className: 'btn btn-block btn-modal-option text-favourite save-grant',
-
-  template: require('../templates/detail_star.html'),
-
-  modelEvents: {
-    'change:is_saved': 'render'
-  }
+export const FooterView = Marionette.LayoutView.extend({
+  tagName: 'ul',
+  className: 'row list-unstyled list-inline list-facts-three',
+  template: require('../templates/detail/footer.html')
 });
 
-
-const GrantDetailView = Marionette.LayoutView.extend({
+export const GrantView = Marionette.LayoutView.extend({
   behaviors: {
     modal: {
       behaviorClass: ModalBehavior
+    },
+    grant: {
+      behaviorClass: GrantModal
     }
   },
   template: require('../templates/detail.html'),
 
   templateHelpers: {
-    fromNow: function(deadline) {
-      if (!deadline) {
-        return 'No Deadline';
-      }
-      return moment(deadline).calendar(
-        null,
-        {
-          sameDay: '[Today]',
-          nextDay: '[Tomorrow]',
-          nextWeek: 'dddd',
-          lastDay: '[Yesterday]',
-          lastWeek: '[Last] dddd',
-          sameElse: 'DD/MM/YYYY'
-        }
-      );
-    },
+    fromNow: fromNow,
     renderMarkdown: markdown.toHTML
   },
 
   regions: {
-    project: '.save-project-hook',
-    star: '.star-hook',
-    title: '.title-hook'
+    title: '.title-hook',
+    footer: '.footer-hook'
   },
 
-  ui: {
-    detail: '.grant-detail',
-    expand: '.read-more',
-    toggleProject: '.add-project',
-    save: '.save-grant'
+  onRender: function() {
+    this.showTitle();
+    this.showFooter();
   },
 
-  events: {
-    'click @ui.toggleProject': 'toggleProject',
-    'click @ui.expand': 'expandDialog',
-    'click @ui.save': 'saveGrant'
-  },
-
-  modelEvents: {
-    sync: 'closeProject'
-  },
-
-  onShow: function() {
-    const starView = new StarView({
-      model: this.model
-    });
+  showTitle: function() {
     const title = new TitleView({
       model: this.model
     });
 
-    this.showChildView('star', starView);
     this.showChildView('title', title);
   },
 
-  saveGrant: function () {
-    this.model.starGrant();
-  },
+  showFooter: function() {
+    const footer = new FooterView({
+      model: this.model
+    });
 
-  expandDialog: function() {
-    this.ui.detail.removeClass('hide');
-    this.ui.expand.addClass('hide');
-  },
-
-  toggleProject: function() {
-    const projectRegion = this.getRegion('project');
-
-    if (projectRegion.hasView()) {
-      this.closeProject();
-    }
-    else {
-      let projectView = new ProjectLayout({
-        collection: this.getOption('projects'),
-        model: this.model
-      });
-      this.showChildView('project', projectView);
-    }
-  },
-
-  closeProject: function() {
-    const projectRegion = this.getRegion('project');
-    projectRegion.reset();
+    this.showChildView('footer', footer);
   }
 });
-
-
-module.exports = GrantDetailView;

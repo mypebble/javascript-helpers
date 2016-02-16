@@ -1,4 +1,9 @@
 /** Export all our functions for later use. */
 
-export {GrantLayout as GrantView} from './grants/views/grant';
+export {GrantModal} from './grants/behaviors';
+export {GrantView} from './grants/views/grant';
+
+export {ModalBehavior} from './modals/behaviors';
+
+export {fromNow} from './date/util';
 export {markdown} from './markdown/util';

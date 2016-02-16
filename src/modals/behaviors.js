@@ -15,7 +15,7 @@ import Marionette from 'backbone.marionette';
         clean-up in any parent views.
         If the confirm button is clicked, the confirm:action is fired
 */
-var ModalBehavior = Marionette.Behavior.extend({
+export const ModalBehavior = Marionette.Behavior.extend({
   defaults: {
     backdrop: 'static'
   },
@@ -68,6 +68,3 @@ var ModalBehavior = Marionette.Behavior.extend({
     }
   }
 });
-
-
-module.exports = ModalBehavior;
