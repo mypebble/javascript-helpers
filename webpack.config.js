@@ -12,6 +12,7 @@ module.exports = {
     accounting: true,
     moment: true,
     backbone: true,
+    underscore: true,
     'backbone.marionette': true
   },
   module: {
