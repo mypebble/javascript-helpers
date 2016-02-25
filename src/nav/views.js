@@ -33,6 +33,10 @@ export const NavView = Marionette.LayoutView.extend({
     project: '.project-notification-hook'
   },
 
+  initialize: function() {
+    this.model.fetchArro();
+  },
+
   onRender: function() {
     const navStatus = this.model.get('nav');
     if (navStatus === 'large') {

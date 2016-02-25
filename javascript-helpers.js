@@ -690,7 +690,8 @@ module.exports =
 	    return {
 	      nav: nav || 'large',
 	      arroUrl: '',
-	      grantUrl: ''
+	      grantUrl: '',
+	      project: 0
 	    };
 	  },
 
@@ -778,6 +779,10 @@ module.exports =
 
 	  regions: {
 	    project: '.project-notification-hook'
+	  },
+
+	  initialize: function initialize() {
+	    this.model.fetchArro();
 	  },
 
 	  onRender: function onRender() {

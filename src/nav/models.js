@@ -19,7 +19,8 @@ export const Nav = Backbone.Model.extend({
     return {
       nav: nav || 'large',
       arroUrl: '',
-      grantUrl: ''
+      grantUrl: '',
+      project: 0
     };
   },
 
