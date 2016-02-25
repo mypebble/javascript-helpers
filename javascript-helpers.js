@@ -678,8 +678,16 @@ module.exports =
 	    This handles a fair few concepts including:
 	      - Whether the navbar should be shrunk or fulll
 	      - The notification icons to display on each line
+	    We also supply a listener for the Radio to instruct this to update its
+	    notification widgets, with the number to reduce the notifications by.
 	*/
 	var Nav = exports.Nav = _backbone2.default.Model.extend({
+	  initialize: function initialize() {
+	    var channel = _backbone2.default.Wreqr.radio.channel('navigation');
+	    console.log(channel);
+	    this.listenTo(channel.vent, 'update', this.updateNavigation);
+	  },
+
 	  url: function url() {
 	    return this.get('arroUrl') || this.get('grantUrl');
 	  },
@@ -706,6 +714,12 @@ module.exports =
 
 	  fetchGrant: function fetchGrant() {
 	    this._doFetch('grantUrl');
+	  },
+
+	  updateNavigation: function updateNavigation(key, reduceBy) {
+	    var val = this.get(key);
+	    var newVal = val - reduceBy;
+	    this.set(key, newVal < 0 ? 0 : newVal);
 	  },
 
 	  _doFetch: function _doFetch(urlKey) {

@@ -58,6 +58,19 @@ app.start({
 Leaving any of these blank will cause the navbar to not attempt to poll for
 notifications on that application.
 
+### Manually updating notifications
+
+To manually update a notification, use the `navigation` channel and send the
+`update` command:
+
+```javascript
+import Backbone from 'backbone';
+
+// Reduce the Project notifications by 5
+const channel = Backbone.Wreqr.radio.channel('navigation');
+navigation.vent.trigger('update', 'project', 5);
+```
+
 ## Behaviors
 
 List of useful behaviors.
