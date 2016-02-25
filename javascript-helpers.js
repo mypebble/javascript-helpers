@@ -53,110 +53,164 @@ module.exports =
 
 	var _behaviors = __webpack_require__(1);
 
-	var _loop = function _loop(_key7) {
-	  if (_key7 === "default") return 'continue';
-	  Object.defineProperty(exports, _key7, {
+	var _loop = function _loop(_key10) {
+	  if (_key10 === "default") return 'continue';
+	  Object.defineProperty(exports, _key10, {
 	    enumerable: true,
 	    get: function get() {
-	      return _behaviors[_key7];
+	      return _behaviors[_key10];
 	    }
 	  });
 	};
 
-	for (var _key7 in _behaviors) {
-	  var _ret = _loop(_key7);
+	for (var _key10 in _behaviors) {
+	  var _ret = _loop(_key10);
 
 	  if (_ret === 'continue') continue;
 	}
 
 	var _grant = __webpack_require__(3);
 
-	var _loop2 = function _loop2(_key8) {
-	  if (_key8 === "default") return 'continue';
-	  Object.defineProperty(exports, _key8, {
+	var _loop2 = function _loop2(_key11) {
+	  if (_key11 === "default") return 'continue';
+	  Object.defineProperty(exports, _key11, {
 	    enumerable: true,
 	    get: function get() {
-	      return _grant[_key8];
+	      return _grant[_key11];
 	    }
 	  });
 	};
 
-	for (var _key8 in _grant) {
-	  var _ret2 = _loop2(_key8);
+	for (var _key11 in _grant) {
+	  var _ret2 = _loop2(_key11);
 
 	  if (_ret2 === 'continue') continue;
 	}
 
 	var _behaviors2 = __webpack_require__(4);
 
-	var _loop3 = function _loop3(_key9) {
-	  if (_key9 === "default") return 'continue';
-	  Object.defineProperty(exports, _key9, {
+	var _loop3 = function _loop3(_key12) {
+	  if (_key12 === "default") return 'continue';
+	  Object.defineProperty(exports, _key12, {
 	    enumerable: true,
 	    get: function get() {
-	      return _behaviors2[_key9];
+	      return _behaviors2[_key12];
 	    }
 	  });
 	};
 
-	for (var _key9 in _behaviors2) {
-	  var _ret3 = _loop3(_key9);
+	for (var _key12 in _behaviors2) {
+	  var _ret3 = _loop3(_key12);
 
 	  if (_ret3 === 'continue') continue;
 	}
 
 	var _util = __webpack_require__(7);
 
-	var _loop4 = function _loop4(_key10) {
-	  if (_key10 === "default") return 'continue';
-	  Object.defineProperty(exports, _key10, {
+	var _loop4 = function _loop4(_key13) {
+	  if (_key13 === "default") return 'continue';
+	  Object.defineProperty(exports, _key13, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util[_key10];
+	      return _util[_key13];
 	    }
 	  });
 	};
 
-	for (var _key10 in _util) {
-	  var _ret4 = _loop4(_key10);
+	for (var _key13 in _util) {
+	  var _ret4 = _loop4(_key13);
 
 	  if (_ret4 === 'continue') continue;
 	}
 
 	var _util2 = __webpack_require__(13);
 
-	var _loop5 = function _loop5(_key11) {
-	  if (_key11 === "default") return 'continue';
-	  Object.defineProperty(exports, _key11, {
+	var _loop5 = function _loop5(_key14) {
+	  if (_key14 === "default") return 'continue';
+	  Object.defineProperty(exports, _key14, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util2[_key11];
+	      return _util2[_key14];
 	    }
 	  });
 	};
 
-	for (var _key11 in _util2) {
-	  var _ret5 = _loop5(_key11);
+	for (var _key14 in _util2) {
+	  var _ret5 = _loop5(_key14);
 
 	  if (_ret5 === 'continue') continue;
 	}
 
 	var _util3 = __webpack_require__(5);
 
-	var _loop6 = function _loop6(_key12) {
-	  if (_key12 === "default") return 'continue';
-	  Object.defineProperty(exports, _key12, {
+	var _loop6 = function _loop6(_key15) {
+	  if (_key15 === "default") return 'continue';
+	  Object.defineProperty(exports, _key15, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util3[_key12];
+	      return _util3[_key15];
 	    }
 	  });
 	};
 
-	for (var _key12 in _util3) {
-	  var _ret6 = _loop6(_key12);
+	for (var _key15 in _util3) {
+	  var _ret6 = _loop6(_key15);
 
 	  if (_ret6 === 'continue') continue;
+	}
+
+	var _init = __webpack_require__(15);
+
+	var _loop7 = function _loop7(_key16) {
+	  if (_key16 === "default") return 'continue';
+	  Object.defineProperty(exports, _key16, {
+	    enumerable: true,
+	    get: function get() {
+	      return _init[_key16];
+	    }
+	  });
+	};
+
+	for (var _key16 in _init) {
+	  var _ret7 = _loop7(_key16);
+
+	  if (_ret7 === 'continue') continue;
+	}
+
+	var _models = __webpack_require__(16);
+
+	var _loop8 = function _loop8(_key17) {
+	  if (_key17 === "default") return 'continue';
+	  Object.defineProperty(exports, _key17, {
+	    enumerable: true,
+	    get: function get() {
+	      return _models[_key17];
+	    }
+	  });
+	};
+
+	for (var _key17 in _models) {
+	  var _ret8 = _loop8(_key17);
+
+	  if (_ret8 === 'continue') continue;
+	}
+
+	var _views = __webpack_require__(19);
+
+	var _loop9 = function _loop9(_key18) {
+	  if (_key18 === "default") return 'continue';
+	  Object.defineProperty(exports, _key18, {
+	    enumerable: true,
+	    get: function get() {
+	      return _views[_key18];
+	    }
+	  });
+	};
+
+	for (var _key18 in _views) {
+	  var _ret9 = _loop9(_key18);
+
+	  if (_ret9 === 'continue') continue;
 	}
 
 /***/ },
@@ -262,6 +316,7 @@ module.exports =
 	  onRender: function onRender() {
 	    this.showTitle();
 	    this.showFooter();
+	    this.showOther();
 	  },
 
 	  showTitle: function showTitle() {
@@ -278,7 +333,9 @@ module.exports =
 	    });
 
 	    this.showChildView('footer', footer);
-	  }
+	  },
+
+	  showOther: function showOther() {}
 	});
 
 /***/ },
@@ -574,6 +631,141 @@ module.exports =
 /***/ function(module, exports) {
 
 	module.exports = require("accounting");
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.navInit = undefined;
+
+	var _models = __webpack_require__(16);
+
+	var _views = __webpack_require__(19);
+
+	var navInit = exports.navInit = function navInit() {
+	  var model = new _models.Nav();
+	  var nav = new _views.NavView({ model: model });
+	  nav.render();
+	};
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Nav = undefined;
+
+	var _backbone = __webpack_require__(17);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _windowOrGlobal = __webpack_require__(18);
+
+	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Nav = exports.Nav = _backbone2.default.Model.extend({
+	  defaults: function defaults() {
+	    var storage = _windowOrGlobal2.default.localStorage;
+	    var nav = storage.getItem('navStatus');
+	    return {
+	      nav: nav || 'large'
+	    };
+	  },
+
+	  updateLocalStorage: function updateLocalStorage() {
+	    var storage = _windowOrGlobal2.default.localStorage;
+	    storage.setItem('navStatus', this.get('nav'));
+	  }
+	});
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone");
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict'
+	module.exports = (typeof self === 'object' && self.self === self && self) ||
+	  (typeof global === 'object' && global.global === global && global) ||
+	  this
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NavView = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
+	  el: 'body',
+	  template: false,
+
+	  ui: {
+	    container: '#container',
+	    toggle: '.mainnav-toggle'
+	  },
+
+	  modelEvents: {
+	    'change:nav': 'updateLocalStorage'
+	  },
+
+	  triggers: {
+	    'click @ui.toggle': 'toggle:nav'
+	  },
+
+	  onRender: function onRender() {
+	    var navStatus = this.model.get('nav');
+	    if (navStatus === 'large') {
+	      this.ui.container.addClass('mainnav-lg');
+	      this.ui.container.removeClass('mainnav-sm');
+	    } else if (navStatus === 'small') {
+	      this.ui.container.addClass('mainnav-sm');
+	      this.ui.container.removeClass('mainnav-lg');
+	    }
+	  },
+
+	  updateLocalStorage: function updateLocalStorage(model) {
+	    model.updateLocalStorage();
+	  },
+
+	  onToggleNav: function onToggleNav() {
+	    var navStatus = this._getNavStatus();
+	    this.model.set('nav', navStatus);
+	  },
+
+	  /** Return the new nav status.
+	  */
+	  _getNavStatus: function _getNavStatus() {
+	    return this.model.get('nav') === 'large' ? 'small' : 'large';
+	  }
+	});
 
 /***/ }
 /******/ ]);

@@ -1,12 +1,9 @@
 {
   "globals" : {
-    "document": false,
     "require": false,
-    "module": false,
     "_": false,
     "__dirname": false,
     "console": false,
-    "window": false,
     "exports": false
   },
   "esversion": 6,
