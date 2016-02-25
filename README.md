@@ -34,6 +34,30 @@ When adding new regions, be sure to keep the following:
   * `title` - Title region
   * `footer` - Footer region
 
+## Navbar
+
+The navbar handles all the logic for rendering the status of the navbar and all
+notifications attached to it. To run the navbar code, simply import the
+initializer function and pass in the URL roots to synchronize notifications
+with:
+
+```javascript
+import Marionette from 'backbone.marionette';
+
+import {navInit} from 'javascript-helpers';
+
+
+const app = new Marionette.Application();
+app.addInitializer(navInit);
+app.start({
+  arroUrl: 'https://arro.mypebble.co.uk/school/1/notification/',
+  grantUrl: 'https://grants.mypebble.co.uk/notification/'
+});
+```
+
+Leaving any of these blank will cause the navbar to not attempt to poll for
+notifications on that application.
+
 ## Behaviors
 
 List of useful behaviors.

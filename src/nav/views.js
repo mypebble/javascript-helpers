@@ -1,6 +1,17 @@
 import Marionette from 'backbone.marionette';
 
 
+const Project = Marionette.LayoutView.extend({
+  tagName: 'span',
+  template: require('./templates/project.html'),
+
+  modelEvents: {
+    'change:project': 'render',
+    'sync': 'render'
+  }
+});
+
+
 export const NavView = Marionette.LayoutView.extend({
   el: 'body',
   template: false,
@@ -18,6 +29,10 @@ export const NavView = Marionette.LayoutView.extend({
     'click @ui.toggle': 'toggle:nav'
   },
 
+  regions: {
+    project: '.project-notification-hook'
+  },
+
   onRender: function() {
     const navStatus = this.model.get('nav');
     if (navStatus === 'large') {
@@ -28,6 +43,10 @@ export const NavView = Marionette.LayoutView.extend({
       this.ui.container.addClass('mainnav-sm');
       this.ui.container.removeClass('mainnav-lg');
     }
+
+    this.showChildView('project', new Project({
+      model: this.model
+    }));
   },
 
   updateLocalStorage: function(model) {

@@ -647,8 +647,8 @@ module.exports =
 
 	var _views = __webpack_require__(19);
 
-	var navInit = exports.navInit = function navInit() {
-	  var model = new _models.Nav();
+	var navInit = exports.navInit = function navInit(options) {
+	  var model = new _models.Nav(options);
 	  var nav = new _views.NavView({ model: model });
 	  nav.render();
 	};
@@ -674,18 +674,44 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/** Deal with rendering the navigation component for users.
+	    This handles a fair few concepts including:
+	      - Whether the navbar should be shrunk or fulll
+	      - The notification icons to display on each line
+	*/
 	var Nav = exports.Nav = _backbone2.default.Model.extend({
+	  url: function url() {
+	    return this.get('arroUrl') || this.get('grantUrl');
+	  },
+
 	  defaults: function defaults() {
 	    var storage = _windowOrGlobal2.default.localStorage;
 	    var nav = storage.getItem('navStatus');
 	    return {
-	      nav: nav || 'large'
+	      nav: nav || 'large',
+	      arroUrl: '',
+	      grantUrl: ''
 	    };
 	  },
 
 	  updateLocalStorage: function updateLocalStorage() {
 	    var storage = _windowOrGlobal2.default.localStorage;
 	    storage.setItem('navStatus', this.get('nav'));
+	  },
+
+	  fetchArro: function fetchArro() {
+	    this._doFetch('arroUrl');
+	  },
+
+	  fetchGrant: function fetchGrant() {
+	    this._doFetch('grantUrl');
+	  },
+
+	  _doFetch: function _doFetch(urlKey) {
+	    var url = this.get(urlKey);
+	    if (url) {
+	      this.fetch({ url: url });
+	    }
 	  }
 	});
 
@@ -723,6 +749,16 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var Project = _backbone2.default.LayoutView.extend({
+	  tagName: 'span',
+	  template: __webpack_require__(20),
+
+	  modelEvents: {
+	    'change:project': 'render',
+	    'sync': 'render'
+	  }
+	});
+
 	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
 	  el: 'body',
 	  template: false,
@@ -740,6 +776,10 @@ module.exports =
 	    'click @ui.toggle': 'toggle:nav'
 	  },
 
+	  regions: {
+	    project: '.project-notification-hook'
+	  },
+
 	  onRender: function onRender() {
 	    var navStatus = this.model.get('nav');
 	    if (navStatus === 'large') {
@@ -749,6 +789,10 @@ module.exports =
 	      this.ui.container.addClass('mainnav-sm');
 	      this.ui.container.removeClass('mainnav-lg');
 	    }
+
+	    this.showChildView('project', new Project({
+	      model: this.model
+	    }));
 	  },
 
 	  updateLocalStorage: function updateLocalStorage(model) {
@@ -766,6 +810,25 @@ module.exports =
 	    return this.model.get('nav') === 'large' ? 'small' : 'large';
 	  }
 	});
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<i class="fa fa-sitemap"></i>\n<span class="menu-title">\n  Projects\n  ';
+	 if (project) { 
+	__p+='<span class="notification">'+
+	((__t=( project ))==null?'':_.escape(__t))+
+	'</span>';
+	 } 
+	__p+='\n</span>\n<i class="arrow"></i>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }
 /******/ ]);
