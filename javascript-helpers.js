@@ -725,7 +725,7 @@ module.exports =
 	  _doFetch: function _doFetch(urlKey) {
 	    var url = this.get(urlKey);
 	    if (url) {
-	      this.fetch({ url: url, xhrFields: { setCredentials: true } });
+	      this.fetch({ url: url, xhrFields: { withCredentials: true } });
 	    }
 	  }
 	});

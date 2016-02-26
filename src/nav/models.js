@@ -54,7 +54,7 @@ export const Nav = Backbone.Model.extend({
   _doFetch: function(urlKey) {
     const url = this.get(urlKey);
     if (url) {
-      this.fetch({url: url, xhrFields: {setCredentials: true}});
+      this.fetch({url: url, xhrFields: {withCredentials: true}});
     }
   }
 });
