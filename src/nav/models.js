@@ -13,7 +13,6 @@ import window from 'window-or-global';
 export const Nav = Backbone.Model.extend({
   initialize: function() {
     const channel = Backbone.Wreqr.radio.channel('navigation');
-    console.log(channel);
     this.listenTo(channel.vent, 'update', this.updateNavigation);
   },
 

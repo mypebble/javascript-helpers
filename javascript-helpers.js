@@ -684,7 +684,6 @@ module.exports =
 	var Nav = exports.Nav = _backbone2.default.Model.extend({
 	  initialize: function initialize() {
 	    var channel = _backbone2.default.Wreqr.radio.channel('navigation');
-	    console.log(channel);
 	    this.listenTo(channel.vent, 'update', this.updateNavigation);
 	  },
 
