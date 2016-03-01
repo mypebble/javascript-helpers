@@ -13,6 +13,24 @@ export const TitleView = Marionette.LayoutView.extend({
   className: 'body-title',
   modelEvents: {
     sync: 'render'
+  },
+
+  templateHelpers: {
+    hasProjects: function(projects) {
+      return projects.length;
+    },
+
+    project: function(projects) {
+      if (projects.length > 1) {
+        return `${projects.length} projects`;
+      }
+      const project = _.first(projects);
+
+      if (_.isUndefined(project.attributes)) {
+        return project.title;
+      }
+      return project.get('title');
+    }
   }
 });
 

@@ -87,7 +87,7 @@ module.exports =
 	  if (_ret2 === 'continue') continue;
 	}
 
-	var _behaviors2 = __webpack_require__(4);
+	var _behaviors2 = __webpack_require__(5);
 
 	var _loop3 = function _loop3(_key12) {
 	  if (_key12 === "default") return 'continue';
@@ -105,7 +105,7 @@ module.exports =
 	  if (_ret3 === 'continue') continue;
 	}
 
-	var _util = __webpack_require__(7);
+	var _util = __webpack_require__(8);
 
 	var _loop4 = function _loop4(_key13) {
 	  if (_key13 === "default") return 'continue';
@@ -141,7 +141,7 @@ module.exports =
 	  if (_ret5 === 'continue') continue;
 	}
 
-	var _util3 = __webpack_require__(5);
+	var _util3 = __webpack_require__(6);
 
 	var _loop6 = function _loop6(_key15) {
 	  if (_key15 === "default") return 'continue';
@@ -256,7 +256,7 @@ module.exports =
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -267,21 +267,39 @@ module.exports =
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _behaviors = __webpack_require__(4);
+	var _behaviors = __webpack_require__(5);
 
-	var _util = __webpack_require__(5);
+	var _util = __webpack_require__(6);
 
-	var _util2 = __webpack_require__(7);
+	var _util2 = __webpack_require__(8);
 
 	var _behaviors2 = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var TitleView = exports.TitleView = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(9),
+	  template: __webpack_require__(10),
 	  className: 'body-title',
 	  modelEvents: {
 	    sync: 'render'
+	  },
+
+	  templateHelpers: {
+	    hasProjects: function hasProjects(projects) {
+	      return projects.length;
+	    },
+
+	    project: function project(projects) {
+	      if (projects.length > 1) {
+	        return projects.length + ' projects';
+	      }
+	      var project = _.first(projects);
+
+	      if (_.isUndefined(project.attributes)) {
+	        return project.title;
+	      }
+	      return project.get('title');
+	    }
 	  }
 	}); /** The Grant Modal */
 
@@ -337,9 +355,16 @@ module.exports =
 
 	  showOther: function showOther() {}
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 4 */
+/***/ function(module, exports) {
+
+	module.exports = require("underscore");
+
+/***/ },
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -424,7 +449,7 @@ module.exports =
 	});
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -434,7 +459,7 @@ module.exports =
 	});
 	exports.markdown = undefined;
 
-	var _commonmark = __webpack_require__(6);
+	var _commonmark = __webpack_require__(7);
 
 	var _commonmark2 = _interopRequireDefault(_commonmark);
 
@@ -450,13 +475,13 @@ module.exports =
 	};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = require("commonmark");
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -470,7 +495,7 @@ module.exports =
 	exports.formatDateTime = formatDateTime;
 	exports.fromNow = fromNow;
 
-	var _moment = __webpack_require__(8);
+	var _moment = __webpack_require__(9);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -518,13 +543,13 @@ module.exports =
 	}
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = require("moment");
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -535,22 +560,16 @@ module.exports =
 	'">\n<div class="title">'+
 	((__t=( title ))==null?'':_.escape(__t))+
 	'</div>\n';
-	 if (project) { 
+	 if (hasProjects(projects)) { 
 	__p+='\n<span class="label label-info">'+
-	((__t=( project.title ))==null?'':_.escape(__t))+
+	((__t=( project(projects) ))==null?'':_.escape(__t))+
 	'</span>\n';
 	 } 
 	__p+='\n';
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = require("underscore");
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 11 */
@@ -589,11 +608,11 @@ module.exports =
 	((__t=( renderMarkdown(what_will_i_get) ))==null?'':__t)+
 	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  '+
 	((__t=( renderMarkdown(now_what) ))==null?'':__t)+
-	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer footer-hook">\n        <div class="save-project-hook"></div>\n      </div>\n    </div>\n  </div>\n</div>\n';
+	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer footer-hook"></div>\n    </div>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 13 */
@@ -846,7 +865,7 @@ module.exports =
 	}
 	return __p;
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }
 /******/ ]);
