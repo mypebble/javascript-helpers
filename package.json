@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
-    "test": "mocha test/**.js"
+    "test": "mocha test/**.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "backbone.marionette": "^2.4.4",
     "backbone.radio": "^1.0.2",
     "commonmark": "^0.24.0",
+    "eslint": "^2.4.0",
     "json-loader": "^0.5.4",
     "moment": "^2.11.2",
     "underscore": "^1.8.3",
