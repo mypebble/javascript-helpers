@@ -7,7 +7,7 @@
     "build": "webpack",
     "watch": "webpack -w",
     "test": "mocha test/**.js",
-    "lint": "eslint ."
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",

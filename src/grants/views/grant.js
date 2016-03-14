@@ -1,4 +1,5 @@
 /** The Grant Modal */
+import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
 import {ModalBehavior} from '../../modals/behaviors';
