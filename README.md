@@ -78,3 +78,7 @@ List of useful behaviors.
 ### Modal
 
 `ModalBehavior` renders a view as a Bootstrap Modal.
+
+### Link
+
+`LinkBehavior` causes all injected links to open in a new tab when clicked.

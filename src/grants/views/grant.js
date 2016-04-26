@@ -3,6 +3,7 @@ import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
 import {ModalBehavior} from '../../modals/behaviors';
+import {LinkBehavior} from '../../markdown/behaviors';
 import {markdown} from '../../markdown/util';
 import {fromNow} from '../../date/util';
 
@@ -48,8 +49,12 @@ export const GrantView = Marionette.LayoutView.extend({
     },
     grant: {
       behaviorClass: GrantModal
+    },
+    link: {
+      behaviorClass: LinkBehavior
     }
   },
+
   template: require('../templates/detail/layout.html'),
 
   templateHelpers: {
@@ -63,6 +68,7 @@ export const GrantView = Marionette.LayoutView.extend({
   },
 
   onRender: function() {
+    this._setAnchors();
     this.showTitle();
     this.showFooter();
     this.showOther();

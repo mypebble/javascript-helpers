@@ -7,6 +7,8 @@ export * from './modals/behaviors';
 
 export * from './date/util';
 export * from './decimal/util';
+
+export * from './markdown/behaviors';
 export * from './markdown/util';
 
 export * from './nav/init';
