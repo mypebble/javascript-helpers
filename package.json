@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
-    "test": "mocha test/**.js",
+    "test": "npm run lint",
     "lint": "eslint src"
   },
   "repository": {
