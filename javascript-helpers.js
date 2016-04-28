@@ -360,7 +360,6 @@ module.exports =
 	  },
 
 	  onRender: function onRender() {
-	    this._setAnchors();
 	    this.showTitle();
 	    this.showFooter();
 	    this.showOther();

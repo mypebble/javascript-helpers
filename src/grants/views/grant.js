@@ -68,7 +68,6 @@ export const GrantView = Marionette.LayoutView.extend({
   },
 
   onRender: function() {
-    this._setAnchors();
     this.showTitle();
     this.showFooter();
     this.showOther();
