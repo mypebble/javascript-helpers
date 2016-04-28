@@ -494,8 +494,7 @@ module.exports =
 	  },
 
 	  onRender: function onRender() {
-	    var anchors = this.view.getUI('anchor');
-	    anchors.attr('target', '_blank');
+	    this.view.ui.anchor.attr('target', '_blank');
 	  }
 	});
 

@@ -6,7 +6,6 @@ export const LinkBehavior = Behavior.extend({
   },
 
   onRender: function() {
-    const anchors = this.view.getUI('anchor');
-    anchors.attr('target', '_blank');
+    this.view.ui.anchor.attr('target', '_blank');
   }
 });
