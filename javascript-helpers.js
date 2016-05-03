@@ -490,7 +490,7 @@ module.exports =
 
 	var LinkBehavior = exports.LinkBehavior = _backbone.Behavior.extend({
 	  ui: {
-	    a: 'anchor'
+	    anchor: 'a'
 	  },
 
 	  onRender: function onRender() {
