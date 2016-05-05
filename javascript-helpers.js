@@ -495,6 +495,7 @@ module.exports =
 
 	  onRender: function onRender() {
 	    this.ui.anchor.attr('target', '_blank');
+	    this.ui.anchor.attr('rel', 'noopener noreferrer');
 	  }
 	});
 
