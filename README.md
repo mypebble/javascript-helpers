@@ -82,3 +82,41 @@ List of useful behaviors.
 ### Link
 
 `LinkBehavior` causes all injected links to open in a new tab when clicked.
+
+## Utility Functions
+
+The Javascript Helpers provide a selection of utility functions to format common
+outputs across the Pebble platform.
+
+### Decimal Numbers
+
+`formatAmount` is a helper that formats numerical outputs into a decimal values
+with a leading `£` sign:
+
+```javascript
+const amount = formatAmount('1000');
+// amount is £1,000.00
+
+const noPlaces = formatAmount(1000, 0);
+// noPlaces is £1,000
+```
+
+### Dates
+
+The date utilities provide a number of helpers with a simple output function:
+
+1. `dateObj` takes a date string and outputs a JavaScript `Date` object.
+2. `formatObj` takes a JavaScript `Date` object and outputs a formatted date.
+3. `formatDate` takes a date string and outputs a formatted string of DD/MM/YYYY.
+
+```javascript
+const date = dateObj('2016-01-01');
+const output = formatObj(date);
+// output is 01/01/2016
+
+const year = formatObj(date, 'YYYY');
+// year is 2016
+
+const fullOutput = formatDate('2016-01-03', 'DD/MM');
+// fullOutput is 03/01
+```

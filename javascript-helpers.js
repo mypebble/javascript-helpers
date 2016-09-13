@@ -53,183 +53,123 @@ module.exports =
 
 	var _behaviors = __webpack_require__(1);
 
-	var _loop = function _loop(_key11) {
-	  if (_key11 === "default") return 'continue';
-	  Object.defineProperty(exports, _key11, {
+	Object.keys(_behaviors).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _behaviors[_key11];
+	      return _behaviors[key];
 	    }
 	  });
-	};
-
-	for (var _key11 in _behaviors) {
-	  var _ret = _loop(_key11);
-
-	  if (_ret === 'continue') continue;
-	}
+	});
 
 	var _grant = __webpack_require__(3);
 
-	var _loop2 = function _loop2(_key12) {
-	  if (_key12 === "default") return 'continue';
-	  Object.defineProperty(exports, _key12, {
+	Object.keys(_grant).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _grant[_key12];
+	      return _grant[key];
 	    }
 	  });
-	};
-
-	for (var _key12 in _grant) {
-	  var _ret2 = _loop2(_key12);
-
-	  if (_ret2 === 'continue') continue;
-	}
+	});
 
 	var _behaviors2 = __webpack_require__(5);
 
-	var _loop3 = function _loop3(_key13) {
-	  if (_key13 === "default") return 'continue';
-	  Object.defineProperty(exports, _key13, {
+	Object.keys(_behaviors2).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _behaviors2[_key13];
+	      return _behaviors2[key];
 	    }
 	  });
-	};
-
-	for (var _key13 in _behaviors2) {
-	  var _ret3 = _loop3(_key13);
-
-	  if (_ret3 === 'continue') continue;
-	}
+	});
 
 	var _util = __webpack_require__(9);
 
-	var _loop4 = function _loop4(_key14) {
-	  if (_key14 === "default") return 'continue';
-	  Object.defineProperty(exports, _key14, {
+	Object.keys(_util).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util[_key14];
+	      return _util[key];
 	    }
 	  });
-	};
-
-	for (var _key14 in _util) {
-	  var _ret4 = _loop4(_key14);
-
-	  if (_ret4 === 'continue') continue;
-	}
+	});
 
 	var _util2 = __webpack_require__(14);
 
-	var _loop5 = function _loop5(_key15) {
-	  if (_key15 === "default") return 'continue';
-	  Object.defineProperty(exports, _key15, {
+	Object.keys(_util2).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util2[_key15];
+	      return _util2[key];
 	    }
 	  });
-	};
-
-	for (var _key15 in _util2) {
-	  var _ret5 = _loop5(_key15);
-
-	  if (_ret5 === 'continue') continue;
-	}
+	});
 
 	var _behaviors3 = __webpack_require__(6);
 
-	var _loop6 = function _loop6(_key16) {
-	  if (_key16 === "default") return 'continue';
-	  Object.defineProperty(exports, _key16, {
+	Object.keys(_behaviors3).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _behaviors3[_key16];
+	      return _behaviors3[key];
 	    }
 	  });
-	};
-
-	for (var _key16 in _behaviors3) {
-	  var _ret6 = _loop6(_key16);
-
-	  if (_ret6 === 'continue') continue;
-	}
+	});
 
 	var _util3 = __webpack_require__(7);
 
-	var _loop7 = function _loop7(_key17) {
-	  if (_key17 === "default") return 'continue';
-	  Object.defineProperty(exports, _key17, {
+	Object.keys(_util3).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _util3[_key17];
+	      return _util3[key];
 	    }
 	  });
-	};
-
-	for (var _key17 in _util3) {
-	  var _ret7 = _loop7(_key17);
-
-	  if (_ret7 === 'continue') continue;
-	}
+	});
 
 	var _init = __webpack_require__(16);
 
-	var _loop8 = function _loop8(_key18) {
-	  if (_key18 === "default") return 'continue';
-	  Object.defineProperty(exports, _key18, {
+	Object.keys(_init).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _init[_key18];
+	      return _init[key];
 	    }
 	  });
-	};
-
-	for (var _key18 in _init) {
-	  var _ret8 = _loop8(_key18);
-
-	  if (_ret8 === 'continue') continue;
-	}
+	});
 
 	var _models = __webpack_require__(17);
 
-	var _loop9 = function _loop9(_key19) {
-	  if (_key19 === "default") return 'continue';
-	  Object.defineProperty(exports, _key19, {
+	Object.keys(_models).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _models[_key19];
+	      return _models[key];
 	    }
 	  });
-	};
-
-	for (var _key19 in _models) {
-	  var _ret9 = _loop9(_key19);
-
-	  if (_ret9 === 'continue') continue;
-	}
+	});
 
 	var _views = __webpack_require__(20);
 
-	var _loop10 = function _loop10(_key20) {
-	  if (_key20 === "default") return 'continue';
-	  Object.defineProperty(exports, _key20, {
+	Object.keys(_views).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _views[_key20];
+	      return _views[key];
 	    }
 	  });
-	};
-
-	for (var _key20 in _views) {
-	  var _ret10 = _loop10(_key20);
-
-	  if (_ret10 === 'continue') continue;
-	}
+	});
 
 /***/ },
 /* 1 */
@@ -326,8 +266,6 @@ module.exports =
 	    }
 	  }
 	}); /** The Grant Modal */
-
-
 	var FooterView = exports.FooterView = _backbone2.default.LayoutView.extend({
 	  tagName: 'ul',
 	  className: 'row list-unstyled list-inline list-facts-three',
@@ -682,9 +620,11 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function formatAmount(amount, places) {
+	function formatAmount(amount) {
+	  var places = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+
 	  var options = {
-	    precision: places || 2,
+	    precision: places,
 	    thousand: ',',
 	    symbol: '£ '
 	  };

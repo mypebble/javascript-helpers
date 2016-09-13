@@ -1,8 +1,8 @@
 import accounting from 'accounting';
 
-export function formatAmount(amount, places) {
+export function formatAmount(amount, places = 2) {
   const options = {
-    precision: places || 2,
+    precision: places,
     thousand: ',',
     symbol: '£ '
   };
