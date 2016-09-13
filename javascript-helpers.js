@@ -428,11 +428,12 @@ module.exports =
 
 	var LinkBehavior = exports.LinkBehavior = _backbone.Behavior.extend({
 	  ui: {
-	    a: 'anchor'
+	    anchor: 'a'
 	  },
 
 	  onRender: function onRender() {
-	    this.view.ui.anchor.attr('target', '_blank');
+	    this.ui.anchor.attr('target', '_blank');
+	    this.ui.anchor.attr('rel', 'noopener noreferrer');
 	  }
 	});
 

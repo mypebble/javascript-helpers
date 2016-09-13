@@ -77,7 +77,70 @@ List of useful behaviors.
 
 ### Modal
 
-`ModalBehavior` renders a view as a Bootstrap Modal.
+`ModalBehavior` renders a view as a Bootstrap Modal. This modal must be closed
+by clicking the X at the top corner.
+
+#### Usage
+
+```javascript
+import {LayoutView} from 'backbone.marionette';
+
+import {ModalBehavior} from 'javascript-helpers';
+
+export const ModalView = LayoutView.extend({
+  behaviors: {
+    modal: {
+      behaviorClass: ModalBehavior
+    }
+  },
+
+  template: require('modal.html')
+});
+```
+
+#### Template
+
+An example Modal Template:
+
+```html
+<div class="modal modal-hook" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close close-modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+
+      <div class="modal-body"></div>
+
+      <div class="modal-footer">
+        <button class="btn btn-default close-modal">Abandon</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+The modal listens to clicks on the `.close-modal` class - set this class on any
+buttons that are to close the modal.
+
+#### Code
+
+To close the modal inside your view, do:
+
+```javascript
+view.triggerMethod('close:modal');
+```
+
+#### Events
+
+The modal behavior fires the following events:
+
+1. `close:modal:complete` - once the modal is closed and removed from its parent
+  region.
+2. `comfirm:action` - when the `.confirm-modal` class is clicked
 
 ### Link
 

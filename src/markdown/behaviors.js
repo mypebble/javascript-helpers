@@ -2,10 +2,11 @@ import {Behavior} from 'backbone.marionette';
 
 export const LinkBehavior = Behavior.extend({
   ui: {
-    a: 'anchor'
+    anchor: 'a'
   },
 
   onRender: function() {
-    this.view.ui.anchor.attr('target', '_blank');
+    this.ui.anchor.attr('target', '_blank');
+    this.ui.anchor.attr('rel', 'noopener noreferrer');
   }
 });
