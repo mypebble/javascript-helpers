@@ -801,7 +801,7 @@ module.exports =
 
 	  templateHelpers: function templateHelpers() {
 	    return {
-	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'border-left:4px solid #fc6e51;' : ''
+	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'background-color: #d6e5ed;' : ''
 	    };
 	  }
 	});
@@ -930,7 +930,7 @@ module.exports =
 	((__t=( link ))==null?'':_.escape(__t))+
 	'">'+
 	((__t=( text ))==null?'':_.escape(__t))+
-	'</a> -->\n<li class="b-b b-light" style="'+
+	'</a> -->\n<li class="b-b b-light" style="border-left:4px solid #fc6e51; '+
 	((__t=( readClass ))==null?'':_.escape(__t))+
 	'">\n  <a href="'+
 	((__t=( link ))==null?'':_.escape(__t))+

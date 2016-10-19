@@ -25,7 +25,7 @@ const Notification = Marionette.ItemView.extend({
   templateHelpers: function() {
     return {
       readClass: _.isNull(this.model.get('datetime_read')) ?
-        'border-left:4px solid #fc6e51;' : ''
+        'background-color: #d6e5ed;' : ''
     };
   }
 });
