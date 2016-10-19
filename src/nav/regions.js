@@ -1,7 +1,7 @@
 import {Region} from 'backbone.marionette';
 
-import {NavModel} from 'nav/models';
-import {NavView} from 'nav/views';
+import {NavModel} from './models';
+import {NavView} from './views';
 
 
 export const NavRegion = Region.extend({

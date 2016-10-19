@@ -11,6 +11,4 @@ export * from './decimal/util';
 export * from './markdown/behaviors';
 export * from './markdown/util';
 
-export * from './nav/init';
-export * from './nav/models';
-export * from './nav/views';
+export {NavRegion} from './nav/regions';

@@ -6,7 +6,7 @@ export const NavView = LayoutView.extend({
     'id': '#mainnav'
   },
 
-  template: require('nav/templates/nav.jst'),
+  template: require('./templates/nav.html'),
 
   templateHelpers: function() {
     const user = this.model.getUser();

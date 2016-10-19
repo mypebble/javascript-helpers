@@ -2,7 +2,7 @@ import parse from 'url-parse';
 import root from 'window-or-global';
 
 import {Model} from 'backbone';
-import {reverse} from 'nav/routes';
+import {reverse} from './routes';
 
 
 export const NavModel = Model.extend({

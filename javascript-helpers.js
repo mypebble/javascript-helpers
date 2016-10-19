@@ -135,40 +135,13 @@ module.exports =
 	  });
 	});
 
-	var _init = __webpack_require__(16);
+	var _regions = __webpack_require__(16);
 
-	Object.keys(_init).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _init[key];
-	    }
-	  });
-	});
-
-	var _models = __webpack_require__(17);
-
-	Object.keys(_models).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _models[key];
-	    }
-	  });
-	});
-
-	var _views = __webpack_require__(20);
-
-	Object.keys(_views).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _views[key];
-	    }
-	  });
+	Object.defineProperty(exports, 'NavRegion', {
+	  enumerable: true,
+	  get: function get() {
+	    return _regions.NavRegion;
+	  }
 	});
 
 /***/ },
@@ -622,7 +595,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function formatAmount(amount) {
-	  var places = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var places = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
 
 	  var options = {
 	    precision: places,
@@ -651,17 +624,22 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.navInit = undefined;
+	exports.NavRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
 
 	var _models = __webpack_require__(17);
 
-	var _views = __webpack_require__(20);
+	var _views = __webpack_require__(25);
 
-	var navInit = exports.navInit = function navInit(options) {
-	  var model = new _models.Nav(options);
-	  var nav = new _views.NavView({ model: model });
-	  nav.render();
-	};
+	var NavRegion = exports.NavRegion = _backbone.Region.extend({
+	  el: '#mainnav-container',
+
+	  showNav: function showNav(user) {
+	    var model = new _models.NavModel({ user: user });
+	    this.show(new _views.NavView({ model: model }));
+	  }
+	});
 
 /***/ },
 /* 17 */
@@ -672,81 +650,600 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Nav = undefined;
+	exports.NavModel = undefined;
 
-	var _backbone = __webpack_require__(18);
+	var _urlParse = __webpack_require__(18);
 
-	var _backbone2 = _interopRequireDefault(_backbone);
+	var _urlParse2 = _interopRequireDefault(_urlParse);
 
-	var _windowOrGlobal = __webpack_require__(19);
+	var _windowOrGlobal = __webpack_require__(22);
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
+	var _backbone = __webpack_require__(23);
+
+	var _routes = __webpack_require__(24);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/** Deal with rendering the navigation component for users.
-	    This handles a fair few concepts including:
-	      - Whether the navbar should be shrunk or fulll
-	      - The notification icons to display on each line
-	    We also supply a listener for the Radio to instruct this to update its
-	    notification widgets, with the number to reduce the notifications by.
-	*/
-	var Nav = exports.Nav = _backbone2.default.Model.extend({
-	  initialize: function initialize() {
-	    var channel = _backbone2.default.Wreqr.radio.channel('navigation');
-	    this.listenTo(channel.vent, 'update', this.updateNavigation);
+	var NavModel = exports.NavModel = _backbone.Model.extend({
+	  setUser: function setUser(user) {
+	    this.set({ user: user });
 	  },
 
-	  url: function url() {
-	    return this.get('arroUrl') || this.get('grantUrl');
+	  getUser: function getUser() {
+	    return this.get('user') || null;
 	  },
 
-	  defaults: function defaults() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    var nav = storage.getItem('navStatus');
-	    return {
-	      nav: nav || 'large',
-	      arroUrl: '',
-	      grantUrl: '',
-	      project: 0
+	  isStaff: function isStaff() {
+	    var user = this.getUser();
+	    return user.get('is_staff');
+	  },
+
+	  multipleOrgs: function multipleOrgs() {
+	    var user = this.getUser();
+	    return this.isStaff() || user.getSchools.length > 1;
+	  },
+
+	  reverse: function reverse(urlName) {
+	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	    return (0, _routes.reverse)(urlName, options);
+	  },
+
+
+	  activeNav: function activeNav(sectionName) {
+	    var url = (0, _urlParse2.default)(_windowOrGlobal2.default.location.href);
+	    var pathComponents = url.pathname.split('/');
+
+	    var sections = {
+	      grant: pathComponents[1] === 'grants',
+	      support: pathComponents[2] === 'support' || pathComponents[2] === 'schools' && pathComponents[3] !== 'change' || pathComponents[2] === 'users',
+	      choose: pathComponents[3] === 'change',
+	      project: pathComponents[3] === 'project',
+	      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
+	      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
 	    };
-	  },
 
-	  updateLocalStorage: function updateLocalStorage() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    storage.setItem('navStatus', this.get('nav'));
-	  },
-
-	  fetchArro: function fetchArro() {
-	    this._doFetch('arroUrl');
-	  },
-
-	  fetchGrant: function fetchGrant() {
-	    this._doFetch('grantUrl');
-	  },
-
-	  updateNavigation: function updateNavigation(key, reduceBy) {
-	    var val = this.get(key);
-	    var newVal = val - reduceBy;
-	    this.set(key, newVal < 0 ? 0 : newVal);
-	  },
-
-	  _doFetch: function _doFetch(urlKey) {
-	    var url = this.get(urlKey);
-	    if (url) {
-	      this.fetch({ url: url, xhrFields: { withCredentials: true } });
-	    }
+	    return sections[sectionName] ? 'active' : '';
 	  }
 	});
 
 /***/ },
 /* 18 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("backbone");
+	'use strict';
+
+	var required = __webpack_require__(19)
+	  , lolcation = __webpack_require__(20)
+	  , qs = __webpack_require__(21)
+	  , protocolre = /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/i;
+
+	/**
+	 * These are the parse rules for the URL parser, it informs the parser
+	 * about:
+	 *
+	 * 0. The char it Needs to parse, if it's a string it should be done using
+	 *    indexOf, RegExp using exec and NaN means set as current value.
+	 * 1. The property we should set when parsing this value.
+	 * 2. Indication if it's backwards or forward parsing, when set as number it's
+	 *    the value of extra chars that should be split off.
+	 * 3. Inherit from location if non existing in the parser.
+	 * 4. `toLowerCase` the resulting value.
+	 */
+	var rules = [
+	  ['#', 'hash'],                        // Extract from the back.
+	  ['?', 'query'],                       // Extract from the back.
+	  ['/', 'pathname'],                    // Extract from the back.
+	  ['@', 'auth', 1],                     // Extract from the front.
+	  [NaN, 'host', undefined, 1, 1],       // Set left over value.
+	  [/:(\d+)$/, 'port', undefined, 1],    // RegExp the back.
+	  [NaN, 'hostname', undefined, 1, 1]    // Set left over.
+	];
+
+	/**
+	 * @typedef ProtocolExtract
+	 * @type Object
+	 * @property {String} protocol Protocol matched in the URL, in lowercase.
+	 * @property {Boolean} slashes `true` if protocol is followed by "//", else `false`.
+	 * @property {String} rest Rest of the URL that is not part of the protocol.
+	 */
+
+	/**
+	 * Extract protocol information from a URL with/without double slash ("//").
+	 *
+	 * @param {String} address URL we want to extract from.
+	 * @return {ProtocolExtract} Extracted information.
+	 * @api private
+	 */
+	function extractProtocol(address) {
+	  var match = protocolre.exec(address);
+
+	  return {
+	    protocol: match[1] ? match[1].toLowerCase() : '',
+	    slashes: !!match[2],
+	    rest: match[3]
+	  };
+	}
+
+	/**
+	 * Resolve a relative URL pathname against a base URL pathname.
+	 *
+	 * @param {String} relative Pathname of the relative URL.
+	 * @param {String} base Pathname of the base URL.
+	 * @return {String} Resolved pathname.
+	 * @api private
+	 */
+	function resolve(relative, base) {
+	  var path = (base || '/').split('/').slice(0, -1).concat(relative.split('/'))
+	    , i = path.length
+	    , last = path[i - 1]
+	    , unshift = false
+	    , up = 0;
+
+	  while (i--) {
+	    if (path[i] === '.') {
+	      path.splice(i, 1);
+	    } else if (path[i] === '..') {
+	      path.splice(i, 1);
+	      up++;
+	    } else if (up) {
+	      if (i === 0) unshift = true;
+	      path.splice(i, 1);
+	      up--;
+	    }
+	  }
+
+	  if (unshift) path.unshift('');
+	  if (last === '.' || last === '..') path.push('');
+
+	  return path.join('/');
+	}
+
+	/**
+	 * The actual URL instance. Instead of returning an object we've opted-in to
+	 * create an actual constructor as it's much more memory efficient and
+	 * faster and it pleases my OCD.
+	 *
+	 * @constructor
+	 * @param {String} address URL we want to parse.
+	 * @param {Object|String} location Location defaults for relative paths.
+	 * @param {Boolean|Function} parser Parser for the query string.
+	 * @api public
+	 */
+	function URL(address, location, parser) {
+	  if (!(this instanceof URL)) {
+	    return new URL(address, location, parser);
+	  }
+
+	  var relative, extracted, parse, instruction, index, key
+	    , instructions = rules.slice()
+	    , type = typeof location
+	    , url = this
+	    , i = 0;
+
+	  //
+	  // The following if statements allows this module two have compatibility with
+	  // 2 different API:
+	  //
+	  // 1. Node.js's `url.parse` api which accepts a URL, boolean as arguments
+	  //    where the boolean indicates that the query string should also be parsed.
+	  //
+	  // 2. The `URL` interface of the browser which accepts a URL, object as
+	  //    arguments. The supplied object will be used as default values / fall-back
+	  //    for relative paths.
+	  //
+	  if ('object' !== type && 'string' !== type) {
+	    parser = location;
+	    location = null;
+	  }
+
+	  if (parser && 'function' !== typeof parser) parser = qs.parse;
+
+	  location = lolcation(location);
+
+	  //
+	  // Extract protocol information before running the instructions.
+	  //
+	  extracted = extractProtocol(address || '');
+	  relative = !extracted.protocol && !extracted.slashes;
+	  url.slashes = extracted.slashes || relative && location.slashes;
+	  url.protocol = extracted.protocol || location.protocol || '';
+	  address = extracted.rest;
+
+	  //
+	  // When the authority component is absent the URL starts with a path
+	  // component.
+	  //
+	  if (!extracted.slashes) instructions[2] = [/(.*)/, 'pathname'];
+
+	  for (; i < instructions.length; i++) {
+	    instruction = instructions[i];
+	    parse = instruction[0];
+	    key = instruction[1];
+
+	    if (parse !== parse) {
+	      url[key] = address;
+	    } else if ('string' === typeof parse) {
+	      if (~(index = address.indexOf(parse))) {
+	        if ('number' === typeof instruction[2]) {
+	          url[key] = address.slice(0, index);
+	          address = address.slice(index + instruction[2]);
+	        } else {
+	          url[key] = address.slice(index);
+	          address = address.slice(0, index);
+	        }
+	      }
+	    } else if (index = parse.exec(address)) {
+	      url[key] = index[1];
+	      address = address.slice(0, index.index);
+	    }
+
+	    url[key] = url[key] || (
+	      relative && instruction[3] ? location[key] || '' : ''
+	    );
+
+	    //
+	    // Hostname, host and protocol should be lowercased so they can be used to
+	    // create a proper `origin`.
+	    //
+	    if (instruction[4]) url[key] = url[key].toLowerCase();
+	  }
+
+	  //
+	  // Also parse the supplied query string in to an object. If we're supplied
+	  // with a custom parser as function use that instead of the default build-in
+	  // parser.
+	  //
+	  if (parser) url.query = parser(url.query);
+
+	  //
+	  // If the URL is relative, resolve the pathname against the base URL.
+	  //
+	  if (
+	      relative
+	    && location.slashes
+	    && url.pathname.charAt(0) !== '/'
+	    && (url.pathname !== '' || location.pathname !== '')
+	  ) {
+	    url.pathname = resolve(url.pathname, location.pathname);
+	  }
+
+	  //
+	  // We should not add port numbers if they are already the default port number
+	  // for a given protocol. As the host also contains the port number we're going
+	  // override it with the hostname which contains no port number.
+	  //
+	  if (!required(url.port, url.protocol)) {
+	    url.host = url.hostname;
+	    url.port = '';
+	  }
+
+	  //
+	  // Parse down the `auth` for the username and password.
+	  //
+	  url.username = url.password = '';
+	  if (url.auth) {
+	    instruction = url.auth.split(':');
+	    url.username = instruction[0] || '';
+	    url.password = instruction[1] || '';
+	  }
+
+	  url.origin = url.protocol && url.host && url.protocol !== 'file:'
+	    ? url.protocol +'//'+ url.host
+	    : 'null';
+
+	  //
+	  // The href is just the compiled result.
+	  //
+	  url.href = url.toString();
+	}
+
+	/**
+	 * This is convenience method for changing properties in the URL instance to
+	 * insure that they all propagate correctly.
+	 *
+	 * @param {String} part          Property we need to adjust.
+	 * @param {Mixed} value          The newly assigned value.
+	 * @param {Boolean|Function} fn  When setting the query, it will be the function
+	 *                               used to parse the query.
+	 *                               When setting the protocol, double slash will be
+	 *                               removed from the final url if it is true.
+	 * @returns {URL}
+	 * @api public
+	 */
+	URL.prototype.set = function set(part, value, fn) {
+	  var url = this;
+
+	  switch (part) {
+	    case 'query':
+	      if ('string' === typeof value && value.length) {
+	        value = (fn || qs.parse)(value);
+	      }
+
+	      url[part] = value;
+	      break;
+
+	    case 'port':
+	      url[part] = value;
+
+	      if (!required(value, url.protocol)) {
+	        url.host = url.hostname;
+	        url[part] = '';
+	      } else if (value) {
+	        url.host = url.hostname +':'+ value;
+	      }
+
+	      break;
+
+	    case 'hostname':
+	      url[part] = value;
+
+	      if (url.port) value += ':'+ url.port;
+	      url.host = value;
+	      break;
+
+	    case 'host':
+	      url[part] = value;
+
+	      if (/:\d+$/.test(value)) {
+	        value = value.split(':');
+	        url.port = value.pop();
+	        url.hostname = value.join(':');
+	      } else {
+	        url.hostname = value;
+	        url.port = '';
+	      }
+
+	      break;
+
+	    case 'protocol':
+	      url.protocol = value.toLowerCase();
+	      url.slashes = !fn;
+	      break;
+
+	    case 'pathname':
+	      url.pathname = value.charAt(0) === '/' ? value : '/' + value;
+	      break;
+
+	    default:
+	      url[part] = value;
+	  }
+
+	  for (var i = 0; i < rules.length; i++) {
+	    var ins = rules[i];
+
+	    if (ins[4]) url[ins[1]] = url[ins[1]].toLowerCase();
+	  }
+
+	  url.origin = url.protocol && url.host && url.protocol !== 'file:'
+	    ? url.protocol +'//'+ url.host
+	    : 'null';
+
+	  url.href = url.toString();
+
+	  return url;
+	};
+
+	/**
+	 * Transform the properties back in to a valid and full URL string.
+	 *
+	 * @param {Function} stringify Optional query stringify function.
+	 * @returns {String}
+	 * @api public
+	 */
+	URL.prototype.toString = function toString(stringify) {
+	  if (!stringify || 'function' !== typeof stringify) stringify = qs.stringify;
+
+	  var query
+	    , url = this
+	    , protocol = url.protocol;
+
+	  if (protocol && protocol.charAt(protocol.length - 1) !== ':') protocol += ':';
+
+	  var result = protocol + (url.slashes ? '//' : '');
+
+	  if (url.username) {
+	    result += url.username;
+	    if (url.password) result += ':'+ url.password;
+	    result += '@';
+	  }
+
+	  result += url.host + url.pathname;
+
+	  query = 'object' === typeof url.query ? stringify(url.query) : url.query;
+	  if (query) result += '?' !== query.charAt(0) ? '?'+ query : query;
+
+	  if (url.hash) result += url.hash;
+
+	  return result;
+	};
+
+	//
+	// Expose the URL parser and some additional properties that might be useful for
+	// others or testing.
+	//
+	URL.extractProtocol = extractProtocol;
+	URL.location = lolcation;
+	URL.qs = qs;
+
+	module.exports = URL;
+
 
 /***/ },
 /* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Check if we're required to add a port number.
+	 *
+	 * @see https://url.spec.whatwg.org/#default-port
+	 * @param {Number|String} port Port number we need to check
+	 * @param {String} protocol Protocol we need to check against.
+	 * @returns {Boolean} Is it a default port for the given protocol
+	 * @api private
+	 */
+	module.exports = function required(port, protocol) {
+	  protocol = protocol.split(':')[0];
+	  port = +port;
+
+	  if (!port) return false;
+
+	  switch (protocol) {
+	    case 'http':
+	    case 'ws':
+	    return port !== 80;
+
+	    case 'https':
+	    case 'wss':
+	    return port !== 443;
+
+	    case 'ftp':
+	    return port !== 21;
+
+	    case 'gopher':
+	    return port !== 70;
+
+	    case 'file':
+	    return false;
+	  }
+
+	  return port !== 0;
+	};
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var slashes = /^[A-Za-z][A-Za-z0-9+-.]*:\/\//;
+
+	/**
+	 * These properties should not be copied or inherited from. This is only needed
+	 * for all non blob URL's as a blob URL does not include a hash, only the
+	 * origin.
+	 *
+	 * @type {Object}
+	 * @private
+	 */
+	var ignore = { hash: 1, query: 1 }
+	  , URL;
+
+	/**
+	 * The location object differs when your code is loaded through a normal page,
+	 * Worker or through a worker using a blob. And with the blobble begins the
+	 * trouble as the location object will contain the URL of the blob, not the
+	 * location of the page where our code is loaded in. The actual origin is
+	 * encoded in the `pathname` so we can thankfully generate a good "default"
+	 * location from it so we can generate proper relative URL's again.
+	 *
+	 * @param {Object|String} loc Optional default location object.
+	 * @returns {Object} lolcation object.
+	 * @api public
+	 */
+	module.exports = function lolcation(loc) {
+	  loc = loc || global.location || {};
+	  URL = URL || __webpack_require__(18);
+
+	  var finaldestination = {}
+	    , type = typeof loc
+	    , key;
+
+	  if ('blob:' === loc.protocol) {
+	    finaldestination = new URL(unescape(loc.pathname), {});
+	  } else if ('string' === type) {
+	    finaldestination = new URL(loc, {});
+	    for (key in ignore) delete finaldestination[key];
+	  } else if ('object' === type) {
+	    for (key in loc) {
+	      if (key in ignore) continue;
+	      finaldestination[key] = loc[key];
+	    }
+
+	    if (finaldestination.slashes === undefined) {
+	      finaldestination.slashes = slashes.test(loc.href);
+	    }
+	  }
+
+	  return finaldestination;
+	};
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var has = Object.prototype.hasOwnProperty;
+
+	/**
+	 * Simple query string parser.
+	 *
+	 * @param {String} query The query string that needs to be parsed.
+	 * @returns {Object}
+	 * @api public
+	 */
+	function querystring(query) {
+	  var parser = /([^=?&]+)=?([^&]*)/g
+	    , result = {}
+	    , part;
+
+	  //
+	  // Little nifty parsing hack, leverage the fact that RegExp.exec increments
+	  // the lastIndex property so we can continue executing this loop until we've
+	  // parsed all results.
+	  //
+	  for (;
+	    part = parser.exec(query);
+	    result[decodeURIComponent(part[1])] = decodeURIComponent(part[2])
+	  );
+
+	  return result;
+	}
+
+	/**
+	 * Transform a query string to an object.
+	 *
+	 * @param {Object} obj Object that should be transformed.
+	 * @param {String} prefix Optional prefix.
+	 * @returns {String}
+	 * @api public
+	 */
+	function querystringify(obj, prefix) {
+	  prefix = prefix || '';
+
+	  var pairs = [];
+
+	  //
+	  // Optionally prefix with a '?' if needed
+	  //
+	  if ('string' !== typeof prefix) prefix = '?';
+
+	  for (var key in obj) {
+	    if (has.call(obj, key)) {
+	      pairs.push(encodeURIComponent(key) +'='+ encodeURIComponent(obj[key]));
+	    }
+	  }
+
+	  return pairs.length ? prefix + pairs.join('&') : '';
+	}
+
+	//
+	// Expose the module.
+	//
+	exports.stringify = querystringify;
+	exports.parse = querystring;
+
+
+/***/ },
+/* 22 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict'
@@ -757,7 +1254,44 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 20 */
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone");
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reverse = reverse;
+	/** Return the full URL for the given route */
+	function reverse(name) {
+	  var routeArgs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var schoolRoot = '/school/' + routeArgs.organisation + '/';
+
+	  var routes = {
+	    dashboard: schoolRoot,
+	    donation: schoolRoot + 'donation/',
+	    project: schoolRoot + 'project/',
+	    contact: schoolRoot + 'name/',
+	    costcentre: schoolRoot + 'account/',
+	    bank: schoolRoot + 'account/bank/',
+	    group: schoolRoot + 'name/group/',
+	    support: '/main/support/',
+	    choose: '/main/schools/change/'
+	  };
+
+	  return routes[name];
+	}
+
+/***/ },
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -769,90 +1303,90 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _backbone2 = _interopRequireDefault(_backbone);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Project = _backbone2.default.LayoutView.extend({
-	  tagName: 'span',
-	  template: __webpack_require__(21),
-
-	  modelEvents: {
-	    'change:project': 'render',
-	    'sync': 'render'
-	  }
-	});
-
-	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
-	  el: 'body',
-	  template: false,
-
-	  ui: {
-	    container: '#container',
-	    toggle: '.mainnav-toggle'
+	var NavView = exports.NavView = _backbone.LayoutView.extend({
+	  attributes: {
+	    'id': '#mainnav'
 	  },
 
-	  modelEvents: {
-	    'change:nav': 'updateLocalStorage'
-	  },
+	  template: __webpack_require__(26),
 
-	  triggers: {
-	    'click @ui.toggle': 'toggle:nav'
-	  },
+	  templateHelpers: function templateHelpers() {
+	    var _this = this;
 
-	  regions: {
-	    project: '.project-notification-hook'
-	  },
+	    var user = this.model.getUser();
 
-	  initialize: function initialize() {
-	    this.model.fetchArro();
-	  },
-
-	  onRender: function onRender() {
-	    var navStatus = this.model.get('nav');
-	    if (navStatus === 'large') {
-	      this.ui.container.addClass('mainnav-lg');
-	      this.ui.container.removeClass('mainnav-sm');
-	    } else if (navStatus === 'small') {
-	      this.ui.container.addClass('mainnav-sm');
-	      this.ui.container.removeClass('mainnav-lg');
-	    }
-
-	    this.showChildView('project', new Project({
-	      model: this.model
-	    }));
-	  },
-
-	  updateLocalStorage: function updateLocalStorage(model) {
-	    model.updateLocalStorage();
-	  },
-
-	  onToggleNav: function onToggleNav() {
-	    var navStatus = this._getNavStatus();
-	    this.model.set('nav', navStatus);
-	  },
-
-	  /** Return the new nav status.
-	  */
-	  _getNavStatus: function _getNavStatus() {
-	    return this.model.get('nav') === 'large' ? 'small' : 'large';
+	    return {
+	      activeOrganisation: user.getActiveSchool(),
+	      getActive: this.model.activeNav,
+	      getUrl: function getUrl(urlName, organisation) {
+	        return _this.model.reverse(urlName, { organisation: organisation });
+	      },
+	      isStaff: this.model.isStaff(),
+	      multipleOrgs: this.model.multipleOrgs()
+	    };
 	  }
 	});
 
 /***/ },
-/* 21 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<i class="fa fa-sitemap"></i>\n<span class="menu-title">\n  Projects\n  ';
-	 if (project) { 
-	__p+='<span class="notification">'+
-	((__t=( project ))==null?'':_.escape(__t))+
-	'</span>';
+	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
+	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-dashboard"></i>\n          <span class="menu-title">\n              <strong>Dashboard</strong>\n          </span>\n          </a>\n      </li>\n\n      <li class="list-divider"></li>\n      <li class="list-header">Activities</li>\n\n      <li class="nav-donations '+
+	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'create">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-grants">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="list-divider"></li>\n\n      <li class="list-header">System</li>\n\n      <li class="nav-projects '+
+	((__t=( getActive('project') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
+	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-reports '+
+	((__t=( getActive('report') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-folder-o"></i>\n          <span class="menu-title">Reports</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-stakeholder '+
+	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-users"></i>\n          <span class="menu-title">SRM</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
+	((__t=( getActive('admin') ))==null?'':_.escape(__t))+
+	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="'+
+	((__t=( getUrl('costcentre', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Accounts</a>\n        </li>\n        <li>\n          <a href="'+
+	((__t=( getUrl('bank', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="'+
+	((__t=( getUrl('group', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Groups</a>\n        </li>\n        </ul>\n      </li>\n\n      ';
+	 if (isStaff) { 
+	__p+='\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder '+
+	((__t=( getActive('support') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('support') ))==null?'':_.escape(__t))+
+	'">\n        <i class="fa fa-crosshairs"></i>\n        <span class="menu-title">Support</span>\n        <i class="arrow"></i>\n        </a>\n      </li>\n      ';
 	 } 
-	__p+='\n</span>\n<i class="arrow"></i>\n';
+	__p+='\n\n      ';
+	 if (multipleOrgs) { 
+	__p+='\n      <li class="nav-admin '+
+	((__t=( getActive('choose') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('choose') ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-home"></i>\n          <span class="menu-title">School</span>\n          <i class="arrow"></i>\n          </a>\n      </li>\n      ';
+	 } 
+	__p+='\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
