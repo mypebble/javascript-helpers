@@ -767,6 +767,10 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
+	var _jquery = __webpack_require__(21);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	var _underscore = __webpack_require__(4);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
@@ -783,7 +787,7 @@ module.exports =
 
 	var Project = _backbone4.default.LayoutView.extend({
 	  tagName: 'span',
-	  template: __webpack_require__(21),
+	  template: __webpack_require__(22),
 
 	  modelEvents: {
 	    'change:project': 'render',
@@ -793,10 +797,25 @@ module.exports =
 
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
-	  template: __webpack_require__(22),
+	  template: __webpack_require__(23),
 
 	  initialize: function initialize() {
 	    console.log(this);
+	  },
+
+	  ui: {
+	    link: '.notification-link'
+	  },
+
+	  events: {
+	    'click @ui.link': 'redirect'
+	  },
+
+	  redirect: function redirect() {
+	    _jquery2.default.ajax({
+	      url: "http://where.to/redirect",
+	      async: false
+	    });
 	  },
 
 	  templateHelpers: function templateHelpers() {
@@ -810,7 +829,7 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(23),
+	  template: __webpack_require__(24),
 
 	  initialize: function initialize() {
 	    var _this = this;
@@ -902,6 +921,12 @@ module.exports =
 
 /***/ },
 /* 21 */
+/***/ function(module, exports) {
+
+	module.exports = require(undefined);
+
+/***/ },
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -920,7 +945,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -932,9 +957,7 @@ module.exports =
 	((__t=( text ))==null?'':_.escape(__t))+
 	'</a> -->\n<li class="b-b b-light" style="border-left:4px solid #fc6e51; '+
 	((__t=( readClass ))==null?'':_.escape(__t))+
-	'">\n  <a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'" style="color:#555555">\n    '+
+	'">\n  <a class="notification-link" href="" style="color:#555555">\n    '+
 	((__t=( text ))==null?'':_.escape(__t))+
 	'\n  </a>\n</li>\n';
 	}
@@ -943,7 +966,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){

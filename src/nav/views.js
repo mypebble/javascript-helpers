@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
@@ -20,6 +21,21 @@ const Notification = Marionette.ItemView.extend({
 
   initialize: function() {
     console.log(this);
+  },
+
+  ui: {
+    link: '.notification-link'
+  },
+
+  events: {
+    'click @ui.link': 'redirect'
+  },
+
+  redirect: function() {
+    $.ajax({
+      url:"http://where.to/redirect",
+      async:false
+    });
   },
 
   templateHelpers: function() {
