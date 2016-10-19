@@ -137,11 +137,14 @@ module.exports =
 
 	var _regions = __webpack_require__(16);
 
-	Object.defineProperty(exports, 'NavRegion', {
-	  enumerable: true,
-	  get: function get() {
-	    return _regions.NavRegion;
-	  }
+	Object.keys(_regions).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _regions[key];
+	    }
+	  });
 	});
 
 /***/ },
