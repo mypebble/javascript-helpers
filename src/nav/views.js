@@ -30,7 +30,10 @@ const PromptContainer = Marionette.CompositeView.extend({
     this.collection.url = '/notifications/';
 
     this.collection.fetch({
-      data: {notification_type: 'prompt'},
+      data: {
+        notification_type: 'prompt',
+        read: 'false'
+      },
       success: () => this.render()
     });
   }

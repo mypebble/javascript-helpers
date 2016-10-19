@@ -808,7 +808,10 @@ module.exports =
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
-	      data: { notification_type: 'prompt' },
+	      data: {
+	        notification_type: 'prompt',
+	        read: 'false'
+	      },
 	      success: function success() {
 	        return _this.render();
 	      }
@@ -1011,9 +1014,11 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+=''+
+	__p+='<a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
 	((__t=( text ))==null?'':_.escape(__t))+
-	'\n';
+	'</a>\n';
 	}
 	return __p;
 	};
