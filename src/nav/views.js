@@ -46,7 +46,6 @@ const Notification = Marionette.ItemView.extend({
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
-    console.log(this);
     const link = this.model.get('link');
     const no_notifications = _.isUndefined(link);
     return {
@@ -83,8 +82,10 @@ const Bell = Marionette.CompositeView.extend({
   },
 
   templateHelpers: function() {
+    const unread_count = this._getUnread();
     return {
-      unreadCount: this._getUnread()
+      unreadCount: unread_count,
+      hidden: unread_count == 0 ? 'hidden' : ''
     };
   },
 

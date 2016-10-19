@@ -825,7 +825,6 @@ module.exports =
 	  template: __webpack_require__(22),
 
 	  templateHelpers: function templateHelpers() {
-	    console.log(this);
 	    var link = this.model.get('link');
 	    var no_notifications = _underscore2.default.isUndefined(link);
 	    return {
@@ -862,8 +861,10 @@ module.exports =
 	  },
 
 	  templateHelpers: function templateHelpers() {
+	    var unread_count = this._getUnread();
 	    return {
-	      unreadCount: this._getUnread()
+	      unreadCount: unread_count,
+	      hidden: unread_count == 0 ? 'hidden' : ''
 	    };
 	  },
 
@@ -989,7 +990,9 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt" style="top:5px; right:5px; padding:3px 5px;">\n      '+
+	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt '+
+	((__t=( hidden ))==null?'':_.escape(__t))+
+	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
 	((__t=( unreadCount ))==null?'':_.escape(__t))+
 	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
 	}
