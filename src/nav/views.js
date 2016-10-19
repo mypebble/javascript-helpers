@@ -1,3 +1,5 @@
+import _ from 'underscore';
+import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
 
@@ -8,6 +10,53 @@ const Project = Marionette.LayoutView.extend({
   modelEvents: {
     'change:project': 'render',
     'sync': 'render'
+  }
+});
+
+
+const Notification = Marionette.ItemView.extend({
+  // tagName: 'li',
+  template: require('./templates/notification.html'),
+
+  initialize: function() {
+    console.log(this);
+  },
+
+  templateHelpers: function() {
+    return {
+      readClass: _.isNull(this.model.get('datetime_read')) ?
+        'border-left:4px solid #fc6e51;' : ''
+    };
+  }
+});
+
+
+const Bell = Marionette.CompositeView.extend({
+  childView: Notification,
+  childViewContainer: 'ul',
+
+  template: require('./templates/bell.html'),
+
+  initialize: function() {
+    this.collection = new Backbone.Collection();
+    this.collection.url = '/notifications/';
+
+    this.collection.fetch({
+      data: {notification_type: 'global'},
+      success: () => this.render()
+    });
+  },
+
+  templateHelpers: function() {
+    return {
+      notificationCount: this._getUnread()
+    };
+  },
+
+  _getUnread: function() {
+    return this.collection.filter((notification) => {
+      return _.isNull(notification.get('datetime_read'));
+    }).length;
   }
 });
 
@@ -30,7 +79,8 @@ export const NavView = Marionette.LayoutView.extend({
   },
 
   regions: {
-    project: '.project-notification-hook'
+    project: '.project-notification-hook',
+    bell: '.nav-bell-hook'
   },
 
   initialize: function() {
@@ -47,6 +97,10 @@ export const NavView = Marionette.LayoutView.extend({
       this.ui.container.addClass('mainnav-sm');
       this.ui.container.removeClass('mainnav-lg');
     }
+
+    this.showChildView('bell', new Bell({
+      model: this.model
+    }));
 
     this.showChildView('project', new Project({
       model: this.model

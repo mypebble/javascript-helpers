@@ -622,7 +622,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function formatAmount(amount) {
-	  var places = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var places = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
 
 	  var options = {
 	    precision: places,
@@ -767,13 +767,21 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
-	var _backbone = __webpack_require__(2);
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _backbone = __webpack_require__(18);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
+	var _backbone3 = __webpack_require__(2);
+
+	var _backbone4 = _interopRequireDefault(_backbone3);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Project = _backbone2.default.LayoutView.extend({
+	var Project = _backbone4.default.LayoutView.extend({
 	  tagName: 'span',
 	  template: __webpack_require__(21),
 
@@ -783,7 +791,55 @@ module.exports =
 	  }
 	});
 
-	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
+	var Notification = _backbone4.default.ItemView.extend({
+	  // tagName: 'li',
+	  template: __webpack_require__(22),
+
+	  initialize: function initialize() {
+	    console.log(this);
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'border-left:4px solid #fc6e51;' : ''
+	    };
+	  }
+	});
+
+	var Bell = _backbone4.default.CompositeView.extend({
+	  childView: Notification,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(23),
+
+	  initialize: function initialize() {
+	    var _this = this;
+
+	    this.collection = new _backbone2.default.Collection();
+	    this.collection.url = '/notifications/';
+
+	    this.collection.fetch({
+	      data: { notification_type: 'global' },
+	      success: function success() {
+	        return _this.render();
+	      }
+	    });
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      notificationCount: this._getUnread()
+	    };
+	  },
+
+	  _getUnread: function _getUnread() {
+	    return this.collection.filter(function (notification) {
+	      return _underscore2.default.isNull(notification.get('datetime_read'));
+	    }).length;
+	  }
+	});
+
+	var NavView = exports.NavView = _backbone4.default.LayoutView.extend({
 	  el: 'body',
 	  template: false,
 
@@ -801,7 +857,8 @@ module.exports =
 	  },
 
 	  regions: {
-	    project: '.project-notification-hook'
+	    project: '.project-notification-hook',
+	    bell: '.nav-bell-hook'
 	  },
 
 	  initialize: function initialize() {
@@ -817,6 +874,10 @@ module.exports =
 	      this.ui.container.addClass('mainnav-sm');
 	      this.ui.container.removeClass('mainnav-lg');
 	    }
+
+	    this.showChildView('bell', new Bell({
+	      model: this.model
+	    }));
 
 	    this.showChildView('project', new Project({
 	      model: this.model
@@ -853,6 +914,44 @@ module.exports =
 	'</span>';
 	 } 
 	__p+='\n</span>\n<i class="arrow"></i>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<!-- <a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'</a> -->\n<li class="b-b b-light" style="'+
+	((__t=( readClass ))==null?'':_.escape(__t))+
+	'">\n  <a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'" style="color:#555555">\n    '+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'\n  </a>\n</li>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<!-- <div class="dropdown"> -->\n<!--   <button class="btn btn-default dropdown-toggle" type="button" -->\n<!--                                                   data-toggle="dropdown"> -->\n<!--     <i class="fa fa-bell"></i>'+
+	((__t=( notificationCount ))==null?'':_.escape(__t))+
+	' -->\n<!--   </button> -->\n<!--   <ul class="dropdown-menu"></ul> -->\n<!-- </div> -->\n\n<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt" style="top:5px; right:5px; padding:3px 5px;">1</span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
 	}
 	return __p;
 	};
