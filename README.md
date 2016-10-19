@@ -34,41 +34,37 @@ When adding new regions, be sure to keep the following:
   * `title` - Title region
   * `footer` - Footer region
 
-## Navbar
+## Navigation Panel
 
-The navbar handles all the logic for rendering the status of the navbar and all
-notifications attached to it. To run the navbar code, simply import the
-initializer function and pass in the URL roots to synchronize notifications
-with:
+The navigation panel renders the HTML side-bar and keeps it consistent between
+all Pebble systems. To initialise the nav panel, simply import the navigation
+region, attach it to a region manager and call `showNav(user)` with the user
+instance.
+
+The following example is a cut down version of the code from Arro:
 
 ```javascript
-import Marionette from 'backbone.marionette';
+import Mn from 'backbone.marionette';
 
-import {navInit} from 'javascript-helpers';
+import {NavRegion} from 'javascript-helpers';
+
+import {User} from 'user/models';
 
 
-const app = new Marionette.Application();
-app.addInitializer(navInit);
-app.start({
-  arroUrl: 'https://arro.mypebble.co.uk/school/1/notification/',
-  grantUrl: 'https://grants.mypebble.co.uk/notification/'
+const app = new Mn.Application({
+  onStart: function(options) {
+    const user = new User();
+    user.fetch();
+
+    this.regionManager = new Mn.RegionManager({
+      regions: {
+        nav: NavRegion
+      }
+    });
+
+    this.regionManager.get('nav').showNav(user);
+  }
 });
-```
-
-Leaving any of these blank will cause the navbar to not attempt to poll for
-notifications on that application.
-
-### Manually updating notifications
-
-To manually update a notification, use the `navigation` channel and send the
-`update` command:
-
-```javascript
-import Backbone from 'backbone';
-
-// Reduce the Project notifications by 5
-const channel = Backbone.Wreqr.radio.channel('navigation');
-navigation.vent.trigger('update', 'project', 5);
 ```
 
 ## Behaviors
