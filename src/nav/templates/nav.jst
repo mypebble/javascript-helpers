@@ -1,0 +1,135 @@
+<div id="mainnav-menu-wrap">
+  <div class="nano">
+    <div class="nano-content">
+      <ul id="mainnav-menu" class="list-group">
+      <li class="<%- getActive('dashboard') %>">
+          <a href="<%- getUrl('dashboard', activeOrganisation) %>">
+          <i class="fa fa-dashboard"></i>
+          <span class="menu-title">
+              <strong>Dashboard</strong>
+          </span>
+          </a>
+      </li>
+
+      <li class="list-divider"></li>
+      <li class="list-header">Activities</li>
+
+      <li class="nav-donations <%- getActive('donation') %>">
+        <a href="<%- getUrl('donation', activeOrganisation) %>create">
+          <i class="fa fa-gift"></i>
+            <span class="menu-title">Donations</span>
+          <i class="arrow"></i>
+        </a>
+        <ul class="collapse">
+          <li class="">
+            <a href="<%- getUrl('donation', activeOrganisation) %>create">
+              Record Donation
+            </a>
+          </li>
+          <li class="list-divider"></li>
+          <li>
+            <a href="<%- getUrl('donation', activeOrganisation) %>">
+              View Donations
+            </a>
+          </li>
+          <li>
+            <a href="<%- getUrl('donation', activeOrganisation) %>period/">
+              Gift Aid Claims
+            </a>
+          </li>
+          <li class="list-divider"></li>
+          <li>
+            <a href="<%- getUrl('donation', activeOrganisation) %>amend/">
+              Amend/Remove Donations
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-grants">
+        <a href="/grants/">
+          <i class="fa fa-briefcase"></i>
+          <span class="menu-title">Grants</span>
+          <i class="arrow"></i>
+        </a>
+      </li>
+
+      <li class="list-divider"></li>
+
+      <li class="list-header">System</li>
+
+      <li class="nav-projects <%- getActive('project') %>">
+          <a href="<%- getUrl('project', activeOrganisation) %>"
+            class="project-notification-hook">
+            <i class="fa fa-sitemap"></i>
+            <span class="menu-title">Projects</span>
+            <i class="arrow"></i>
+          </a>
+      </li>
+
+      <li class="nav-reports <%- getActive('report') %>">
+        <a href="<%- getUrl('dashboard', activeOrganisation) %>">
+          <i class="fa fa-folder-o"></i>
+          <span class="menu-title">Reports</span>
+          <i class="arrow"></i>
+        </a>
+      </li>
+
+      <li class="nav-stakeholder <%- getActive('contact') %>">
+        <a href="<%- getUrl('contact', activeOrganisation) %>">
+          <i class="fa fa-users"></i>
+          <span class="menu-title">SRM</span>
+          <i class="arrow"></i>
+        </a>
+      </li>
+
+      <li class="nav-admin <%- getActive('admin') %>">
+        <a href="#">
+          <i class="fa fa-wrench"></i>
+          <span class="menu-title">Admin</span>
+          <i class="arrow"></i>
+        </a>
+        <ul class="collapse">
+        <li>
+          <a href="<%- getUrl('costcentre', activeOrganisation) %>">Accounts</a>
+        </li>
+        <li>
+          <a href="<%- getUrl('bank', activeOrganisation) %>">Bank Account</a>
+        </li>
+        <li>
+          <a href="<%- getUrl('group', activeOrganisation) %>">Groups</a>
+        </li>
+        </ul>
+      </li>
+
+      <% if (isStaff) { %>
+      <li class="list-divider"></li>
+      <li class="nav-stakeholder <%- getActive('support') %>">
+        <a href="<%- getUrl('support') %>">
+        <i class="fa fa-crosshairs"></i>
+        <span class="menu-title">Support</span>
+        <i class="arrow"></i>
+        </a>
+      </li>
+      <% } %>
+
+      <% if (multipleOrgs) { %>
+      <li class="nav-admin <%- getActive('choose') %>">
+          <a href="<%- getUrl('choose') %>">
+          <i class="fa fa-home"></i>
+          <span class="menu-title">School</span>
+          <i class="arrow"></i>
+          </a>
+      </li>
+      <% } %>
+
+      <li class="list-divider"></li>
+      <li class="">
+        <a href="/logout/">
+          <i class="fa fa-off"></i>
+          <span class="menu-title">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

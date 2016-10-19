@@ -1,59 +1,48 @@
-import Backbone from 'backbone';
+import parse from 'url-parse';
+import root from 'window-or-global';
 
-import window from 'window-or-global';
+import {Model} from 'backbone';
+import {reverse} from 'nav/routes';
 
 
-/** Deal with rendering the navigation component for users.
-    This handles a fair few concepts including:
-      - Whether the navbar should be shrunk or fulll
-      - The notification icons to display on each line
-    We also supply a listener for the Radio to instruct this to update its
-    notification widgets, with the number to reduce the notifications by.
-*/
-export const Nav = Backbone.Model.extend({
-  initialize: function() {
-    const channel = Backbone.Wreqr.radio.channel('navigation');
-    this.listenTo(channel.vent, 'update', this.updateNavigation);
+export const NavModel = Model.extend({
+  setUser: function(user) {
+    this.set({user: user});
   },
 
-  url: function() {
-    return this.get('arroUrl') || this.get('grantUrl');
+  getUser: function() {
+    return this.get('user') || null;
   },
 
-  defaults: function() {
-    const storage = window.localStorage;
-    const nav = storage.getItem('navStatus');
-    return {
-      nav: nav || 'large',
-      arroUrl: '',
-      grantUrl: '',
-      project: 0
+  isStaff: function() {
+    const user = this.getUser();
+    return user.get('is_staff');
+  },
+
+  multipleOrgs: function() {
+    const user = this.getUser();
+    return this.isStaff() || user.getSchools.length > 1;
+  },
+
+  reverse(urlName, options={}) {
+    return reverse(urlName, options);
+  },
+
+  activeNav: function(sectionName) {
+    const url = parse(root.location.href);
+    const pathComponents = url.pathname.split('/');
+
+    const sections = {
+      grant: pathComponents[1] === 'grants',
+      support: pathComponents[2] === 'support' ||
+        (pathComponents[2] === 'schools' && pathComponents[3] !== 'change') ||
+        pathComponents[2] === 'users',
+      choose: pathComponents[3] === 'change',
+      project: pathComponents[3] === 'project',
+      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
+      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
     };
-  },
 
-  updateLocalStorage: function() {
-    const storage = window.localStorage;
-    storage.setItem('navStatus', this.get('nav'));
-  },
-
-  fetchArro: function() {
-    this._doFetch('arroUrl');
-  },
-
-  fetchGrant: function() {
-    this._doFetch('grantUrl');
-  },
-
-  updateNavigation: function(key, reduceBy) {
-    const val = this.get(key);
-    const newVal = val - reduceBy;
-    this.set(key, newVal < 0 ? 0 : newVal);
-  },
-
-  _doFetch: function(urlKey) {
-    const url = this.get(urlKey);
-    if (url) {
-      this.fetch({url: url, xhrFields: {withCredentials: true}});
-    }
+    return sections[sectionName] ? 'active' : '';
   }
 });
