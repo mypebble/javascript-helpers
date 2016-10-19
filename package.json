@@ -2,7 +2,7 @@
   "name": "javascript-helpers",
   "version": "1.0.0",
   "description": "A collection of helpers and widgets for our JS front end applications",
-  "main": "javascript-helpers.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
