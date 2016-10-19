@@ -825,12 +825,17 @@ module.exports =
 	  template: __webpack_require__(22),
 
 	  templateHelpers: function templateHelpers() {
+	    // A notifications model will be made to handle defaults and make methods
+	    // like this neater
+	    console.log(this);
 	    var link = this.model.get('link');
+	    var notification_class = this.model.get('notification_class');
 	    var no_notifications = _underscore2.default.isUndefined(link);
 	    return {
 	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'background-color: #d6e5ed;' : '',
 	      getLink: no_notifications ? '' : 'href=' + link,
-	      mutedText: no_notifications ? 'text-muted' : ''
+	      mutedText: no_notifications ? 'text-muted' : '',
+	      getClass: _underscore2.default.isNull('notification_class') ? '' : notification_class
 	    };
 	  }
 	});
@@ -969,7 +974,9 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<li class="b-b b-light" style="border-left:4px solid #fc6e51; '+
+	__p+='<li class="'+
+	((__t=( getClass ))==null?'':_.escape(__t))+
+	'" style="'+
 	((__t=( readClass ))==null?'':_.escape(__t))+
 	'">\n  <a class="'+
 	((__t=( mutedText ))==null?'':_.escape(__t))+

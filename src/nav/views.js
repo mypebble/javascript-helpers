@@ -46,13 +46,18 @@ const Notification = Marionette.ItemView.extend({
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
+    // A notifications model will be made to handle defaults and make methods
+    // like this neater
+    console.log(this);
     const link = this.model.get('link');
+    const notification_class = this.model.get('notification_class');
     const no_notifications = _.isUndefined(link);
     return {
       readClass: _.isNull(this.model.get('datetime_read')) ?
         'background-color: #d6e5ed;' : '',
       getLink: no_notifications ? '' : `href=${link}`,
-      mutedText: no_notifications ? 'text-muted' : ''
+      mutedText: no_notifications ? 'text-muted' : '',
+      getClass: _.isNull('notification_class') ? '' : notification_class
     };
   }
 });
