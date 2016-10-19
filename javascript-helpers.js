@@ -792,6 +792,7 @@ module.exports =
 	});
 
 	var Prompt = _backbone4.default.ItemView.extend({
+	  className: 'alert alert-info',
 	  template: __webpack_require__(25)
 	});
 
@@ -824,6 +825,7 @@ module.exports =
 	  template: __webpack_require__(22),
 
 	  templateHelpers: function templateHelpers() {
+	    console.log(this);
 	    var link = this.model.get('link');
 	    var no_notifications = _underscore2.default.isUndefined(link);
 	    return {
@@ -973,7 +975,7 @@ module.exports =
 	'" '+
 	((__t=( getLink ))==null?'':_.escape(__t))+
 	' style="color:#555555">\n    '+
-	((__t=( text ))==null?'':_.escape(__t))+
+	((__t=( text ))==null?'':__t)+
 	'\n  </a>\n</li>\n';
 	}
 	return __p;
@@ -1002,7 +1004,7 @@ module.exports =
 	module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<ul></ul>\n';
+	__p+='<ul class="list-unstyled"></ul>\n';
 	}
 	return __p;
 	};

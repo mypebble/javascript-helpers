@@ -15,6 +15,7 @@ const Project = Marionette.LayoutView.extend({
 
 
 const Prompt = Marionette.ItemView.extend({
+  className: 'alert alert-info',
   template: require('./templates/prompt.html')
 });
 
@@ -45,6 +46,7 @@ const Notification = Marionette.ItemView.extend({
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
+    console.log(this);
     const link = this.model.get('link');
     const no_notifications = _.isUndefined(link);
     return {
