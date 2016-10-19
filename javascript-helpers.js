@@ -767,10 +767,6 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
-	var _jquery = __webpack_require__(21);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
 	var _underscore = __webpack_require__(4);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
@@ -787,7 +783,7 @@ module.exports =
 
 	var Project = _backbone4.default.LayoutView.extend({
 	  tagName: 'span',
-	  template: __webpack_require__(22),
+	  template: __webpack_require__(21),
 
 	  modelEvents: {
 	    'change:project': 'render',
@@ -795,38 +791,12 @@ module.exports =
 	  }
 	});
 
-	var Notification = _backbone4.default.ItemView.extend({
-	  // tagName: 'li',
-	  template: __webpack_require__(23),
-
-	  initialize: function initialize() {
-	    console.log(this);
-	  },
-
-	  ui: {
-	    link: '.notification-link'
-	  },
-
-	  events: {
-	    'click @ui.link': 'redirect'
-	  },
-
-	  redirect: function redirect() {
-	    _jquery2.default.ajax({
-	      url: "http://where.to/redirect",
-	      async: false
-	    });
-	  },
-
-	  templateHelpers: function templateHelpers() {
-	    return {
-	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'background-color: #d6e5ed;' : ''
-	    };
-	  }
+	var Prompt = _backbone4.default.ItemView.extend({
+	  template: __webpack_require__(25)
 	});
 
-	var Bell = _backbone4.default.CompositeView.extend({
-	  childView: Notification,
+	var PromptContainer = _backbone4.default.CompositeView.extend({
+	  childView: Prompt,
 	  childViewContainer: 'ul',
 
 	  template: __webpack_require__(24),
@@ -838,23 +808,65 @@ module.exports =
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
-	      data: { notification_type: 'global' },
+	      data: { notification_type: 'prompt' },
 	      success: function success() {
 	        return _this.render();
+	      }
+	    });
+	  }
+	});
+
+	var Notification = _backbone4.default.ItemView.extend({
+	  // tagName: 'li',
+	  template: __webpack_require__(22),
+
+	  templateHelpers: function templateHelpers() {
+	    var link = this.model.get('link');
+	    var no_notifications = _underscore2.default.isUndefined(link);
+	    return {
+	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'background-color: #d6e5ed;' : '',
+	      getLink: no_notifications ? '' : 'href=' + link,
+	      mutedText: no_notifications ? 'text-muted' : ''
+	    };
+	  }
+	});
+
+	var Bell = _backbone4.default.CompositeView.extend({
+	  childView: Notification,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(23),
+
+	  initialize: function initialize() {
+	    var _this2 = this;
+
+	    this.collection = new _backbone2.default.Collection();
+	    this.collection.url = '/notifications/';
+
+	    this.collection.fetch({
+	      data: { notification_type: 'global' },
+	      success: function success(collection) {
+	        if (collection.length == 0) {
+	          collection.add(new _backbone2.default.Model({
+	            text: 'No notifications'
+	          }));
+	        }
+	        _this2.render();
 	      }
 	    });
 	  },
 
 	  templateHelpers: function templateHelpers() {
 	    return {
-	      notificationCount: this._getUnread()
+	      unreadCount: this._getUnread()
 	    };
 	  },
 
 	  _getUnread: function _getUnread() {
-	    return this.collection.filter(function (notification) {
+	    var unread = this.collection.filter(function (notification) {
 	      return _underscore2.default.isNull(notification.get('datetime_read'));
-	    }).length;
+	    });
+	    return unread.length;
 	  }
 	});
 
@@ -877,7 +889,8 @@ module.exports =
 
 	  regions: {
 	    project: '.project-notification-hook',
-	    bell: '.nav-bell-hook'
+	    bell: '.nav-bell-hook',
+	    prompts: '#notification-hook-2'
 	  },
 
 	  initialize: function initialize() {
@@ -893,6 +906,11 @@ module.exports =
 	      this.ui.container.addClass('mainnav-sm');
 	      this.ui.container.removeClass('mainnav-lg');
 	    }
+
+	    var promptContainer = new PromptContainer({
+	      model: this.model
+	    });
+	    this.showChildView('prompts', promptContainer);
 
 	    this.showChildView('bell', new Bell({
 	      model: this.model
@@ -921,12 +939,6 @@ module.exports =
 
 /***/ },
 /* 21 */
-/***/ function(module, exports) {
-
-	module.exports = require(undefined);
-
-/***/ },
-/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -945,19 +957,19 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<!-- <a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a> -->\n<li class="b-b b-light" style="border-left:4px solid #fc6e51; '+
+	__p+='<li class="b-b b-light" style="border-left:4px solid #fc6e51; '+
 	((__t=( readClass ))==null?'':_.escape(__t))+
-	'">\n  <a class="notification-link" href="" style="color:#555555">\n    '+
+	'">\n  <a class="'+
+	((__t=( mutedText ))==null?'':_.escape(__t))+
+	'" '+
+	((__t=( getLink ))==null?'':_.escape(__t))+
+	' style="color:#555555">\n    '+
 	((__t=( text ))==null?'':_.escape(__t))+
 	'\n  </a>\n</li>\n';
 	}
@@ -966,15 +978,42 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<!-- <div class="dropdown"> -->\n<!--   <button class="btn btn-default dropdown-toggle" type="button" -->\n<!--                                                   data-toggle="dropdown"> -->\n<!--     <i class="fa fa-bell"></i>'+
-	((__t=( notificationCount ))==null?'':_.escape(__t))+
-	' -->\n<!--   </button> -->\n<!--   <ul class="dropdown-menu"></ul> -->\n<!-- </div> -->\n\n<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt" style="top:5px; right:5px; padding:3px 5px;">1</span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt" style="top:5px; right:5px; padding:3px 5px;">\n      '+
+	((__t=( unreadCount ))==null?'':_.escape(__t))+
+	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+=''+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'\n';
 	}
 	return __p;
 	};

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
@@ -15,33 +14,41 @@ const Project = Marionette.LayoutView.extend({
 });
 
 
+const Prompt = Marionette.ItemView.extend({
+  template: require('./templates/prompt.html')
+});
+
+
+const PromptContainer = Marionette.CompositeView.extend({
+  childView: Prompt,
+  childViewContainer: 'ul',
+
+  template: require('./templates/prompts.html'),
+
+  initialize: function() {
+    this.collection = new Backbone.Collection();
+    this.collection.url = '/notifications/';
+
+    this.collection.fetch({
+      data: {notification_type: 'prompt'},
+      success: () => this.render()
+    });
+  }
+});
+
+
 const Notification = Marionette.ItemView.extend({
   // tagName: 'li',
   template: require('./templates/notification.html'),
 
-  initialize: function() {
-    console.log(this);
-  },
-
-  ui: {
-    link: '.notification-link'
-  },
-
-  events: {
-    'click @ui.link': 'redirect'
-  },
-
-  redirect: function() {
-    $.ajax({
-      url:"http://where.to/redirect",
-      async:false
-    });
-  },
-
   templateHelpers: function() {
+    const link = this.model.get('link');
+    const no_notifications = _.isUndefined(link);
     return {
       readClass: _.isNull(this.model.get('datetime_read')) ?
-        'background-color: #d6e5ed;' : ''
+        'background-color: #d6e5ed;' : '',
+      getLink: no_notifications ? '' : `href=${link}`,
+      mutedText: no_notifications ? 'text-muted' : ''
     };
   }
 });
@@ -59,20 +66,28 @@ const Bell = Marionette.CompositeView.extend({
 
     this.collection.fetch({
       data: {notification_type: 'global'},
-      success: () => this.render()
+      success: (collection) => {
+        if (collection.length == 0) {
+          collection.add(new Backbone.Model({
+            text: 'No notifications'
+          }));
+        }
+        this.render();
+      }
     });
   },
 
   templateHelpers: function() {
     return {
-      notificationCount: this._getUnread()
+      unreadCount: this._getUnread()
     };
   },
 
   _getUnread: function() {
-    return this.collection.filter((notification) => {
+    const unread = this.collection.filter((notification) => {
       return _.isNull(notification.get('datetime_read'));
-    }).length;
+    });
+    return unread.length;
   }
 });
 
@@ -96,7 +111,8 @@ export const NavView = Marionette.LayoutView.extend({
 
   regions: {
     project: '.project-notification-hook',
-    bell: '.nav-bell-hook'
+    bell: '.nav-bell-hook',
+    prompts: '#notification-hook-2'
   },
 
   initialize: function() {
@@ -113,6 +129,11 @@ export const NavView = Marionette.LayoutView.extend({
       this.ui.container.addClass('mainnav-sm');
       this.ui.container.removeClass('mainnav-lg');
     }
+
+    const promptContainer = new PromptContainer({
+      model: this.model
+    });
+    this.showChildView('prompts', promptContainer);
 
     this.showChildView('bell', new Bell({
       model: this.model
