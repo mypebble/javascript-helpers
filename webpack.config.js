@@ -13,7 +13,9 @@ module.exports = {
     moment: true,
     backbone: true,
     underscore: true,
-    'backbone.marionette': true
+    'backbone.marionette': true,
+    'url-parse': true,
+    'window-or-global': true
   },
   module: {
     loaders: [

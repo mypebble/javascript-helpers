@@ -10,6 +10,8 @@ env:
 globals:
   window: no
   require: no
+  __dirname: yes
+  module: yes
 rules:
   no-console:
     - 2
