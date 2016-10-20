@@ -67,6 +67,30 @@ const app = new Mn.Application({
 });
 ```
 
+## User
+
+To get access to the shared user model, you can use the localstorage-backed
+class `User`:
+
+```javascript
+import {User} from 'javascript-helpers';
+
+const user = new User();
+user.fetch();
+```
+
+The `User` contains a number of useful methods:
+
+* `setCredentials(jwt)` - Assign the `jwt` to local storage.
+* `getToken()` - Return the JWT to authenticate with the server.
+* `setActiveSchool()` - Lookup the active school from the URL.
+* `getActiveSchool()` - Return the active school from localstorage.
+* `getSchools()` - Return the list of schools a user can view.
+
+**Note** The information attached to the token is for informational purposes
+only. Changing information _should_ have no effect on the server's behaviour as
+the encoded token is what the server should actually read.
+
 ## Behaviors
 
 List of useful behaviors.
