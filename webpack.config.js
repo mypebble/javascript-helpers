@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var CircularDependencyPlugin = require('circular-dependency-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -13,7 +14,10 @@ module.exports = {
     moment: true,
     backbone: true,
     underscore: true,
-    'backbone.marionette': true
+    'backbone.marionette': true,
+    'backbone.localstorage': true,
+    'url-parse': true,
+    'window-or-global': true
   },
   module: {
     loaders: [
@@ -44,6 +48,10 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       _: 'underscore'
+    }),
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+      failOnError: true
     })
   ],
   resolve: {

@@ -135,19 +135,19 @@ module.exports =
 	  });
 	});
 
-	var _init = __webpack_require__(16);
+	var _regions = __webpack_require__(16);
 
-	Object.keys(_init).forEach(function (key) {
+	Object.keys(_regions).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
 	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _init[key];
+	      return _regions[key];
 	    }
 	  });
 	});
 
-	var _models = __webpack_require__(17);
+	var _models = __webpack_require__(24);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -155,18 +155,6 @@ module.exports =
 	    enumerable: true,
 	    get: function get() {
 	      return _models[key];
-	    }
-	  });
-	});
-
-	var _views = __webpack_require__(20);
-
-	Object.keys(_views).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _views[key];
 	    }
 	  });
 	});
@@ -541,22 +529,25 @@ module.exports =
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<img src="'+
-	((__t=( image_url ))==null?'':_.escape(__t))+
-	'">\n<div class="title">'+
-	((__t=( title ))==null?'':_.escape(__t))+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+	__p += '<img src="' +
+	__e( image_url ) +
+	'">\n<div class="title">' +
+	__e( title ) +
 	'</div>\n';
-	 if (hasProjects(projects)) { 
-	__p+='\n<span class="label label-info">'+
-	((__t=( project(projects) ))==null?'':_.escape(__t))+
+	 if (hasProjects(projects)) { ;
+	__p += '\n<span class="label label-info">' +
+	__e( project(projects) ) +
 	'</span>\n';
-	 } 
-	__p+='\n';
+	 } ;
+	__p += '\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -564,42 +555,46 @@ module.exports =
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">\n  <a class="btn btn-block btn-modal-option text-danger close-modal">\n    <i class="fa fa-times"></i> <span class="block">Close</span>\n  </a>\n</li>\n';
+	module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<li class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">\n  <a class="btn btn-block btn-modal-option text-danger close-modal">\n    <i class="fa fa-times"></i> <span class="block">Close</span>\n  </a>\n</li>\n';
+
 	}
-	return __p;
+	return __p
 	};
 
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<div class="modal modal-hook" role="dialog">\n  <div class="modal-dialog">\n    <div class="modal-content">\n      <div class="modal-header modal-header-clear">\n        <button aria-label="Close" class="close close-modal" type="button">\n          <span aria-hidden="true">x</span>\n        </button>\n      </div>\n      <div class="modal-body modal-body-clear">\n\n        <div class="title-hook"></div>\n\n        <ul class="row list-unstyled list-inline list-facts-three">\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-trophy block"></i>\n            '+
-	((__t=( award ))==null?'':_.escape(__t))+
-	'\n            <small>'+
-	((__t=( display_grant ))==null?'':_.escape(__t))+
-	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4 rating">\n            <i class="fa fa-bolt block"></i>\n            '+
-	((__t=( grant_difficulty ))==null?'':_.escape(__t))+
-	'\n            <small>'+
-	((__t=( time_to_complete ))==null?'':_.escape(__t))+
-	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-clock-o block"></i>\n            '+
-	((__t=( fromNow(deadline) ))==null?'':_.escape(__t))+
-	'\n            <small class="block">Deadline</small>\n          </li>\n        </ul>\n\n        <div class="row">\n          <div class="col-lg-12 col-md-12">\n\n            <div class="text-summary">\n              <p class="text-center">'+
-	((__t=( renderMarkdown(summary) ))==null?'':__t)+
-	'</p>\n            </div>\n\n            <div class="actions-row">\n              <a class="read-more">Read More</a>\n            </div>\n            <div class="hide grant-detail">\n              <div class="panel">\n                <div class="panel-title">Who is Eligible?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(who_is_eligible) ))==null?'':__t)+
-	'\n                </div>\n                <div class="panel-title">What Will I Get?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(what_will_i_get) ))==null?'':__t)+
-	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(now_what) ))==null?'':__t)+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<div class="modal modal-hook" role="dialog">\n  <div class="modal-dialog">\n    <div class="modal-content">\n      <div class="modal-header modal-header-clear">\n        <button aria-label="Close" class="close close-modal" type="button">\n          <span aria-hidden="true">x</span>\n        </button>\n      </div>\n      <div class="modal-body modal-body-clear">\n\n        <div class="title-hook"></div>\n\n        <ul class="row list-unstyled list-inline list-facts-three">\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-trophy block"></i>\n            ' +
+	__e( award ) +
+	'\n            <small>' +
+	__e( display_grant ) +
+	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4 rating">\n            <i class="fa fa-bolt block"></i>\n            ' +
+	__e( grant_difficulty ) +
+	'\n            <small>' +
+	__e( time_to_complete ) +
+	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-clock-o block"></i>\n            ' +
+	__e( fromNow(deadline) ) +
+	'\n            <small class="block">Deadline</small>\n          </li>\n        </ul>\n\n        <div class="row">\n          <div class="col-lg-12 col-md-12">\n\n            <div class="text-summary">\n              <p class="text-center">' +
+	((__t = ( renderMarkdown(summary) )) == null ? '' : __t) +
+	'</p>\n            </div>\n\n            <div class="actions-row">\n              <a class="read-more">Read More</a>\n            </div>\n            <div class="hide grant-detail">\n              <div class="panel">\n                <div class="panel-title">Who is Eligible?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(who_is_eligible) )) == null ? '' : __t) +
+	'\n                </div>\n                <div class="panel-title">What Will I Get?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(what_will_i_get) )) == null ? '' : __t) +
+	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(now_what) )) == null ? '' : __t) +
 	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer footer-hook"></div>\n    </div>\n  </div>\n</div>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -622,7 +617,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function formatAmount(amount) {
-	  var places = arguments.length <= 1 || arguments[1] === undefined ? 2 : arguments[1];
+	  var places = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
 
 	  var options = {
 	    precision: places,
@@ -651,17 +646,22 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.navInit = undefined;
+	exports.NavRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
 
 	var _models = __webpack_require__(17);
 
-	var _views = __webpack_require__(20);
+	var _views = __webpack_require__(22);
 
-	var navInit = exports.navInit = function navInit(options) {
-	  var model = new _models.Nav(options);
-	  var nav = new _views.NavView({ model: model });
-	  nav.render();
-	};
+	var NavRegion = exports.NavRegion = _backbone.Region.extend({
+	  el: '#mainnav-container',
+
+	  showNav: function showNav(user) {
+	    var model = new _models.NavModel({ user: user });
+	    this.show(new _views.NavView({ model: model }));
+	  }
+	});
 
 /***/ },
 /* 17 */
@@ -672,70 +672,62 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Nav = undefined;
+	exports.NavModel = undefined;
 
-	var _backbone = __webpack_require__(18);
+	var _urlParse = __webpack_require__(18);
 
-	var _backbone2 = _interopRequireDefault(_backbone);
+	var _urlParse2 = _interopRequireDefault(_urlParse);
 
 	var _windowOrGlobal = __webpack_require__(19);
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
+	var _backbone = __webpack_require__(20);
+
+	var _routes = __webpack_require__(21);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/** Deal with rendering the navigation component for users.
-	    This handles a fair few concepts including:
-	      - Whether the navbar should be shrunk or fulll
-	      - The notification icons to display on each line
-	    We also supply a listener for the Radio to instruct this to update its
-	    notification widgets, with the number to reduce the notifications by.
-	*/
-	var Nav = exports.Nav = _backbone2.default.Model.extend({
-	  initialize: function initialize() {
-	    var channel = _backbone2.default.Wreqr.radio.channel('navigation');
-	    this.listenTo(channel.vent, 'update', this.updateNavigation);
+	var NavModel = exports.NavModel = _backbone.Model.extend({
+	  setUser: function setUser(user) {
+	    this.set({ user: user });
 	  },
 
-	  url: function url() {
-	    return this.get('arroUrl') || this.get('grantUrl');
+	  getUser: function getUser() {
+	    return this.get('user') || null;
 	  },
 
-	  defaults: function defaults() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    var nav = storage.getItem('navStatus');
-	    return {
-	      nav: nav || 'large',
-	      arroUrl: '',
-	      grantUrl: '',
-	      project: 0
+	  isStaff: function isStaff() {
+	    var user = this.getUser();
+	    return user.get('is_staff');
+	  },
+
+	  multipleOrgs: function multipleOrgs() {
+	    var user = this.getUser();
+	    return this.isStaff() || user.getSchools.length > 1;
+	  },
+
+	  reverse: function reverse(urlName) {
+	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	    return (0, _routes.reverse)(urlName, options);
+	  },
+
+
+	  activeNav: function activeNav(sectionName) {
+	    var url = (0, _urlParse2.default)(_windowOrGlobal2.default.location.href);
+	    var pathComponents = url.pathname.split('/');
+
+	    var sections = {
+	      grant: pathComponents[1] === 'grants',
+	      support: pathComponents[2] === 'support' || pathComponents[2] === 'schools' && pathComponents[3] !== 'change' || pathComponents[2] === 'users',
+	      choose: pathComponents[3] === 'change',
+	      project: pathComponents[3] === 'project',
+	      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
+	      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
 	    };
-	  },
 
-	  updateLocalStorage: function updateLocalStorage() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    storage.setItem('navStatus', this.get('nav'));
-	  },
-
-	  fetchArro: function fetchArro() {
-	    this._doFetch('arroUrl');
-	  },
-
-	  fetchGrant: function fetchGrant() {
-	    this._doFetch('grantUrl');
-	  },
-
-	  updateNavigation: function updateNavigation(key, reduceBy) {
-	    var val = this.get(key);
-	    var newVal = val - reduceBy;
-	    this.set(key, newVal < 0 ? 0 : newVal);
-	  },
-
-	  _doFetch: function _doFetch(urlKey) {
-	    var url = this.get(urlKey);
-	    if (url) {
-	      this.fetch({ url: url, xhrFields: { withCredentials: true } });
-	    }
+	    return sections[sectionName] ? 'active' : '';
 	  }
 	});
 
@@ -743,21 +735,53 @@ module.exports =
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = require("backbone");
+	module.exports = require("url-parse");
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict'
-	module.exports = (typeof self === 'object' && self.self === self && self) ||
-	  (typeof global === 'object' && global.global === global && global) ||
-	  this
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	module.exports = require("window-or-global");
 
 /***/ },
 /* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone");
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reverse = reverse;
+	/** Return the full URL for the given route */
+	function reverse(name) {
+	  var routeArgs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var schoolRoot = '/school/' + routeArgs.organisation + '/';
+
+	  var routes = {
+	    dashboard: schoolRoot,
+	    donation: schoolRoot + 'donation/',
+	    project: schoolRoot + 'project/',
+	    contact: schoolRoot + 'name/',
+	    costcentre: schoolRoot + 'account/',
+	    bank: schoolRoot + 'account/bank/',
+	    group: schoolRoot + 'name/group/',
+	    support: '/main/support/',
+	    choose: '/main/schools/change/'
+	  };
+
+	  return routes[name];
+	}
+
+/***/ },
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -769,94 +793,165 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _backbone2 = _interopRequireDefault(_backbone);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Project = _backbone2.default.LayoutView.extend({
-	  tagName: 'span',
-	  template: __webpack_require__(21),
-
-	  modelEvents: {
-	    'change:project': 'render',
-	    'sync': 'render'
-	  }
-	});
-
-	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
-	  el: 'body',
-	  template: false,
-
-	  ui: {
-	    container: '#container',
-	    toggle: '.mainnav-toggle'
+	var NavView = exports.NavView = _backbone.LayoutView.extend({
+	  attributes: {
+	    'id': '#mainnav'
 	  },
 
-	  modelEvents: {
-	    'change:nav': 'updateLocalStorage'
-	  },
+	  template: __webpack_require__(23),
 
-	  triggers: {
-	    'click @ui.toggle': 'toggle:nav'
-	  },
+	  templateHelpers: function templateHelpers() {
+	    var _this = this;
 
-	  regions: {
-	    project: '.project-notification-hook'
-	  },
+	    var user = this.model.getUser();
 
-	  initialize: function initialize() {
-	    this.model.fetchArro();
-	  },
-
-	  onRender: function onRender() {
-	    var navStatus = this.model.get('nav');
-	    if (navStatus === 'large') {
-	      this.ui.container.addClass('mainnav-lg');
-	      this.ui.container.removeClass('mainnav-sm');
-	    } else if (navStatus === 'small') {
-	      this.ui.container.addClass('mainnav-sm');
-	      this.ui.container.removeClass('mainnav-lg');
-	    }
-
-	    this.showChildView('project', new Project({
-	      model: this.model
-	    }));
-	  },
-
-	  updateLocalStorage: function updateLocalStorage(model) {
-	    model.updateLocalStorage();
-	  },
-
-	  onToggleNav: function onToggleNav() {
-	    var navStatus = this._getNavStatus();
-	    this.model.set('nav', navStatus);
-	  },
-
-	  /** Return the new nav status.
-	  */
-	  _getNavStatus: function _getNavStatus() {
-	    return this.model.get('nav') === 'large' ? 'small' : 'large';
+	    return {
+	      activeOrganisation: user.getActiveSchool(),
+	      getActive: this.model.activeNav,
+	      getUrl: function getUrl(urlName, organisation) {
+	        return _this.model.reverse(urlName, { organisation: organisation });
+	      },
+	      isStaff: this.model.isStaff(),
+	      multipleOrgs: this.model.multipleOrgs()
+	    };
 	  }
 	});
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<i class="fa fa-sitemap"></i>\n<span class="menu-title">\n  Projects\n  ';
-	 if (project) { 
-	__p+='<span class="notification">'+
-	((__t=( project ))==null?'':_.escape(__t))+
-	'</span>';
-	 } 
-	__p+='\n</span>\n<i class="arrow"></i>\n';
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+	__p += '<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="' +
+	__e( getActive('dashboard') ) +
+	'">\n          <a href="' +
+	__e( getUrl('dashboard', activeOrganisation) ) +
+	'">\n          <i class="fa fa-dashboard"></i>\n          <span class="menu-title">\n              <strong>Dashboard</strong>\n          </span>\n          </a>\n      </li>\n\n      <li class="list-divider"></li>\n      <li class="list-header">Activities</li>\n\n      <li class="nav-donations ' +
+	__e( getActive('donation') ) +
+	'">\n        <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'create">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-grants ' +
+	__e( getActive('grant') ) +
+	'">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="list-divider"></li>\n\n      <li class="list-header">System</li>\n\n      <li class="nav-projects ' +
+	__e( getActive('project') ) +
+	'">\n          <a href="' +
+	__e( getUrl('project', activeOrganisation) ) +
+	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-reports ' +
+	__e( getActive('report') ) +
+	'">\n        <a href="' +
+	__e( getUrl('dashboard', activeOrganisation) ) +
+	'">\n          <i class="fa fa-folder-o"></i>\n          <span class="menu-title">Reports</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-stakeholder ' +
+	__e( getActive('contact') ) +
+	'">\n        <a href="' +
+	__e( getUrl('contact', activeOrganisation) ) +
+	'">\n          <i class="fa fa-users"></i>\n          <span class="menu-title">SRM</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-admin ' +
+	__e( getActive('admin') ) +
+	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="' +
+	__e( getUrl('costcentre', activeOrganisation) ) +
+	'">Accounts</a>\n        </li>\n        <li>\n          <a href="' +
+	__e( getUrl('bank', activeOrganisation) ) +
+	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="' +
+	__e( getUrl('group', activeOrganisation) ) +
+	'">Groups</a>\n        </li>\n        </ul>\n      </li>\n\n      ';
+	 if (isStaff) { ;
+	__p += '\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder ' +
+	__e( getActive('support') ) +
+	'">\n        <a href="' +
+	__e( getUrl('support') ) +
+	'">\n        <i class="fa fa-crosshairs"></i>\n        <span class="menu-title">Support</span>\n        <i class="arrow"></i>\n        </a>\n      </li>\n      ';
+	 } ;
+	__p += '\n\n      ';
+	 if (multipleOrgs) { ;
+	__p += '\n      <li class="nav-admin ' +
+	__e( getActive('choose') ) +
+	'">\n          <a href="' +
+	__e( getUrl('choose') ) +
+	'">\n          <i class="fa fa-home"></i>\n          <span class="menu-title">School</span>\n          <i class="arrow"></i>\n          </a>\n      </li>\n      ';
+	 } ;
+	__p += '\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.User = undefined;
+
+	var _windowOrGlobal = __webpack_require__(19);
+
+	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = __webpack_require__(25);
+
+	var _backbone3 = _interopRequireDefault(_backbone2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var User = exports.User = _backbone.Model.extend({
+	  idAttribute: 'email',
+	  localStorage: new _backbone3.default('User'),
+
+	  setCredentials: function setCredentials(jwt) {
+	    var data = jwt.user;
+	    data.token = jwt.token;
+	    this.save(data);
+	  },
+
+	  getToken: function getToken() {
+	    return this.get('token');
+	  },
+
+	  /** Looks up the window.location.href and figures out what the school id
+	   * should be. If the school id isn't set, then this makes no change.
+	   */
+	  setActiveSchool: function setActiveSchool() {
+	    var path = _windowOrGlobal2.default.location.pathname;
+	    if (path) {
+	      var parts = path.split('/');
+	      if (parts[1] == 'school') {
+	        var schoolId = parseInt(parts[2]);
+	        this.save({ activeSchool: schoolId });
+	      }
+	    }
+	  },
+
+	  getActiveSchool: function getActiveSchool() {
+	    return this.get('activeSchool');
+	  },
+
+	  getSchools: function getSchools() {
+	    return this.get('organisations') || [];
+	  }
+	});
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone.localstorage");
 
 /***/ }
 /******/ ]);
