@@ -135,7 +135,7 @@ module.exports =
 	  });
 	});
 
-	var _regions = __webpack_require__(26);
+	var _regions = __webpack_require__(16);
 
 	Object.keys(_regions).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -631,7 +631,32 @@ module.exports =
 	module.exports = require("accounting");
 
 /***/ },
-/* 16 */,
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NavRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _models = __webpack_require__(17);
+
+	var _views = __webpack_require__(22);
+
+	var NavRegion = exports.NavRegion = _backbone.Region.extend({
+	  el: '#mainnav-container',
+
+	  showNav: function showNav(user) {
+	    var model = new _models.NavModel({ user: user });
+	    this.show(new _views.NavView({ model: model }));
+	  }
+	});
+
+/***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -642,7 +667,7 @@ module.exports =
 	});
 	exports.NavModel = undefined;
 
-	var _urlParse = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"url-parse\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _urlParse = __webpack_require__(18);
 
 	var _urlParse2 = _interopRequireDefault(_urlParse);
 
@@ -650,9 +675,9 @@ module.exports =
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
-	var _backbone = __webpack_require__(18);
+	var _backbone = __webpack_require__(20);
 
-	var _routes = __webpack_require__(27);
+	var _routes = __webpack_require__(21);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -703,21 +728,53 @@ module.exports =
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = require("backbone");
+	module.exports = require("url-parse");
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict'
-	module.exports = (typeof self === 'object' && self.self === self && self) ||
-	  (typeof global === 'object' && global.global === global && global) ||
-	  this
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+	module.exports = require("window-or-global");
 
 /***/ },
 /* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone");
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reverse = reverse;
+	/** Return the full URL for the given route */
+	function reverse(name) {
+	  var routeArgs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var schoolRoot = '/school/' + routeArgs.organisation + '/';
+
+	  var routes = {
+	    dashboard: schoolRoot,
+	    donation: schoolRoot + 'donation/',
+	    project: schoolRoot + 'project/',
+	    contact: schoolRoot + 'name/',
+	    costcentre: schoolRoot + 'account/',
+	    bank: schoolRoot + 'account/bank/',
+	    group: schoolRoot + 'name/group/',
+	    support: '/main/support/',
+	    choose: '/main/schools/change/'
+	  };
+
+	  return routes[name];
+	}
+
+/***/ },
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -731,7 +788,7 @@ module.exports =
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _backbone = __webpack_require__(18);
+	var _backbone = __webpack_require__(20);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
@@ -743,17 +800,19 @@ module.exports =
 
 	var Prompt = _backbone4.default.ItemView.extend({
 	  className: 'alert alert-info',
-	  template: __webpack_require__(22)
+	  template: __webpack_require__(23)
 	});
 
 	var PromptContainer = _backbone4.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(23),
+	  template: __webpack_require__(24),
 
 	  initialize: function initialize() {
 	    var _this = this;
+
+	    var user = this.model.getUser();
 
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = '/notifications/';
@@ -762,7 +821,8 @@ module.exports =
 	      data: {
 	        notification_type: 'prompt',
 	        read: false,
-	        location: window.location.pathname
+	        location: window.location.pathname,
+	        active_school: user.get('activeSchool')
 	      },
 	      success: function success() {
 	        return _this.render();
@@ -773,7 +833,7 @@ module.exports =
 
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
-	  template: __webpack_require__(24),
+	  template: __webpack_require__(25),
 
 	  templateHelpers: function templateHelpers() {
 	    // A notifications model will be made to handle defaults and make methods
@@ -794,16 +854,21 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(25),
+	  template: __webpack_require__(26),
 
 	  initialize: function initialize() {
 	    var _this2 = this;
+
+	    var user = this.model.getUser();
 
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
-	      data: { notification_type: 'global' },
+	      data: {
+	        notification_type: 'global',
+	        active_school: user.get('activeSchool')
+	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
 	          collection.add(new _backbone2.default.Model({
@@ -836,7 +901,12 @@ module.exports =
 	    'id': '#mainnav'
 	  },
 
-	  template: __webpack_require__(29),
+	  template: __webpack_require__(27),
+
+	  regions: {
+	    bell: '.nav-bell-hook',
+	    prompts: '#notification-hook-2'
+	  },
 
 	  templateHelpers: function templateHelpers() {
 	    var _this3 = this;
@@ -862,14 +932,13 @@ module.exports =
 	      model: this.model
 	    });
 
-	    this.showChildView('prompts', promptContainer);
 	    this.showChildView('bell', bell);
+	    this.showChildView('prompts', promptContainer);
 	  }
 	});
 
 /***/ },
-/* 21 */,
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -886,7 +955,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -898,7 +967,7 @@ module.exports =
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -921,7 +990,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -938,130 +1007,13 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NavRegion = undefined;
-
-	var _backbone = __webpack_require__(2);
-
-	var _models = __webpack_require__(17);
-
-	var _views = __webpack_require__(20);
-
-	var NavRegion = exports.NavRegion = _backbone.Region.extend({
-	  el: '#mainnav-container',
-
-	  showNav: function showNav(user) {
-	    var model = new _models.NavModel({ user: user });
-	    this.show(new _views.NavView({ model: model }));
-	  }
-	});
-
-/***/ },
 /* 27 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.reverse = reverse;
-	/** Return the full URL for the given route */
-	function reverse(name) {
-	  var routeArgs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	  var schoolRoot = '/school/' + routeArgs.organisation + '/';
-
-	  var routes = {
-	    dashboard: schoolRoot,
-	    donation: schoolRoot + 'donation/',
-	    project: schoolRoot + 'project/',
-	    contact: schoolRoot + 'name/',
-	    costcentre: schoolRoot + 'account/',
-	    bank: schoolRoot + 'account/bank/',
-	    group: schoolRoot + 'name/group/',
-	    support: '/main/support/',
-	    choose: '/main/schools/change/'
-	  };
-
-	  return routes[name];
-	}
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.User = undefined;
-
-	var _windowOrGlobal = __webpack_require__(19);
-
-	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
-
-	var _backbone = __webpack_require__(18);
-
-	var _backbone2 = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"backbone.localstorage\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _backbone3 = _interopRequireDefault(_backbone2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var User = exports.User = _backbone.Model.extend({
-	  idAttribute: 'email',
-	  localStorage: new _backbone3.default('User'),
-
-	  setCredentials: function setCredentials(jwt) {
-	    var data = jwt.user;
-	    data.token = jwt.token;
-	    this.save(data);
-	  },
-
-	  getToken: function getToken() {
-	    return this.get('token');
-	  },
-
-	  /** Looks up the window.location.href and figures out what the school id
-	   * should be. If the school id isn't set, then this makes no change.
-	   */
-	  setActiveSchool: function setActiveSchool() {
-	    var path = _windowOrGlobal2.default.location.pathname;
-	    if (path) {
-	      var parts = path.split('/');
-	      if (parts[1] == 'school') {
-	        var schoolId = parseInt(parts[2]);
-	        this.save({ activeSchool: schoolId });
-	      }
-	    }
-	  },
-
-	  getActiveSchool: function getActiveSchool() {
-	    return this.get('activeSchool');
-	  },
-
-	  getSchools: function getSchools() {
-	    return this.get('organisations') || [];
-	  }
-	});
-
-/***/ },
-/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
+	__p+='\n<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="notification-hook-2"></div>\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="{% url "base-organisation-choose" %}">\n                {{ current_organisation.name }}\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
 	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
@@ -1120,6 +1072,72 @@ module.exports =
 	return __p;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.User = undefined;
+
+	var _windowOrGlobal = __webpack_require__(19);
+
+	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = __webpack_require__(29);
+
+	var _backbone3 = _interopRequireDefault(_backbone2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var User = exports.User = _backbone.Model.extend({
+	  idAttribute: 'email',
+	  localStorage: new _backbone3.default('User'),
+
+	  setCredentials: function setCredentials(jwt) {
+	    var data = jwt.user;
+	    data.token = jwt.token;
+	    this.save(data);
+	  },
+
+	  getToken: function getToken() {
+	    return this.get('token');
+	  },
+
+	  /** Looks up the window.location.href and figures out what the school id
+	   * should be. If the school id isn't set, then this makes no change.
+	   */
+	  setActiveSchool: function setActiveSchool() {
+	    var path = _windowOrGlobal2.default.location.pathname;
+	    if (path) {
+	      var parts = path.split('/');
+	      if (parts[1] == 'school') {
+	        var schoolId = parseInt(parts[2]);
+	        this.save({ activeSchool: schoolId });
+	      }
+	    }
+	  },
+
+	  getActiveSchool: function getActiveSchool() {
+	    return this.get('activeSchool');
+	  },
+
+	  getSchools: function getSchools() {
+	    return this.get('organisations') || [];
+	  }
+	});
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone.localstorage");
 
 /***/ }
 /******/ ]);

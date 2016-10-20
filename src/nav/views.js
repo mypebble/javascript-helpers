@@ -16,6 +16,8 @@ const PromptContainer = Marionette.CompositeView.extend({
   template: require('./templates/prompts.html'),
 
   initialize: function() {
+    const user = this.model.getUser();
+
     this.collection = new Backbone.Collection();
     this.collection.url = '/notifications/';
 
@@ -23,7 +25,8 @@ const PromptContainer = Marionette.CompositeView.extend({
       data: {
         notification_type: 'prompt',
         read: false,
-        location: window.location.pathname
+        location: window.location.pathname,
+        active_school: user.get('activeSchool')
       },
       success: () => this.render()
     });
@@ -59,11 +62,16 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
+    const user = this.model.getUser();
+
     this.collection = new Backbone.Collection();
     this.collection.url = '/notifications/';
 
     this.collection.fetch({
-      data: {notification_type: 'global'},
+      data: {
+        notification_type: 'global',
+        active_school: user.get('activeSchool')
+      },
       success: (collection) => {
         if (collection.length == 0) {
           collection.add(new Backbone.Model({
@@ -99,6 +107,11 @@ export const NavView = Marionette.LayoutView.extend({
 
   template: require('./templates/nav.html'),
 
+  regions: {
+    bell: '.nav-bell-hook',
+    prompts: '#notification-hook-2'
+  },
+
   templateHelpers: function() {
     const user = this.model.getUser();
 
@@ -120,7 +133,7 @@ export const NavView = Marionette.LayoutView.extend({
       model: this.model
     });
 
-    this.showChildView('prompts', promptContainer);
     this.showChildView('bell', bell);
+    this.showChildView('prompts', promptContainer);
   }
 });
