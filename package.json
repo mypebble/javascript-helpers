@@ -35,7 +35,7 @@
     "backbone.localstorage": "^1.1.16",
     "backbone.marionette": "2.4.7",
     "backbone.radio": "^1.0.5",
-    "commonmark": "^0.24.0",
+    "commonmark": "^0.26.0",
     "json-loader": "^0.5.4",
     "moment": "^2.15.1",
     "underscore": "^1.8.3",
