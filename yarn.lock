@@ -562,6 +562,10 @@ babylon@^6.11.0:
   version "6.12.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.12.0.tgz#953e6202e58062f7f5041fc8037e4bd4e17140a9"
 
+backbone.localstorage:
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/backbone.localstorage/-/backbone.localstorage-1.1.16.tgz#3df5101d93abcee04f326035540f425dd0487916"
+
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
