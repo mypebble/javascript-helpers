@@ -798,39 +798,6 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Prompt = _backbone4.default.ItemView.extend({
-	  className: 'alert alert-info',
-	  template: __webpack_require__(23)
-	});
-
-	var PromptContainer = _backbone4.default.CompositeView.extend({
-	  childView: Prompt,
-	  childViewContainer: 'ul',
-
-	  template: __webpack_require__(24),
-
-	  initialize: function initialize() {
-	    var _this = this;
-
-	    var user = this.model.getUser();
-
-	    this.collection = new _backbone2.default.Collection();
-	    this.collection.url = '/notifications/';
-
-	    this.collection.fetch({
-	      data: {
-	        notification_type: 'prompt',
-	        read: false,
-	        location: window.location.pathname,
-	        active_school: user.get('activeSchool')
-	      },
-	      success: function success() {
-	        return _this.render();
-	      }
-	    });
-	  }
-	});
-
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
 	  template: __webpack_require__(25),
@@ -857,7 +824,7 @@ module.exports =
 	  template: __webpack_require__(26),
 
 	  initialize: function initialize() {
-	    var _this2 = this;
+	    var _this = this;
 
 	    var user = this.model.getUser();
 
@@ -875,7 +842,7 @@ module.exports =
 	            text: 'No notifications'
 	          }));
 	        }
-	        _this2.render();
+	        _this.render();
 	      }
 	    });
 	  },
@@ -904,12 +871,11 @@ module.exports =
 	  template: __webpack_require__(27),
 
 	  regions: {
-	    bell: '.nav-bell-hook',
-	    prompts: '#notification-hook-2'
+	    bell: '.nav-bell-hook'
 	  },
 
 	  templateHelpers: function templateHelpers() {
-	    var _this3 = this;
+	    var _this2 = this;
 
 	    var user = this.model.getUser();
 
@@ -917,7 +883,7 @@ module.exports =
 	      activeOrganisation: user.getActiveSchool(),
 	      getActive: this.model.activeNav,
 	      getUrl: function getUrl(urlName, organisation) {
-	        return _this3.model.reverse(urlName, { organisation: organisation });
+	        return _this2.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
 	      multipleOrgs: this.model.multipleOrgs()
@@ -925,48 +891,39 @@ module.exports =
 	  },
 
 	  onRender: function onRender() {
-	    var promptContainer = new PromptContainer({
-	      model: this.model
-	    });
 	    var bell = new Bell({
 	      model: this.model
 	    });
 
 	    this.showChildView('bell', bell);
-	    this.showChildView('prompts', promptContainer);
+
+	    var user = this.model.getUser();
+	    var channel = _backbone2.default.Wreqr.radio.channel('notification').vent;
+
+	    var collection = new _backbone2.default.Collection();
+	    collection.url = '/notifications/';
+
+	    collection.fetch({
+	      data: {
+	        notification_type: 'prompt',
+	        read: false,
+	        location: window.location.pathname,
+	        active_school: user.get('activeSchool')
+	      },
+	      success: function success(collection) {
+	        return collection.each(function (model) {
+	          var text = model.get('text');
+	          var link = model.get('link');
+	          channel.trigger('info', text, '', link);
+	        });
+	      }
+	    });
 	  }
 	});
 
 /***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<ul class="list-unstyled"></ul>\n';
-	}
-	return __p;
-	};
-
-/***/ },
+/* 23 */,
+/* 24 */,
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1013,7 +970,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='\n<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="notification-hook-2"></div>\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="{% url "base-organisation-choose" %}">\n                {{ current_organisation.name }}\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
+	__p+='<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="{% url "base-organisation-choose" %}">\n                {{ current_organisation.name }}\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
 	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
