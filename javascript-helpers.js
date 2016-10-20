@@ -798,6 +798,36 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var Prompt = _backbone4.default.ItemView.extend({
+	  className: 'alert alert-info',
+	  template: __webpack_require__(23)
+	});
+
+	var PromptContainer = _backbone4.default.CompositeView.extend({
+	  childView: Prompt,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(24),
+
+	  initialize: function initialize() {
+	    var _this = this;
+
+	    this.collection = new _backbone2.default.Collection();
+	    this.collection.url = '/notifications/';
+
+	    this.collection.fetch({
+	      data: {
+	        notification_type: 'prompt',
+	        read: false,
+	        location: window.location.pathname
+	      },
+	      success: function success() {
+	        return _this.render();
+	      }
+	    });
+	  }
+	});
+
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
 	  template: __webpack_require__(25),
@@ -824,25 +854,20 @@ module.exports =
 	  template: __webpack_require__(26),
 
 	  initialize: function initialize() {
-	    var _this = this;
-
-	    var user = this.model.getUser();
+	    var _this2 = this;
 
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
-	      data: {
-	        notification_type: 'global',
-	        active_school: user.get('activeSchool')
-	      },
+	      data: { notification_type: 'global' },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
 	          collection.add(new _backbone2.default.Model({
 	            text: 'No notifications'
 	          }));
 	        }
-	        _this.render();
+	        _this2.render();
 	      }
 	    });
 	  },
@@ -875,7 +900,7 @@ module.exports =
 	  },
 
 	  templateHelpers: function templateHelpers() {
-	    var _this2 = this;
+	    var _this3 = this;
 
 	    var user = this.model.getUser();
 
@@ -883,7 +908,7 @@ module.exports =
 	      activeOrganisation: user.getActiveSchool(),
 	      getActive: this.model.activeNav,
 	      getUrl: function getUrl(urlName, organisation) {
-	        return _this2.model.reverse(urlName, { organisation: organisation });
+	        return _this3.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
 	      multipleOrgs: this.model.multipleOrgs()
@@ -896,34 +921,39 @@ module.exports =
 	    });
 
 	    this.showChildView('bell', bell);
-
-	    var user = this.model.getUser();
-	    var channel = _backbone2.default.Wreqr.radio.channel('notification').vent;
-
-	    var collection = new _backbone2.default.Collection();
-	    collection.url = '/notifications/';
-
-	    collection.fetch({
-	      data: {
-	        notification_type: 'prompt',
-	        read: false,
-	        location: window.location.pathname,
-	        active_school: user.get('activeSchool')
-	      },
-	      success: function success(collection) {
-	        return collection.each(function (model) {
-	          var text = model.get('text');
-	          var link = model.get('link');
-	          channel.trigger('info', text, '', link);
-	        });
-	      }
-	    });
 	  }
 	});
 
 /***/ },
-/* 23 */,
-/* 24 */,
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'</a>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul class="list-unstyled"></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 

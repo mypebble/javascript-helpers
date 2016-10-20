@@ -3,6 +3,34 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
 
+const Prompt = Marionette.ItemView.extend({
+  className: 'alert alert-info',
+  template: require('./templates/prompt.html')
+});
+
+
+const PromptContainer = Marionette.CompositeView.extend({
+  childView: Prompt,
+  childViewContainer: 'ul',
+
+  template: require('./templates/prompts.html'),
+
+  initialize: function() {
+    this.collection = new Backbone.Collection();
+    this.collection.url = '/notifications/';
+
+    this.collection.fetch({
+      data: {
+        notification_type: 'prompt',
+        read: false,
+        location: window.location.pathname
+      },
+      success: () => this.render()
+    });
+  }
+});
+
+
 const Notification = Marionette.ItemView.extend({
   // tagName: 'li',
   template: require('./templates/notification.html'),
@@ -31,16 +59,11 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
-    const user = this.model.getUser();
-
     this.collection = new Backbone.Collection();
     this.collection.url = '/notifications/';
 
     this.collection.fetch({
-      data: {
-        notification_type: 'global',
-        active_school: user.get('activeSchool')
-      },
+      data: {notification_type: 'global'},
       success: (collection) => {
         if (collection.length == 0) {
           collection.add(new Backbone.Model({
@@ -99,25 +122,5 @@ export const NavView = Marionette.LayoutView.extend({
     });
 
     this.showChildView('bell', bell);
-
-    const user = this.model.getUser();
-    const channel = Backbone.Wreqr.radio.channel('notification').vent;
-
-    const collection = new Backbone.Collection();
-    collection.url = '/notifications/';
-
-    collection.fetch({
-      data: {
-        notification_type: 'prompt',
-        read: false,
-        location: window.location.pathname,
-        active_school: user.get('activeSchool')
-      },
-      success: (collection) => collection.each((model) => {
-        const text = model.get('text');
-        const link = model.get('link');
-        channel.trigger('info', text, '', link);
-      })
-    });
   }
 });
