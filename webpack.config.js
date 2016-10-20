@@ -15,6 +15,7 @@ module.exports = {
     backbone: true,
     underscore: true,
     'backbone.marionette': true,
+    'backbone.localstorage': true,
     'url-parse': true,
     'window-or-global': true
   },
