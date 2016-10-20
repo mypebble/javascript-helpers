@@ -135,19 +135,19 @@ module.exports =
 	  });
 	});
 
-	var _init = __webpack_require__(16);
+	var _regions = __webpack_require__(26);
 
-	Object.keys(_init).forEach(function (key) {
+	Object.keys(_regions).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
 	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _init[key];
+	      return _regions[key];
 	    }
 	  });
 	});
 
-	var _models = __webpack_require__(17);
+	var _models = __webpack_require__(28);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -155,18 +155,6 @@ module.exports =
 	    enumerable: true,
 	    get: function get() {
 	      return _models[key];
-	    }
-	  });
-	});
-
-	var _views = __webpack_require__(20);
-
-	Object.keys(_views).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _views[key];
 	    }
 	  });
 	});
@@ -643,27 +631,7 @@ module.exports =
 	module.exports = require("accounting");
 
 /***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.navInit = undefined;
-
-	var _models = __webpack_require__(17);
-
-	var _views = __webpack_require__(20);
-
-	var navInit = exports.navInit = function navInit(options) {
-	  var model = new _models.Nav(options);
-	  var nav = new _views.NavView({ model: model });
-	  nav.render();
-	};
-
-/***/ },
+/* 16 */,
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -672,70 +640,62 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Nav = undefined;
+	exports.NavModel = undefined;
 
-	var _backbone = __webpack_require__(18);
+	var _urlParse = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"url-parse\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
-	var _backbone2 = _interopRequireDefault(_backbone);
+	var _urlParse2 = _interopRequireDefault(_urlParse);
 
 	var _windowOrGlobal = __webpack_require__(19);
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
+	var _backbone = __webpack_require__(18);
+
+	var _routes = __webpack_require__(27);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/** Deal with rendering the navigation component for users.
-	    This handles a fair few concepts including:
-	      - Whether the navbar should be shrunk or fulll
-	      - The notification icons to display on each line
-	    We also supply a listener for the Radio to instruct this to update its
-	    notification widgets, with the number to reduce the notifications by.
-	*/
-	var Nav = exports.Nav = _backbone2.default.Model.extend({
-	  initialize: function initialize() {
-	    var channel = _backbone2.default.Wreqr.radio.channel('navigation');
-	    this.listenTo(channel.vent, 'update', this.updateNavigation);
+	var NavModel = exports.NavModel = _backbone.Model.extend({
+	  setUser: function setUser(user) {
+	    this.set({ user: user });
 	  },
 
-	  url: function url() {
-	    return this.get('arroUrl') || this.get('grantUrl');
+	  getUser: function getUser() {
+	    return this.get('user') || null;
 	  },
 
-	  defaults: function defaults() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    var nav = storage.getItem('navStatus');
-	    return {
-	      nav: nav || 'large',
-	      arroUrl: '',
-	      grantUrl: '',
-	      project: 0
+	  isStaff: function isStaff() {
+	    var user = this.getUser();
+	    return user.get('is_staff');
+	  },
+
+	  multipleOrgs: function multipleOrgs() {
+	    var user = this.getUser();
+	    return this.isStaff() || user.getSchools.length > 1;
+	  },
+
+	  reverse: function reverse(urlName) {
+	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	    return (0, _routes.reverse)(urlName, options);
+	  },
+
+
+	  activeNav: function activeNav(sectionName) {
+	    var url = (0, _urlParse2.default)(_windowOrGlobal2.default.location.href);
+	    var pathComponents = url.pathname.split('/');
+
+	    var sections = {
+	      grant: pathComponents[1] === 'grants',
+	      support: pathComponents[2] === 'support' || pathComponents[2] === 'schools' && pathComponents[3] !== 'change' || pathComponents[2] === 'users',
+	      choose: pathComponents[3] === 'change',
+	      project: pathComponents[3] === 'project',
+	      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
+	      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
 	    };
-	  },
 
-	  updateLocalStorage: function updateLocalStorage() {
-	    var storage = _windowOrGlobal2.default.localStorage;
-	    storage.setItem('navStatus', this.get('nav'));
-	  },
-
-	  fetchArro: function fetchArro() {
-	    this._doFetch('arroUrl');
-	  },
-
-	  fetchGrant: function fetchGrant() {
-	    this._doFetch('grantUrl');
-	  },
-
-	  updateNavigation: function updateNavigation(key, reduceBy) {
-	    var val = this.get(key);
-	    var newVal = val - reduceBy;
-	    this.set(key, newVal < 0 ? 0 : newVal);
-	  },
-
-	  _doFetch: function _doFetch(urlKey) {
-	    var url = this.get(urlKey);
-	    if (url) {
-	      this.fetch({ url: url, xhrFields: { withCredentials: true } });
-	    }
+	    return sections[sectionName] ? 'active' : '';
 	  }
 	});
 
@@ -781,16 +741,6 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Project = _backbone4.default.LayoutView.extend({
-	  tagName: 'span',
-	  template: __webpack_require__(21),
-
-	  modelEvents: {
-	    'change:project': 'render',
-	    'sync': 'render'
-	  }
-	});
-
 	var Prompt = _backbone4.default.ItemView.extend({
 	  className: 'alert alert-info',
 	  template: __webpack_require__(22)
@@ -828,7 +778,6 @@ module.exports =
 	  templateHelpers: function templateHelpers() {
 	    // A notifications model will be made to handle defaults and make methods
 	    // like this neater
-	    console.log(this);
 	    var link = this.model.get('link');
 	    var notification_class = this.model.get('notification_class');
 	    var no_notifications = _underscore2.default.isUndefined(link);
@@ -883,92 +832,43 @@ module.exports =
 	});
 
 	var NavView = exports.NavView = _backbone4.default.LayoutView.extend({
-	  el: 'body',
-	  template: false,
-
-	  ui: {
-	    container: '#container',
-	    toggle: '.mainnav-toggle'
+	  attributes: {
+	    'id': '#mainnav'
 	  },
 
-	  modelEvents: {
-	    'change:nav': 'updateLocalStorage'
-	  },
+	  template: __webpack_require__(29),
 
-	  triggers: {
-	    'click @ui.toggle': 'toggle:nav'
-	  },
+	  templateHelpers: function templateHelpers() {
+	    var _this3 = this;
 
-	  regions: {
-	    project: '.project-notification-hook',
-	    bell: '.nav-bell-hook',
-	    prompts: '#notification-hook-2'
-	  },
+	    var user = this.model.getUser();
 
-	  initialize: function initialize() {
-	    this.model.fetchArro();
+	    return {
+	      activeOrganisation: user.getActiveSchool(),
+	      getActive: this.model.activeNav,
+	      getUrl: function getUrl(urlName, organisation) {
+	        return _this3.model.reverse(urlName, { organisation: organisation });
+	      },
+	      isStaff: this.model.isStaff(),
+	      multipleOrgs: this.model.multipleOrgs()
+	    };
 	  },
 
 	  onRender: function onRender() {
-	    var navStatus = this.model.get('nav');
-	    if (navStatus === 'large') {
-	      this.ui.container.addClass('mainnav-lg');
-	      this.ui.container.removeClass('mainnav-sm');
-	    } else if (navStatus === 'small') {
-	      this.ui.container.addClass('mainnav-sm');
-	      this.ui.container.removeClass('mainnav-lg');
-	    }
-
 	    var promptContainer = new PromptContainer({
 	      model: this.model
 	    });
+	    var bell = new Bell({
+	      model: this.model
+	    });
+
 	    this.showChildView('prompts', promptContainer);
-
-	    this.showChildView('bell', new Bell({
-	      model: this.model
-	    }));
-
-	    this.showChildView('project', new Project({
-	      model: this.model
-	    }));
-	  },
-
-	  updateLocalStorage: function updateLocalStorage(model) {
-	    model.updateLocalStorage();
-	  },
-
-	  onToggleNav: function onToggleNav() {
-	    var navStatus = this._getNavStatus();
-	    this.model.set('nav', navStatus);
-	  },
-
-	  /** Return the new nav status.
-	  */
-	  _getNavStatus: function _getNavStatus() {
-	    return this.model.get('nav') === 'large' ? 'small' : 'large';
+	    this.showChildView('bell', bell);
 	  }
 	});
 
 /***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<i class="fa fa-sitemap"></i>\n<span class="menu-title">\n  Projects\n  ';
-	 if (project) { 
-	__p+='<span class="notification">'+
-	((__t=( project ))==null?'':_.escape(__t))+
-	'</span>';
-	 } 
-	__p+='\n</span>\n<i class="arrow"></i>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
+/* 21 */,
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1032,6 +932,190 @@ module.exports =
 	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
 	((__t=( unreadCount ))==null?'':_.escape(__t))+
 	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NavRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _models = __webpack_require__(17);
+
+	var _views = __webpack_require__(20);
+
+	var NavRegion = exports.NavRegion = _backbone.Region.extend({
+	  el: '#mainnav-container',
+
+	  showNav: function showNav(user) {
+	    var model = new _models.NavModel({ user: user });
+	    this.show(new _views.NavView({ model: model }));
+	  }
+	});
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reverse = reverse;
+	/** Return the full URL for the given route */
+	function reverse(name) {
+	  var routeArgs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  var schoolRoot = '/school/' + routeArgs.organisation + '/';
+
+	  var routes = {
+	    dashboard: schoolRoot,
+	    donation: schoolRoot + 'donation/',
+	    project: schoolRoot + 'project/',
+	    contact: schoolRoot + 'name/',
+	    costcentre: schoolRoot + 'account/',
+	    bank: schoolRoot + 'account/bank/',
+	    group: schoolRoot + 'name/group/',
+	    support: '/main/support/',
+	    choose: '/main/schools/change/'
+	  };
+
+	  return routes[name];
+	}
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.User = undefined;
+
+	var _windowOrGlobal = __webpack_require__(19);
+
+	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
+
+	var _backbone = __webpack_require__(18);
+
+	var _backbone2 = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"backbone.localstorage\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var _backbone3 = _interopRequireDefault(_backbone2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var User = exports.User = _backbone.Model.extend({
+	  idAttribute: 'email',
+	  localStorage: new _backbone3.default('User'),
+
+	  setCredentials: function setCredentials(jwt) {
+	    var data = jwt.user;
+	    data.token = jwt.token;
+	    this.save(data);
+	  },
+
+	  getToken: function getToken() {
+	    return this.get('token');
+	  },
+
+	  /** Looks up the window.location.href and figures out what the school id
+	   * should be. If the school id isn't set, then this makes no change.
+	   */
+	  setActiveSchool: function setActiveSchool() {
+	    var path = _windowOrGlobal2.default.location.pathname;
+	    if (path) {
+	      var parts = path.split('/');
+	      if (parts[1] == 'school') {
+	        var schoolId = parseInt(parts[2]);
+	        this.save({ activeSchool: schoolId });
+	      }
+	    }
+	  },
+
+	  getActiveSchool: function getActiveSchool() {
+	    return this.get('activeSchool');
+	  },
+
+	  getSchools: function getSchools() {
+	    return this.get('organisations') || [];
+	  }
+	});
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
+	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-dashboard"></i>\n          <span class="menu-title">\n              <strong>Dashboard</strong>\n          </span>\n          </a>\n      </li>\n\n      <li class="list-divider"></li>\n      <li class="list-header">Activities</li>\n\n      <li class="nav-donations '+
+	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'create">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-grants '+
+	((__t=( getActive('grant') ))==null?'':_.escape(__t))+
+	'">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="list-divider"></li>\n\n      <li class="list-header">System</li>\n\n      <li class="nav-projects '+
+	((__t=( getActive('project') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
+	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-reports '+
+	((__t=( getActive('report') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-folder-o"></i>\n          <span class="menu-title">Reports</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-stakeholder '+
+	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-users"></i>\n          <span class="menu-title">SRM</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
+	((__t=( getActive('admin') ))==null?'':_.escape(__t))+
+	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="'+
+	((__t=( getUrl('costcentre', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Accounts</a>\n        </li>\n        <li>\n          <a href="'+
+	((__t=( getUrl('bank', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="'+
+	((__t=( getUrl('group', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">Groups</a>\n        </li>\n        </ul>\n      </li>\n\n      ';
+	 if (isStaff) { 
+	__p+='\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder '+
+	((__t=( getActive('support') ))==null?'':_.escape(__t))+
+	'">\n        <a href="'+
+	((__t=( getUrl('support') ))==null?'':_.escape(__t))+
+	'">\n        <i class="fa fa-crosshairs"></i>\n        <span class="menu-title">Support</span>\n        <i class="arrow"></i>\n        </a>\n      </li>\n      ';
+	 } 
+	__p+='\n\n      ';
+	 if (multipleOrgs) { 
+	__p+='\n      <li class="nav-admin '+
+	((__t=( getActive('choose') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('choose') ))==null?'':_.escape(__t))+
+	'">\n          <i class="fa fa-home"></i>\n          <span class="menu-title">School</span>\n          <i class="arrow"></i>\n          </a>\n      </li>\n      ';
+	 } 
+	__p+='\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};

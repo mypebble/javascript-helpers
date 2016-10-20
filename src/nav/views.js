@@ -3,17 +3,6 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
 
-const Project = Marionette.LayoutView.extend({
-  tagName: 'span',
-  template: require('./templates/project.html'),
-
-  modelEvents: {
-    'change:project': 'render',
-    'sync': 'render'
-  }
-});
-
-
 const Prompt = Marionette.ItemView.extend({
   className: 'alert alert-info',
   template: require('./templates/prompt.html')
@@ -49,7 +38,6 @@ const Notification = Marionette.ItemView.extend({
   templateHelpers: function() {
     // A notifications model will be made to handle defaults and make methods
     // like this neater
-    console.log(this);
     const link = this.model.get('link');
     const notification_class = this.model.get('notification_class');
     const no_notifications = _.isUndefined(link);
@@ -105,69 +93,34 @@ const Bell = Marionette.CompositeView.extend({
 
 
 export const NavView = Marionette.LayoutView.extend({
-  el: 'body',
-  template: false,
-
-  ui: {
-    container: '#container',
-    toggle: '.mainnav-toggle'
+  attributes: {
+    'id': '#mainnav'
   },
 
-  modelEvents: {
-    'change:nav': 'updateLocalStorage'
-  },
+  template: require('./templates/nav.html'),
 
-  triggers: {
-    'click @ui.toggle': 'toggle:nav'
-  },
+  templateHelpers: function() {
+    const user = this.model.getUser();
 
-  regions: {
-    project: '.project-notification-hook',
-    bell: '.nav-bell-hook',
-    prompts: '#notification-hook-2'
-  },
-
-  initialize: function() {
-    this.model.fetchArro();
+    return {
+      activeOrganisation: user.getActiveSchool(),
+      getActive: this.model.activeNav,
+      getUrl: (urlName, organisation) =>
+        this.model.reverse(urlName, {organisation: organisation}),
+      isStaff: this.model.isStaff(),
+      multipleOrgs: this.model.multipleOrgs()
+    };
   },
 
   onRender: function() {
-    const navStatus = this.model.get('nav');
-    if (navStatus === 'large') {
-      this.ui.container.addClass('mainnav-lg');
-      this.ui.container.removeClass('mainnav-sm');
-    }
-    else if (navStatus === 'small') {
-      this.ui.container.addClass('mainnav-sm');
-      this.ui.container.removeClass('mainnav-lg');
-    }
-
     const promptContainer = new PromptContainer({
       model: this.model
     });
+    const bell = new Bell({
+      model: this.model
+    });
+
     this.showChildView('prompts', promptContainer);
-
-    this.showChildView('bell', new Bell({
-      model: this.model
-    }));
-
-    this.showChildView('project', new Project({
-      model: this.model
-    }));
-  },
-
-  updateLocalStorage: function(model) {
-    model.updateLocalStorage();
-  },
-
-  onToggleNav: function() {
-    const navStatus = this._getNavStatus();
-    this.model.set('nav', navStatus);
-  },
-
-  /** Return the new nav status.
-  */
-  _getNavStatus: function() {
-    return this.model.get('nav') === 'large' ? 'small' : 'large';
+    this.showChildView('bell', bell);
   }
 });
