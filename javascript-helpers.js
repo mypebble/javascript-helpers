@@ -793,14 +793,14 @@ module.exports =
 
 	var Prompt = _backbone4.default.ItemView.extend({
 	  className: 'alert alert-info',
-	  template: __webpack_require__(25)
+	  template: __webpack_require__(22)
 	});
 
 	var PromptContainer = _backbone4.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(24),
+	  template: __webpack_require__(23),
 
 	  initialize: function initialize() {
 	    var _this = this;
@@ -811,7 +811,8 @@ module.exports =
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'prompt',
-	        read: 'false'
+	        read: false,
+	        location: window.location.pathname
 	      },
 	      success: function success() {
 	        return _this.render();
@@ -822,7 +823,7 @@ module.exports =
 
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
-	  template: __webpack_require__(22),
+	  template: __webpack_require__(24),
 
 	  templateHelpers: function templateHelpers() {
 	    // A notifications model will be made to handle defaults and make methods
@@ -832,7 +833,7 @@ module.exports =
 	    var notification_class = this.model.get('notification_class');
 	    var no_notifications = _underscore2.default.isUndefined(link);
 	    return {
-	      readClass: _underscore2.default.isNull(this.model.get('datetime_read')) ? 'background-color: #d6e5ed;' : '',
+	      readClass: _underscore2.default.isNull(this.model.get('datetime_cleared')) ? 'background-color: #d6e5ed;' : '',
 	      getLink: no_notifications ? '' : 'href=' + link,
 	      mutedText: no_notifications ? 'text-muted' : '',
 	      getClass: _underscore2.default.isNull('notification_class') ? '' : notification_class
@@ -844,7 +845,7 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(23),
+	  template: __webpack_require__(25),
 
 	  initialize: function initialize() {
 	    var _this2 = this;
@@ -875,7 +876,7 @@ module.exports =
 
 	  _getUnread: function _getUnread() {
 	    var unread = this.collection.filter(function (notification) {
-	      return _underscore2.default.isNull(notification.get('datetime_read'));
+	      return _underscore2.default.isNull(notification.get('datetime_cleared'));
 	    });
 	    return unread.length;
 	  }
@@ -974,6 +975,35 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
+	__p+='<a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'</a>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul class="list-unstyled"></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
 	__p+='<li class="'+
 	((__t=( getClass ))==null?'':_.escape(__t))+
 	'" style="'+
@@ -991,7 +1021,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1002,35 +1032,6 @@ module.exports =
 	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
 	((__t=( unreadCount ))==null?'':_.escape(__t))+
 	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<ul class="list-unstyled"></ul>\n';
-	}
-	return __p;
-	};
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a>\n';
 	}
 	return __p;
 	};

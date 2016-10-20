@@ -33,7 +33,8 @@ const PromptContainer = Marionette.CompositeView.extend({
     this.collection.fetch({
       data: {
         notification_type: 'prompt',
-        read: 'false'
+        read: false,
+        location: window.location.pathname
       },
       success: () => this.render()
     });
@@ -53,7 +54,7 @@ const Notification = Marionette.ItemView.extend({
     const notification_class = this.model.get('notification_class');
     const no_notifications = _.isUndefined(link);
     return {
-      readClass: _.isNull(this.model.get('datetime_read')) ?
+      readClass: _.isNull(this.model.get('datetime_cleared')) ?
         'background-color: #d6e5ed;' : '',
       getLink: no_notifications ? '' : `href=${link}`,
       mutedText: no_notifications ? 'text-muted' : '',
@@ -96,7 +97,7 @@ const Bell = Marionette.CompositeView.extend({
 
   _getUnread: function() {
     const unread = this.collection.filter((notification) => {
-      return _.isNull(notification.get('datetime_read'));
+      return _.isNull(notification.get('datetime_cleared'));
     });
     return unread.length;
   }
