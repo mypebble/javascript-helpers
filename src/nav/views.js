@@ -112,7 +112,9 @@ export const NavView = Marionette.LayoutView.extend({
       getUrl: (urlName, organisation) =>
         this.model.reverse(urlName, {organisation: organisation}),
       isStaff: this.model.isStaff(),
-      multipleOrgs: this.model.multipleOrgs()
+      multipleOrgs: this.model.multipleOrgs(),
+      organisationName: this.getOption('organisationName'),
+      organisationUrl: this.getOption('organisationUrl')
     };
   },
 

@@ -650,9 +650,13 @@ module.exports =
 	var NavRegion = exports.NavRegion = _backbone.Region.extend({
 	  el: '#mainnav-container',
 
-	  showNav: function showNav(user) {
+	  showNav: function showNav(user, options) {
 	    var model = new _models.NavModel({ user: user });
-	    this.show(new _views.NavView({ model: model }));
+	    this.show(new _views.NavView({
+	      model: model,
+	      organisationName: options.organisationName,
+	      organisationUrl: options.organisationUrl
+	    }));
 	  }
 	});
 
@@ -911,7 +915,9 @@ module.exports =
 	        return _this3.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
-	      multipleOrgs: this.model.multipleOrgs()
+	      multipleOrgs: this.model.multipleOrgs(),
+	      organisationName: this.getOption('organisationName'),
+	      organisationUrl: this.getOption('organisationUrl')
 	    };
 	  },
 
@@ -1000,7 +1006,11 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="{% url "base-organisation-choose" %}">\n                {{ current_organisation.name }}\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
+	__p+='<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="'+
+	((__t=( organisationUrl ))==null?'':_.escape(__t))+
+	'">\n                '+
+	((__t=( organisationName ))==null?'':_.escape(__t))+
+	'\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
 	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
