@@ -948,7 +948,7 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Prompt = _backbone4.default.ItemView.extend({
+	var Prompt = _backbone4.default.LayoutView.extend({
 	  className: 'alert alert-info',
 	  template: __webpack_require__(28)
 	});
@@ -1126,7 +1126,7 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Notification = _backbone4.default.ItemView.extend({
+	var Notification = _backbone4.default.LayoutView.extend({
 	  // tagName: 'li',
 	  template: __webpack_require__(35),
 

@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
 
-const Prompt = Marionette.ItemView.extend({
+const Prompt = Marionette.LayoutView.extend({
   className: 'alert alert-info',
   template: require('./templates/prompt.html')
 });

@@ -4,7 +4,7 @@ import Marionette from 'backbone.marionette';
 import {NotificationModel} from './models';
 
 
-const Notification = Marionette.ItemView.extend({
+const Notification = Marionette.LayoutView.extend({
   // tagName: 'li',
   template: require('./templates/notification.html'),
 
