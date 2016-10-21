@@ -26,20 +26,27 @@
   <div class="nano">
     <div class="nano-content">
       <ul id="mainnav-menu" class="list-group">
-      <li class="<%- getActive('dashboard') %>">
-          <a href="<%- getUrl('dashboard', activeOrganisation) %>">
-          <i class="fa fa-dashboard"></i>
-          <span class="menu-title">
-              <strong>Dashboard</strong>
-          </span>
+
+      <li class="nav-projects <%- getActive('project') %>">
+          <a href="<%- getUrl('project', activeOrganisation) %>"
+            class="b-b" style="padding:20px;">
+            <i class="fa fa-sitemap"></i>
+            <span class="menu-title">Projects</span>
+            <i class="arrow"></i>
           </a>
       </li>
 
-      <li class="list-divider"></li>
-      <li class="list-header">Activities</li>
+      <li class="nav-grants <%- getActive('grant') %>">
+        <a href="/grants/" class="b-b" style="padding:20px;">
+          <i class="fa fa-briefcase"></i>
+          <span class="menu-title">Grants</span>
+          <i class="arrow"></i>
+        </a>
+      </li>
 
       <li class="nav-donations <%- getActive('donation') %>">
-        <a href="<%- getUrl('donation', activeOrganisation) %>create">
+        <a href="<%- getUrl('donation', activeOrganisation) %>create"
+          class="b-b" style="padding:20px;">
           <i class="fa fa-gift"></i>
             <span class="menu-title">Donations</span>
           <i class="arrow"></i>
@@ -70,40 +77,9 @@
         </ul>
       </li>
 
-      <li class="nav-grants <%- getActive('grant') %>">
-        <a href="/grants/">
-          <i class="fa fa-briefcase"></i>
-          <span class="menu-title">Grants</span>
-          <i class="arrow"></i>
-        </a>
-      </li>
-
-      <li class="list-divider"></li>
-
-      <li class="list-header">System</li>
-
-      <li class="nav-projects <%- getActive('project') %>">
-          <a href="<%- getUrl('project', activeOrganisation) %>"
-            class="project-notification-hook">
-            <i class="fa fa-sitemap"></i>
-            <span class="menu-title">Projects</span>
-            <i class="arrow"></i>
-          </a>
-      </li>
-
-      <li class="nav-reports <%- getActive('report') %>">
-        <a href="<%- getUrl('dashboard', activeOrganisation) %>">
-          <i class="fa fa-folder-o"></i>
-          <span class="menu-title">Reports</span>
-          <i class="arrow"></i>
-        </a>
-      </li>
-
       <li class="nav-stakeholder <%- getActive('contact') %>">
         <a href="<%- getUrl('contact', activeOrganisation) %>">
-          <i class="fa fa-users"></i>
           <span class="menu-title">SRM</span>
-          <i class="arrow"></i>
         </a>
       </li>
 

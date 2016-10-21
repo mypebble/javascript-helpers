@@ -147,7 +147,7 @@ module.exports =
 	  });
 	});
 
-	var _regions2 = __webpack_require__(28);
+	var _regions2 = __webpack_require__(26);
 
 	Object.keys(_regions2).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -159,7 +159,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(32);
+	var _models = __webpack_require__(30);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -830,7 +830,7 @@ module.exports =
 
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
-	  template: __webpack_require__(25),
+	  template: __webpack_require__(23),
 
 	  templateHelpers: function templateHelpers() {
 	    var link = this.model.get('link');
@@ -846,7 +846,7 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(26),
+	  template: __webpack_require__(24),
 
 	  initialize: function initialize() {
 	    var _this = this;
@@ -891,7 +891,7 @@ module.exports =
 	    'id': '#mainnav'
 	  },
 
-	  template: __webpack_require__(27),
+	  template: __webpack_require__(25),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
@@ -925,9 +925,7 @@ module.exports =
 	});
 
 /***/ },
-/* 23 */,
-/* 24 */,
-/* 25 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -950,7 +948,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 26 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -967,7 +965,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 27 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -977,15 +975,17 @@ module.exports =
 	((__t=( organisationUrl ))==null?'':_.escape(__t))+
 	'">\n                '+
 	((__t=( organisationName ))==null?'':_.escape(__t))+
-	'\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="'+
-	((__t=( getActive('dashboard') ))==null?'':_.escape(__t))+
+	'\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects '+
+	((__t=( getActive('project') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
-	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n          <i class="fa fa-dashboard"></i>\n          <span class="menu-title">\n              <strong>Dashboard</strong>\n          </span>\n          </a>\n      </li>\n\n      <li class="list-divider"></li>\n      <li class="list-header">Activities</li>\n\n      <li class="nav-donations '+
+	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
+	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-grants '+
+	((__t=( getActive('grant') ))==null?'':_.escape(__t))+
+	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-donations '+
 	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
 	'">\n        <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
+	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
@@ -993,21 +993,11 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-grants '+
-	((__t=( getActive('grant') ))==null?'':_.escape(__t))+
-	'">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="list-divider"></li>\n\n      <li class="list-header">System</li>\n\n      <li class="nav-projects '+
-	((__t=( getActive('project') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
-	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
-	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-reports '+
-	((__t=( getActive('report') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
-	((__t=( getUrl('dashboard', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n          <i class="fa fa-folder-o"></i>\n          <span class="menu-title">Reports</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-stakeholder '+
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
 	'">\n        <a href="'+
 	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n          <i class="fa fa-users"></i>\n          <span class="menu-title">SRM</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
+	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
 	((__t=( getActive('admin') ))==null?'':_.escape(__t))+
 	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="'+
 	((__t=( getUrl('costcentre', activeOrganisation) ))==null?'':_.escape(__t))+
@@ -1038,7 +1028,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 28 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1050,7 +1040,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _views = __webpack_require__(29);
+	var _views = __webpack_require__(27);
 
 	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
 	  el: '#prompt-hook',
@@ -1063,7 +1053,7 @@ module.exports =
 	});
 
 /***/ },
-/* 29 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1085,14 +1075,14 @@ module.exports =
 
 	var Prompt = _backbone4.default.ItemView.extend({
 	  className: 'alert alert-info',
-	  template: __webpack_require__(30)
+	  template: __webpack_require__(28)
 	});
 
 	var PromptView = exports.PromptView = _backbone4.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(31),
+	  template: __webpack_require__(29),
 
 	  initialize: function initialize() {
 	    var _this = this;
@@ -1114,7 +1104,7 @@ module.exports =
 	});
 
 /***/ },
-/* 30 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1131,7 +1121,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 31 */
+/* 29 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -1143,7 +1133,7 @@ module.exports =
 	};
 
 /***/ },
-/* 32 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1159,7 +1149,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(33);
+	var _backbone2 = __webpack_require__(31);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1203,7 +1193,7 @@ module.exports =
 	});
 
 /***/ },
-/* 33 */
+/* 31 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");
