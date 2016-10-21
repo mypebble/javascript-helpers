@@ -1,34 +1,5 @@
-import _ from 'underscore';
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
-
-
-const Prompt = Marionette.ItemView.extend({
-  className: 'alert alert-info',
-  template: require('./templates/prompt.html')
-});
-
-
-const PromptContainer = Marionette.CompositeView.extend({
-  childView: Prompt,
-  childViewContainer: 'ul',
-
-  template: require('./templates/prompts.html'),
-
-  initialize: function() {
-    this.collection = new Backbone.Collection();
-    this.collection.url = '/notifications/';
-
-    this.collection.fetch({
-      data: {
-        notification_type: 'prompt',
-        read: false,
-        location: window.location.pathname
-      },
-      success: () => this.render()
-    });
-  }
-});
 
 
 const Notification = Marionette.ItemView.extend({
@@ -36,17 +7,12 @@ const Notification = Marionette.ItemView.extend({
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
-    // A notifications model will be made to handle defaults and make methods
-    // like this neater
     const link = this.model.get('link');
-    const notification_class = this.model.get('notification_class');
-    const no_notifications = _.isUndefined(link);
     return {
-      readClass: _.isNull(this.model.get('datetime_cleared')) ?
+      readClass: this.model.get('datetime_cleared') ?
         'background-color: #d6e5ed;' : '',
-      getLink: no_notifications ? '' : `href=${link}`,
-      mutedText: no_notifications ? 'text-muted' : '',
-      getClass: _.isNull('notification_class') ? '' : notification_class
+      getLink: link ? `href=${link}` : '',
+      mutedText: link ? '' : 'text-muted'
     };
   }
 });
@@ -85,7 +51,7 @@ const Bell = Marionette.CompositeView.extend({
 
   _getUnread: function() {
     const unread = this.collection.filter((notification) => {
-      return _.isNull(notification.get('datetime_cleared'));
+      return notification.get('datetime_cleared');
     });
     return unread.length;
   }

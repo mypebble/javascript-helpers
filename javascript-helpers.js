@@ -147,7 +147,19 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(28);
+	var _regions2 = __webpack_require__(28);
+
+	Object.keys(_regions2).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _regions2[key];
+	    }
+	  });
+	});
+
+	var _models = __webpack_require__(32);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -669,7 +681,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NavModel = undefined;
+	exports.NotificationModel = exports.NavModel = undefined;
 
 	var _urlParse = __webpack_require__(18);
 
@@ -725,6 +737,14 @@ module.exports =
 	    };
 
 	    return sections[sectionName] ? 'active' : '';
+	  }
+	});
+
+	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
+	  defaults: {
+	    datetime_cleared: '',
+	    link: '',
+	    notification_class: ''
 	  }
 	});
 
@@ -788,10 +808,6 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
-	var _underscore = __webpack_require__(4);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
 	var _backbone = __webpack_require__(20);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -802,51 +818,16 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Prompt = _backbone4.default.ItemView.extend({
-	  className: 'alert alert-info',
-	  template: __webpack_require__(23)
-	});
-
-	var PromptContainer = _backbone4.default.CompositeView.extend({
-	  childView: Prompt,
-	  childViewContainer: 'ul',
-
-	  template: __webpack_require__(24),
-
-	  initialize: function initialize() {
-	    var _this = this;
-
-	    this.collection = new _backbone2.default.Collection();
-	    this.collection.url = '/notifications/';
-
-	    this.collection.fetch({
-	      data: {
-	        notification_type: 'prompt',
-	        read: false,
-	        location: window.location.pathname
-	      },
-	      success: function success() {
-	        return _this.render();
-	      }
-	    });
-	  }
-	});
-
 	var Notification = _backbone4.default.ItemView.extend({
 	  // tagName: 'li',
 	  template: __webpack_require__(25),
 
 	  templateHelpers: function templateHelpers() {
-	    // A notifications model will be made to handle defaults and make methods
-	    // like this neater
 	    var link = this.model.get('link');
-	    var notification_class = this.model.get('notification_class');
-	    var no_notifications = _underscore2.default.isUndefined(link);
 	    return {
-	      readClass: _underscore2.default.isNull(this.model.get('datetime_cleared')) ? 'background-color: #d6e5ed;' : '',
-	      getLink: no_notifications ? '' : 'href=' + link,
-	      mutedText: no_notifications ? 'text-muted' : '',
-	      getClass: _underscore2.default.isNull('notification_class') ? '' : notification_class
+	      readClass: this.model.get('datetime_cleared') ? 'background-color: #d6e5ed;' : '',
+	      getLink: link ? 'href=' + link : '',
+	      mutedText: link ? '' : 'text-muted'
 	    };
 	  }
 	});
@@ -858,7 +839,7 @@ module.exports =
 	  template: __webpack_require__(26),
 
 	  initialize: function initialize() {
-	    var _this2 = this;
+	    var _this = this;
 
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = '/notifications/';
@@ -871,7 +852,7 @@ module.exports =
 	            text: 'No notifications'
 	          }));
 	        }
-	        _this2.render();
+	        _this.render();
 	      }
 	    });
 	  },
@@ -886,7 +867,7 @@ module.exports =
 
 	  _getUnread: function _getUnread() {
 	    var unread = this.collection.filter(function (notification) {
-	      return _underscore2.default.isNull(notification.get('datetime_cleared'));
+	      return notification.get('datetime_cleared');
 	    });
 	    return unread.length;
 	  }
@@ -904,7 +885,7 @@ module.exports =
 	  },
 
 	  templateHelpers: function templateHelpers() {
-	    var _this3 = this;
+	    var _this2 = this;
 
 	    var user = this.model.getUser();
 
@@ -912,7 +893,7 @@ module.exports =
 	      activeOrganisation: user.getActiveSchool(),
 	      getActive: this.model.activeNav,
 	      getUrl: function getUrl(urlName, organisation) {
-	        return _this3.model.reverse(urlName, { organisation: organisation });
+	        return _this2.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
 	      multipleOrgs: this.model.multipleOrgs(),
@@ -931,35 +912,8 @@ module.exports =
 	});
 
 /***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<ul class="list-unstyled"></ul>\n';
-	}
-	return __p;
-	};
-
-/***/ },
+/* 23 */,
+/* 24 */,
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -967,7 +921,7 @@ module.exports =
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
 	__p+='<li class="'+
-	((__t=( getClass ))==null?'':_.escape(__t))+
+	((__t=( notification_class ))==null?'':_.escape(__t))+
 	'" style="'+
 	((__t=( readClass ))==null?'':_.escape(__t))+
 	'">\n  <a class="'+
@@ -1079,6 +1033,111 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.PromptRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _views = __webpack_require__(29);
+
+	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
+	  el: '#prompt-hook',
+
+	  showPrompts: function showPrompts(options) {
+	    this.show(new _views.PromptView({
+	      notificationsUrl: options.notificationsUrl
+	    }));
+	  }
+	});
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.PromptView = undefined;
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _backbone3 = __webpack_require__(2);
+
+	var _backbone4 = _interopRequireDefault(_backbone3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Prompt = _backbone4.default.ItemView.extend({
+	  className: 'alert alert-info',
+	  template: __webpack_require__(30)
+	});
+
+	var PromptView = exports.PromptView = _backbone4.default.CompositeView.extend({
+	  childView: Prompt,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(31),
+
+	  initialize: function initialize() {
+	    var _this = this;
+
+	    this.collection = new _backbone2.default.Collection();
+	    this.collection.url = this.getOption('notificationsUrl');
+
+	    this.collection.fetch({
+	      data: {
+	        notification_type: 'prompt',
+	        read: false,
+	        location: window.location.pathname
+	      },
+	      success: function success() {
+	        return _this.render();
+	      }
+	    });
+	  }
+	});
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<a href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
+	((__t=( text ))==null?'':_.escape(__t))+
+	'</a>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul class="list-unstyled"></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.User = undefined;
 
 	var _windowOrGlobal = __webpack_require__(19);
@@ -1087,7 +1146,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(29);
+	var _backbone2 = __webpack_require__(33);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1131,7 +1190,7 @@ module.exports =
 	});
 
 /***/ },
-/* 29 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");

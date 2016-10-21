@@ -46,3 +46,12 @@ export const NavModel = Model.extend({
     return sections[sectionName] ? 'active' : '';
   }
 });
+
+
+export const NotificationModel = Model.extend({
+  defaults: {
+    datetime_cleared: '',
+    link: '',
+    notification_class: ''
+  }
+});
