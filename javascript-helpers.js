@@ -159,6 +159,18 @@ module.exports =
 	  });
 	});
 
+	var _regions3 = __webpack_require__(32);
+
+	Object.keys(_regions3).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _regions3[key];
+	    }
+	  });
+	});
+
 	var _models = __webpack_require__(30);
 
 	Object.keys(_models).forEach(function (key) {
@@ -665,9 +677,7 @@ module.exports =
 	  showNav: function showNav(user, options) {
 	    var model = new _models.NavModel({ user: user });
 	    this.show(new _views.NavView({
-	      model: model,
-	      organisationName: options.organisationName,
-	      organisationUrl: options.organisationUrl
+	      model: model
 	    }));
 	  }
 	});
@@ -681,11 +691,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NotificationModel = exports.NavModel = undefined;
-
-	var _underscore = __webpack_require__(4);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
+	exports.NavModel = undefined;
 
 	var _urlParse = __webpack_require__(18);
 
@@ -741,18 +747,6 @@ module.exports =
 	    };
 
 	    return sections[sectionName] ? 'active' : '';
-	  }
-	});
-
-	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
-	  defaults: {
-	    datetime_cleared: '',
-	    link: '',
-	    notification_class: ''
-	  },
-
-	  isCleared: function isCleared() {
-	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
 	  }
 	});
 
@@ -816,94 +810,21 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
-	var _backbone = __webpack_require__(20);
+	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _backbone3 = __webpack_require__(2);
-
-	var _backbone4 = _interopRequireDefault(_backbone3);
-
-	var _models = __webpack_require__(17);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Notification = _backbone4.default.ItemView.extend({
-	  // tagName: 'li',
-	  template: __webpack_require__(23),
-
-	  templateHelpers: function templateHelpers() {
-	    var link = this.model.get('link');
-	    return {
-	      readClass: this.model.isCleared() ? '' : 'background-color: #d6e5ed;',
-	      getLink: link ? 'href=' + link : '',
-	      mutedText: link ? '' : 'text-muted'
-	    };
-	  }
-	});
-
-	var Bell = _backbone4.default.CompositeView.extend({
-	  childView: Notification,
-	  childViewContainer: 'ul',
-
-	  template: __webpack_require__(24),
-
-	  initialize: function initialize() {
-	    var _this = this;
-
-	    var user = this.model.getUser();
-
-	    var NotificationCollection = _backbone2.default.Collection.extend({
-	      model: _models.NotificationModel
-	    });
-	    this.collection = new NotificationCollection();
-	    this.collection.url = '/notifications/';
-
-	    this.collection.fetch({
-	      data: {
-	        notification_type: 'global',
-	        active_school: user.get('activeSchool')
-	      },
-	      success: function success(collection) {
-	        if (collection.length == 0) {
-	          collection.add(new _backbone2.default.Model({
-	            text: 'No notifications'
-	          }));
-	        }
-	        _this.render();
-	      }
-	    });
-	  },
-
-	  templateHelpers: function templateHelpers() {
-	    var unread_count = this._getUnread();
-	    return {
-	      unreadCount: unread_count,
-	      hidden: unread_count == 0 ? 'hidden' : ''
-	    };
-	  },
-
-	  _getUnread: function _getUnread() {
-	    var unread = this.collection.filter(function (notification) {
-	      return !notification.isCleared();
-	    });
-	    return unread.length;
-	  }
-	});
-
-	var NavView = exports.NavView = _backbone4.default.LayoutView.extend({
+	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
 	  attributes: {
 	    'id': '#mainnav'
 	  },
 
 	  template: __webpack_require__(25),
 
-	  regions: {
-	    bell: '.nav-bell-hook'
-	  },
-
 	  templateHelpers: function templateHelpers() {
-	    var _this2 = this;
+	    var _this = this;
 
 	    var user = this.model.getUser();
 
@@ -911,76 +832,24 @@ module.exports =
 	      activeOrganisation: user.getActiveSchool(),
 	      getActive: this.model.activeNav,
 	      getUrl: function getUrl(urlName, organisation) {
-	        return _this2.model.reverse(urlName, { organisation: organisation });
+	        return _this.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
-	      multipleOrgs: this.model.multipleOrgs(),
-	      organisationName: this.getOption('organisationName'),
-	      organisationUrl: this.getOption('organisationUrl')
+	      multipleOrgs: this.model.multipleOrgs()
 	    };
-	  },
-
-	  onRender: function onRender() {
-	    var bell = new Bell({
-	      model: this.model
-	    });
-
-	    this.showChildView('bell', bell);
 	  }
 	});
 
 /***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li class="'+
-	((__t=( notification_class ))==null?'':_.escape(__t))+
-	'" style="'+
-	((__t=( readClass ))==null?'':_.escape(__t))+
-	'">\n  <a class="'+
-	((__t=( mutedText ))==null?'':_.escape(__t))+
-	'" '+
-	((__t=( getLink ))==null?'':_.escape(__t))+
-	' style="color:#555555">\n    '+
-	((__t=( text ))==null?'':__t)+
-	'\n  </a>\n</li>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt '+
-	((__t=( hidden ))==null?'':_.escape(__t))+
-	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
-	((__t=( unreadCount ))==null?'':_.escape(__t))+
-	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
+/* 23 */,
+/* 24 */,
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<div id="mainnav-menu-wrap">\n  <header id="navbar">\n    <div id="navbar-container">\n      <div class="navbar-header">\n        <a class="navbar-brand" href="{% url "index" %}"></a>\n      </div>\n      <div class="navbar-content clearfix">\n        <div class="col-lg-12">\n          <div class="navbar-left menu-button">\n            <a href="" class="mainnav-toggle">\n              <i class="fa fa-navicon fa-lg"></i>\n            </a>\n          </div>\n          <ul class="nav navbar-nav navbar-right">\n            <li><div class="nav-bell-hook"></div></li>\n            <li class="user_name">\n              <a href="'+
-	((__t=( organisationUrl ))==null?'':_.escape(__t))+
-	'">\n                '+
-	((__t=( organisationName ))==null?'':_.escape(__t))+
-	'\n              </a>\n            </li>\n          </ul>\n        </div>\n      </div>\n    </div>\n  </header>\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects '+
+	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects '+
 	((__t=( getActive('project') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
@@ -1206,6 +1075,234 @@ module.exports =
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.TopbarRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _views = __webpack_require__(33);
+
+	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
+	  el: '#topbar-hook',
+
+	  showTopbar: function showTopbar(user, options) {
+	    this.show(new _views.TopbarView({
+	      user: user,
+	      organisationName: options.organisationName,
+	      organisationUrl: options.organisationUrl
+	    }));
+	  }
+	});
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.TopbarView = undefined;
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _backbone3 = __webpack_require__(2);
+
+	var _backbone4 = _interopRequireDefault(_backbone3);
+
+	var _models = __webpack_require__(34);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Notification = _backbone4.default.ItemView.extend({
+	  // tagName: 'li',
+	  template: __webpack_require__(35),
+
+	  templateHelpers: function templateHelpers() {
+	    var link = this.model.get('link');
+	    return {
+	      readClass: this.model.isCleared() ? '' : 'background-color: #d6e5ed;',
+	      getLink: link ? 'href=' + link : '',
+	      mutedText: link ? '' : 'text-muted'
+	    };
+	  }
+	});
+
+	var Bell = _backbone4.default.CompositeView.extend({
+	  childView: Notification,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(36),
+
+	  initialize: function initialize() {
+	    var _this = this;
+
+	    var user = this.getOption('user');
+
+	    var NotificationCollection = _backbone2.default.Collection.extend({
+	      model: _models.NotificationModel
+	    });
+	    this.collection = new NotificationCollection();
+	    this.collection.url = '/notifications/';
+
+	    this.collection.fetch({
+	      data: {
+	        notification_type: 'global',
+	        active_school: user.get('activeSchool')
+	      },
+	      success: function success(collection) {
+	        if (collection.length == 0) {
+	          collection.add(new _backbone2.default.Model({
+	            text: 'No notifications'
+	          }));
+	        }
+	        _this.render();
+	      }
+	    });
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    var unread_count = this._getUnread();
+	    return {
+	      unreadCount: unread_count,
+	      hidden: unread_count == 0 ? 'hidden' : ''
+	    };
+	  },
+
+	  _getUnread: function _getUnread() {
+	    var unread = this.collection.filter(function (notification) {
+	      return !notification.isCleared();
+	    });
+	    return unread.length;
+	  }
+	});
+
+	var TopbarView = exports.TopbarView = _backbone4.default.LayoutView.extend({
+	  attributes: {
+	    'id': '#topbar-hook'
+	  },
+
+	  template: __webpack_require__(37),
+
+	  regions: {
+	    bell: '.nav-bell-hook'
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      organisationName: this.getOption('organisationName'),
+	      organisationUrl: this.getOption('organisationUrl')
+	    };
+	  },
+
+	  onRender: function onRender() {
+	    var bell = new Bell({
+	      user: this.getOption('user')
+	    });
+
+	    this.showChildView('bell', bell);
+	  }
+	});
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NotificationModel = undefined;
+
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _backbone = __webpack_require__(20);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
+	  defaults: {
+	    datetime_cleared: '',
+	    link: '',
+	    notification_class: ''
+	  },
+
+	  isCleared: function isCleared() {
+	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
+	  }
+	});
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<li class="'+
+	((__t=( notification_class ))==null?'':_.escape(__t))+
+	'" style="'+
+	((__t=( readClass ))==null?'':_.escape(__t))+
+	'">\n  <a class="'+
+	((__t=( mutedText ))==null?'':_.escape(__t))+
+	'" '+
+	((__t=( getLink ))==null?'':_.escape(__t))+
+	' style="color:#555555">\n    '+
+	((__t=( text ))==null?'':__t)+
+	'\n  </a>\n</li>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt '+
+	((__t=( hidden ))==null?'':_.escape(__t))+
+	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
+	((__t=( unreadCount ))==null?'':_.escape(__t))+
+	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<header id="navbar">\n  <div id="navbar-container">\n    <div class="navbar-header">\n      <a class="navbar-brand" href="{% url "index" %}"></a>\n    </div>\n    <div class="navbar-content clearfix">\n      <div class="col-lg-12">\n        <div class="navbar-left menu-button">\n          <a href="" class="mainnav-toggle">\n            <i class="fa fa-navicon fa-lg"></i>\n          </a>\n        </div>\n        <ul class="nav navbar-nav navbar-right">\n          <li><div class="nav-bell-hook"></div></li>\n          <li class="user_name">\n            <a href="'+
+	((__t=( organisationUrl ))==null?'':_.escape(__t))+
+	'">\n              '+
+	((__t=( organisationName ))==null?'':_.escape(__t))+
+	'\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</header>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }
 /******/ ]);

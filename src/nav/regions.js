@@ -10,9 +10,7 @@ export const NavRegion = Region.extend({
   showNav: function(user, options) {
     const model = new NavModel({user: user});
     this.show(new NavView({
-      model: model,
-      organisationName: options.organisationName,
-      organisationUrl: options.organisationUrl
+      model: model
     }));
   }
 });

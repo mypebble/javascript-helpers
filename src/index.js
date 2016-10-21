@@ -13,4 +13,5 @@ export * from './markdown/util';
 
 export * from './nav/regions';
 export * from './prompt/regions';
+export * from './topbar/regions';
 export * from './user/models';

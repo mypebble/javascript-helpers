@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import parse from 'url-parse';
 import root from 'window-or-global';
 
@@ -45,18 +44,5 @@ export const NavModel = Model.extend({
     };
 
     return sections[sectionName] ? 'active' : '';
-  }
-});
-
-
-export const NotificationModel = Model.extend({
-  defaults: {
-    datetime_cleared: '',
-    link: '',
-    notification_class: ''
-  },
-
-  isCleared: function() {
-    return !_.isNull(this.get('datetime_cleared'));
   }
 });
