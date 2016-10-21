@@ -15,6 +15,8 @@ export const PromptView = Marionette.CompositeView.extend({
   template: require('./templates/prompts.html'),
 
   initialize: function() {
+    const user = this.getOption('user');
+
     this.collection = new Backbone.Collection();
     this.collection.url = this.getOption('notificationsUrl');
 
@@ -22,7 +24,8 @@ export const PromptView = Marionette.CompositeView.extend({
       data: {
         notification_type: 'prompt',
         read: false,
-        location: window.location.pathname
+        location: window.location.pathname,
+        active_school: user.get('activeSchool')
       },
       success: () => this.render()
     });

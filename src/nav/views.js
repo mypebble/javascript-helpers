@@ -27,6 +27,8 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
+    const user = this.model.getUser();
+
     const NotificationCollection = Backbone.Collection.extend({
       model: NotificationModel
     });
@@ -34,7 +36,10 @@ const Bell = Marionette.CompositeView.extend({
     this.collection.url = '/notifications/';
 
     this.collection.fetch({
-      data: {notification_type: 'global'},
+      data: {
+        notification_type: 'global',
+        active_school: user.get('activeSchool')
+      },
       success: (collection) => {
         if (collection.length == 0) {
           collection.add(new Backbone.Model({

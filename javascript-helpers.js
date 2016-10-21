@@ -851,6 +851,8 @@ module.exports =
 	  initialize: function initialize() {
 	    var _this = this;
 
+	    var user = this.model.getUser();
+
 	    var NotificationCollection = _backbone2.default.Collection.extend({
 	      model: _models.NotificationModel
 	    });
@@ -858,7 +860,10 @@ module.exports =
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
-	      data: { notification_type: 'global' },
+	      data: {
+	        notification_type: 'global',
+	        active_school: user.get('activeSchool')
+	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
 	          collection.add(new _backbone2.default.Model({
@@ -1045,8 +1050,9 @@ module.exports =
 	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
 	  el: '#prompt-hook',
 
-	  showPrompts: function showPrompts(options) {
+	  showPrompts: function showPrompts(user, options) {
 	    this.show(new _views.PromptView({
+	      user: user,
 	      notificationsUrl: options.notificationsUrl
 	    }));
 	  }
@@ -1087,6 +1093,8 @@ module.exports =
 	  initialize: function initialize() {
 	    var _this = this;
 
+	    var user = this.getOption('user');
+
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = this.getOption('notificationsUrl');
 
@@ -1094,7 +1102,8 @@ module.exports =
 	      data: {
 	        notification_type: 'prompt',
 	        read: false,
-	        location: window.location.pathname
+	        location: window.location.pathname,
+	        active_school: user.get('activeSchool')
 	      },
 	      success: function success() {
 	        return _this.render();
