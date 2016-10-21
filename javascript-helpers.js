@@ -850,7 +850,7 @@ module.exports =
 	__e( getUrl('contact', activeOrganisation) ) +
 	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin ' +
 	__e( getActive('admin') ) +
-	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="' +
+	'">\n        <a href="#">\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="' +
 	__e( getUrl('costcentre', activeOrganisation) ) +
 	'">Accounts</a>\n        </li>\n        <li>\n          <a href="' +
 	__e( getUrl('bank', activeOrganisation) ) +
@@ -862,15 +862,15 @@ module.exports =
 	__e( getActive('support') ) +
 	'">\n        <a href="' +
 	__e( getUrl('support') ) +
-	'">\n        <i class="fa fa-crosshairs"></i>\n        <span class="menu-title">Support</span>\n        <i class="arrow"></i>\n        </a>\n      </li>\n      ';
+	'">\n          <span class="menu-title">Support</span>\n        </a>\n      </li>\n      ';
 	 } ;
 	__p += '\n\n      ';
 	 if (multipleOrgs) { ;
 	__p += '\n      <li class="nav-admin ' +
 	__e( getActive('choose') ) +
-	'">\n          <a href="' +
+	'">\n        <a href="' +
 	__e( getUrl('choose') ) +
-	'">\n          <i class="fa fa-home"></i>\n          <span class="menu-title">School</span>\n          <i class="arrow"></i>\n          </a>\n      </li>\n      ';
+	'">\n          <span class="menu-title">School</span>\n        </a>\n      </li>\n      ';
 	 } ;
 	__p += '\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
 
