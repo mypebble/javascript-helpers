@@ -21,3 +21,12 @@ export const NavView = LayoutView.extend({
     };
   }
 });
+
+
+export const Topbar = LayoutView.extend({
+  attributes: {
+    'id': 'navbar-container'
+  },
+
+  template: require('./templates/topbar.html')
+});

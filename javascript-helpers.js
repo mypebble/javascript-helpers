@@ -147,7 +147,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(24);
+	var _models = __webpack_require__(25);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -646,7 +646,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NavRegion = undefined;
+	exports.TopRegion = exports.NavRegion = undefined;
 
 	var _backbone = __webpack_require__(2);
 
@@ -663,6 +663,16 @@ module.exports =
 	  }
 	});
 
+	var TopRegion = exports.TopRegion = _backbone.Region.extend({
+	  el: '#navbar',
+
+	  showTop: function showTop(user) {
+	    var model = new _models.TopbarModel();
+	    model.setUser(user);
+	    this.show(new _views.Topbar({ model: model }));
+	  }
+	});
+
 /***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
@@ -672,7 +682,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NavModel = undefined;
+	exports.TopbarModel = exports.NavModel = undefined;
 
 	var _urlParse = __webpack_require__(18);
 
@@ -728,6 +738,23 @@ module.exports =
 	    };
 
 	    return sections[sectionName] ? 'active' : '';
+	  }
+	});
+
+	var TopbarModel = exports.TopbarModel = _backbone.Model.extend({
+	  defaults: {
+	    activeSchool: '',
+	    userName: ''
+	  },
+
+	  /** Assign the user to the top bar to re-render it cleanly. */
+	  setUser: function setUser(user) {
+	    var username = user.pick('first_name', 'last_name');
+	    this.set({
+	      user: user,
+	      userName: username.first_name + ' ' + username.last_name,
+	      activeSchool: user.getActiveSchoolName()
+	    });
 	  }
 	});
 
@@ -789,7 +816,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NavView = undefined;
+	exports.Topbar = exports.NavView = undefined;
 
 	var _backbone = __webpack_require__(2);
 
@@ -815,6 +842,14 @@ module.exports =
 	      multipleOrgs: this.model.multipleOrgs()
 	    };
 	  }
+	});
+
+	var Topbar = exports.Topbar = _backbone.LayoutView.extend({
+	  attributes: {
+	    'id': 'navbar-container'
+	  },
+
+	  template: __webpack_require__(24)
 	});
 
 /***/ },
@@ -883,6 +918,25 @@ module.exports =
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ' +
+	__e( activeSchool ) +
+	'\n      </a>\n    </div>\n    <ul class="nav navbar-nav navbar-right">\n      <li class="user_name">\n        ' +
+	__e( userName ) +
+	'\n      </li>\n    </ul>\n  </div>\n</div>';
+
+	}
+	return __p
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -890,28 +944,37 @@ module.exports =
 	});
 	exports.User = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _windowOrGlobal = __webpack_require__(19);
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(25);
+	var _backbone2 = __webpack_require__(26);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/** The User model forces the current user into local storage so we can easily
+	 * maintain their session with JWT.
+	 */
 	var User = exports.User = _backbone.Model.extend({
 	  idAttribute: 'email',
 	  localStorage: new _backbone3.default('User'),
 
+	  /** Attach the JWT and payload to this user. */
 	  setCredentials: function setCredentials(jwt) {
 	    var data = jwt.user;
 	    data.token = jwt.token;
 	    this.save(data);
 	  },
 
+	  /** Return the JWT for this user to pass into the Authorization header. */
 	  getToken: function getToken() {
 	    return this.get('token');
 	  },
@@ -930,17 +993,41 @@ module.exports =
 	    }
 	  },
 
+	  /** Return the ID of the current active school */
 	  getActiveSchool: function getActiveSchool() {
 	    return this.get('activeSchool');
 	  },
 
+	  /** Return the name of the current active school or an empty string.
+	   * Note that for staff users this may return empty as they don't necessarily
+	   * list the school in their organisations list.
+	   */
+	  getActiveSchoolName: function getActiveSchoolName() {
+	    var activeSchool = this.getActiveSchool();
+	    var schoolName = '';
+
+	    if (activeSchool) {
+	      var school = (0, _underscore2.default)(this.getSchools()).findWhere({ id: activeSchool });
+	      if (school) {
+	        schoolName = school.name;
+	      }
+	    }
+
+	    return schoolName;
+	  },
+
+	  /** Return the list of schools that this user can see.
+	   * For staff users, this only returns the schools that they are attached to
+	   * in the database. The server will not send a list of every school, for
+	   * obvious reasons.
+	   */
 	  getSchools: function getSchools() {
 	    return this.get('organisations') || [];
 	  }
 	});
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");

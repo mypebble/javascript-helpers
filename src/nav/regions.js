@@ -1,7 +1,7 @@
 import {Region} from 'backbone.marionette';
 
-import {NavModel} from './models';
-import {NavView} from './views';
+import {NavModel, TopbarModel} from './models';
+import {NavView, Topbar} from './views';
 
 
 export const NavRegion = Region.extend({
@@ -10,5 +10,16 @@ export const NavRegion = Region.extend({
   showNav: function(user) {
     const model = new NavModel({user: user});
     this.show(new NavView({model: model}));
+  }
+});
+
+
+export const TopRegion = Region.extend({
+  el: '#navbar',
+
+  showTop: function(user) {
+    const model = new TopbarModel();
+    model.setUser(user);
+    this.show(new Topbar({model: model}));
   }
 });
