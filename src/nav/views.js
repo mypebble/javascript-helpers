@@ -1,6 +1,8 @@
 import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
+import {NotificationModel} from './models';
+
 
 const Notification = Marionette.ItemView.extend({
   // tagName: 'li',
@@ -9,8 +11,8 @@ const Notification = Marionette.ItemView.extend({
   templateHelpers: function() {
     const link = this.model.get('link');
     return {
-      readClass: this.model.get('datetime_cleared') ?
-        'background-color: #d6e5ed;' : '',
+      readClass: this.model.isCleared() ?
+        '' : 'background-color: #d6e5ed;',
       getLink: link ? `href=${link}` : '',
       mutedText: link ? '' : 'text-muted'
     };
@@ -25,7 +27,10 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
-    this.collection = new Backbone.Collection();
+    const NotificationCollection = Backbone.Collection.extend({
+      model: NotificationModel
+    });
+    this.collection = new NotificationCollection();
     this.collection.url = '/notifications/';
 
     this.collection.fetch({
@@ -51,7 +56,7 @@ const Bell = Marionette.CompositeView.extend({
 
   _getUnread: function() {
     const unread = this.collection.filter((notification) => {
-      return notification.get('datetime_cleared');
+      return !notification.isCleared();
     });
     return unread.length;
   }

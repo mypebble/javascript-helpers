@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import parse from 'url-parse';
 import root from 'window-or-global';
 
@@ -53,5 +54,9 @@ export const NotificationModel = Model.extend({
     datetime_cleared: '',
     link: '',
     notification_class: ''
+  },
+
+  isCleared: function() {
+    return !_.isNull(this.get('datetime_cleared'));
   }
 });

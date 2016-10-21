@@ -683,6 +683,10 @@ module.exports =
 	});
 	exports.NotificationModel = exports.NavModel = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _urlParse = __webpack_require__(18);
 
 	var _urlParse2 = _interopRequireDefault(_urlParse);
@@ -745,6 +749,10 @@ module.exports =
 	    datetime_cleared: '',
 	    link: '',
 	    notification_class: ''
+	  },
+
+	  isCleared: function isCleared() {
+	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
 	  }
 	});
 
@@ -816,6 +824,8 @@ module.exports =
 
 	var _backbone4 = _interopRequireDefault(_backbone3);
 
+	var _models = __webpack_require__(17);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone4.default.ItemView.extend({
@@ -825,7 +835,7 @@ module.exports =
 	  templateHelpers: function templateHelpers() {
 	    var link = this.model.get('link');
 	    return {
-	      readClass: this.model.get('datetime_cleared') ? 'background-color: #d6e5ed;' : '',
+	      readClass: this.model.isCleared() ? '' : 'background-color: #d6e5ed;',
 	      getLink: link ? 'href=' + link : '',
 	      mutedText: link ? '' : 'text-muted'
 	    };
@@ -841,7 +851,10 @@ module.exports =
 	  initialize: function initialize() {
 	    var _this = this;
 
-	    this.collection = new _backbone2.default.Collection();
+	    var NotificationCollection = _backbone2.default.Collection.extend({
+	      model: _models.NotificationModel
+	    });
+	    this.collection = new NotificationCollection();
 	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
@@ -867,7 +880,7 @@ module.exports =
 
 	  _getUnread: function _getUnread() {
 	    var unread = this.collection.filter(function (notification) {
-	      return notification.get('datetime_cleared');
+	      return !notification.isCleared();
 	    });
 	    return unread.length;
 	  }
