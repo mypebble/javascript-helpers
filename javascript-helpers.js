@@ -826,11 +826,13 @@ module.exports =
 	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n      <li class="' +
-	__e( getActive('dashboard') ) +
+	__p += '<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects ' +
+	__e( getActive('project') ) +
 	'">\n          <a href="' +
-	__e( getUrl('dashboard', activeOrganisation) ) +
-	'">\n          <i class="fa fa-dashboard"></i>\n          <span class="menu-title">\n              <strong>Dashboard</strong>\n          </span>\n          </a>\n      </li>\n\n      <li class="list-divider"></li>\n      <li class="list-header">Activities</li>\n\n      <li class="nav-donations ' +
+	__e( getUrl('project', activeOrganisation) ) +
+	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-grants ' +
+	__e( getActive('grant') ) +
+	'">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-donations ' +
 	__e( getActive('donation') ) +
 	'">\n        <a href="' +
 	__e( getUrl('donation', activeOrganisation) ) +
@@ -842,21 +844,11 @@ module.exports =
 	__e( getUrl('donation', activeOrganisation) ) +
 	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
 	__e( getUrl('donation', activeOrganisation) ) +
-	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-grants ' +
-	__e( getActive('grant') ) +
-	'">\n        <a href="/grants/">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="list-divider"></li>\n\n      <li class="list-header">System</li>\n\n      <li class="nav-projects ' +
-	__e( getActive('project') ) +
-	'">\n          <a href="' +
-	__e( getUrl('project', activeOrganisation) ) +
-	'"\n            class="project-notification-hook">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-reports ' +
-	__e( getActive('report') ) +
-	'">\n        <a href="' +
-	__e( getUrl('dashboard', activeOrganisation) ) +
-	'">\n          <i class="fa fa-folder-o"></i>\n          <span class="menu-title">Reports</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-stakeholder ' +
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-stakeholder ' +
 	__e( getActive('contact') ) +
 	'">\n        <a href="' +
 	__e( getUrl('contact', activeOrganisation) ) +
-	'">\n          <i class="fa fa-users"></i>\n          <span class="menu-title">SRM</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-admin ' +
+	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin ' +
 	__e( getActive('admin') ) +
 	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="' +
 	__e( getUrl('costcentre', activeOrganisation) ) +
