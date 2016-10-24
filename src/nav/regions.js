@@ -7,9 +7,11 @@ import {NavView, Topbar} from './views';
 export const NavRegion = Region.extend({
   el: '#mainnav-container',
 
-  showNav: function(user) {
+  showNav: function(user, options) {
     const model = new NavModel({user: user});
-    this.show(new NavView({model: model}));
+    this.show(new NavView({
+      model: model
+    }));
   }
 });
 

@@ -1,0 +1,35 @@
+import Backbone from 'backbone';
+import Marionette from 'backbone.marionette';
+
+
+const Prompt = Marionette.LayoutView.extend({
+  className: 'alert alert-info',
+  template: require('./templates/prompt.html')
+});
+
+
+export const PromptView = Marionette.CompositeView.extend({
+  childView: Prompt,
+  childViewContainer: 'ul',
+
+  template: require('./templates/prompts.html'),
+
+  initialize: function() {
+    const user = this.model;
+
+    const PromptCollection = Backbone.Collection.extend({
+      url: '/notifications/'
+    });
+    this.collection = new PromptCollection();
+
+    this.collection.fetch({
+      data: {
+        notification_type: 'prompt',
+        read: false,
+        location: window.location.pathname,
+        active_school: user.get('activeSchool')
+      },
+      success: () => this.render()
+    });
+  }
+});

@@ -1,7 +1,7 @@
-import {LayoutView} from 'backbone.marionette';
+import Mn from 'backbone.marionette';
 
 
-export const NavView = LayoutView.extend({
+export const NavView = Mn.LayoutView.extend({
   attributes: {
     'id': '#mainnav'
   },
@@ -23,7 +23,7 @@ export const NavView = LayoutView.extend({
 });
 
 
-export const Topbar = LayoutView.extend({
+export const Topbar = Mn.LayoutView.extend({
   attributes: {
     'id': 'navbar-container'
   },
