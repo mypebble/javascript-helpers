@@ -1059,7 +1059,6 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone4.default.LayoutView.extend({
-	  // tagName: 'li',
 	  template: __webpack_require__(31),
 
 	  templateHelpers: function templateHelpers() {
@@ -1084,10 +1083,10 @@ module.exports =
 	    var user = this.model;
 
 	    var NotificationCollection = _backbone2.default.Collection.extend({
-	      model: _models.NotificationModel
+	      model: _models.NotificationModel,
+	      url: '/notifications/'
 	    });
 	    this.collection = new NotificationCollection();
-	    this.collection.url = '/notifications/';
 
 	    this.collection.fetch({
 	      data: {
@@ -1096,9 +1095,7 @@ module.exports =
 	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
-	          collection.add(new _backbone2.default.Model({
-	            text: 'No notifications'
-	          }));
+	          collection.add({ text: 'No notifications' });
 	        }
 	        _this.render();
 	      }
@@ -1109,7 +1106,7 @@ module.exports =
 	    var unread_count = this._getUnread();
 	    return {
 	      unreadCount: unread_count,
-	      hidden: unread_count == 0 ? 'hidden' : ''
+	      hidden: unread_count ? '' : 'hidden'
 	    };
 	  },
 

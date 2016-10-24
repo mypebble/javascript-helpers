@@ -29,10 +29,10 @@ const Bell = Marionette.CompositeView.extend({
     const user = this.model;
 
     const NotificationCollection = Backbone.Collection.extend({
-      model: NotificationModel
+      model: NotificationModel,
+      url: '/notifications/'
     });
     this.collection = new NotificationCollection();
-    this.collection.url = '/notifications/';
 
     this.collection.fetch({
       data: {
@@ -52,7 +52,7 @@ const Bell = Marionette.CompositeView.extend({
     const unread_count = this._getUnread();
     return {
       unreadCount: unread_count,
-      hidden: unread_count == 0 ? 'hidden' : ''
+      hidden: unread_count ? '' : 'hidden'
     };
   },
 
