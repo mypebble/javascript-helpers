@@ -1,7 +1,4 @@
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
-
-import {NotificationModel} from './models';
 
 
 const Notification = Marionette.LayoutView.extend({
@@ -27,12 +24,6 @@ const Bell = Marionette.CompositeView.extend({
 
   initialize: function() {
     const user = this.model;
-
-    const NotificationCollection = Backbone.Collection.extend({
-      model: NotificationModel,
-      url: '/notifications/'
-    });
-    this.collection = new NotificationCollection();
 
     this.collection.fetch({
       data: {
@@ -85,7 +76,8 @@ export const TopbarView = Marionette.LayoutView.extend({
 
   onRender: function() {
     const bell = new Bell({
-      model: this.model
+      model: this.model,
+      collection: this.collection
     });
 
     this.showChildView('bell', bell);
