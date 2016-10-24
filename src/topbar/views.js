@@ -5,7 +5,6 @@ import {NotificationModel} from './models';
 
 
 const Notification = Marionette.LayoutView.extend({
-  // tagName: 'li',
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
