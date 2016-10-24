@@ -41,9 +41,7 @@ const Bell = Marionette.CompositeView.extend({
       },
       success: (collection) => {
         if (collection.length == 0) {
-          collection.add(new Backbone.Model({
-            text: 'No notifications'
-          }));
+          collection.add({text: 'No notifications'});
         }
         this.render();
       }
