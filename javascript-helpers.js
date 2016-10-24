@@ -917,10 +917,9 @@ module.exports =
 	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
 	  el: '#prompt-hook',
 
-	  showPrompts: function showPrompts(user, options) {
+	  showPrompts: function showPrompts(user) {
 	    this.show(new _views.PromptView({
-	      model: user,
-	      notificationsUrl: options.notificationsUrl
+	      model: user
 	    }));
 	  }
 	});
@@ -962,8 +961,10 @@ module.exports =
 
 	    var user = this.model;
 
-	    this.collection = new _backbone2.default.Collection();
-	    this.collection.url = this.getOption('notificationsUrl');
+	    var PromptCollection = _backbone2.default.Collection.extend({
+	      url: '/notifications/'
+	    });
+	    this.collection = new PromptCollection();
 
 	    this.collection.fetch({
 	      data: {

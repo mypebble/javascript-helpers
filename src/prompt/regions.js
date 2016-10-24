@@ -6,10 +6,9 @@ import {PromptView} from './views';
 export const PromptRegion = Region.extend({
   el: '#prompt-hook',
 
-  showPrompts: function(user, options) {
+  showPrompts: function(user) {
     this.show(new PromptView({
-      model: user,
-      notificationsUrl: options.notificationsUrl
+      model: user
     }));
   }
 });
