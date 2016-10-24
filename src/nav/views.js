@@ -3,7 +3,7 @@ import Mn from 'backbone.marionette';
 
 export const NavView = Mn.LayoutView.extend({
   attributes: {
-    'id': '#mainnav'
+    'id': 'mainnav'
   },
 
   template: require('./templates/nav.html'),
@@ -20,13 +20,4 @@ export const NavView = Mn.LayoutView.extend({
       multipleOrgs: this.model.multipleOrgs()
     };
   }
-});
-
-
-export const Topbar = Mn.LayoutView.extend({
-  attributes: {
-    'id': 'navbar-container'
-  },
-
-  template: require('./templates/topbar.html')
 });

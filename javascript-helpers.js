@@ -147,7 +147,7 @@ module.exports =
 	  });
 	});
 
-	var _regions2 = __webpack_require__(25);
+	var _regions2 = __webpack_require__(24);
 
 	Object.keys(_regions2).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -159,7 +159,7 @@ module.exports =
 	  });
 	});
 
-	var _regions3 = __webpack_require__(29);
+	var _regions3 = __webpack_require__(28);
 
 	Object.keys(_regions3).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -670,7 +670,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TopRegion = exports.NavRegion = undefined;
+	exports.NavRegion = undefined;
 
 	var _backbone = __webpack_require__(2);
 
@@ -679,23 +679,13 @@ module.exports =
 	var _views = __webpack_require__(22);
 
 	var NavRegion = exports.NavRegion = _backbone.Region.extend({
-	  el: '#mainnav-container',
+	  el: 'mainnav-container',
 
-	  showNav: function showNav(user, options) {
+	  showNav: function showNav(user) {
 	    var model = new _models.NavModel({ user: user });
 	    this.show(new _views.NavView({
 	      model: model
 	    }));
-	  }
-	});
-
-	var TopRegion = exports.TopRegion = _backbone.Region.extend({
-	  el: '#navbar',
-
-	  showTop: function showTop(user) {
-	    var model = new _models.TopbarModel();
-	    model.setUser(user);
-	    this.show(new _views.Topbar({ model: model }));
 	  }
 	});
 
@@ -708,7 +698,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TopbarModel = exports.NavModel = undefined;
+	exports.NavModel = undefined;
 
 	var _urlParse = __webpack_require__(18);
 
@@ -764,23 +754,6 @@ module.exports =
 	    };
 
 	    return sections[sectionName] ? 'active' : '';
-	  }
-	});
-
-	var TopbarModel = exports.TopbarModel = _backbone.Model.extend({
-	  defaults: {
-	    activeSchool: '',
-	    userName: ''
-	  },
-
-	  /** Assign the user to the top bar to re-render it cleanly. */
-	  setUser: function setUser(user) {
-	    var username = user.pick('first_name', 'last_name');
-	    this.set({
-	      user: user,
-	      userName: username.first_name + ' ' + username.last_name,
-	      activeSchool: user.getActiveSchoolName()
-	    });
 	  }
 	});
 
@@ -842,7 +815,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Topbar = exports.NavView = undefined;
+	exports.NavView = undefined;
 
 	var _backbone = __webpack_require__(2);
 
@@ -852,7 +825,7 @@ module.exports =
 
 	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
 	  attributes: {
-	    'id': '#mainnav'
+	    'id': 'mainnav'
 	  },
 
 	  template: __webpack_require__(23),
@@ -872,14 +845,6 @@ module.exports =
 	      multipleOrgs: this.model.multipleOrgs()
 	    };
 	  }
-	});
-
-	var Topbar = exports.Topbar = _backbone2.default.LayoutView.extend({
-	  attributes: {
-	    'id': 'navbar-container'
-	  },
-
-	  template: __webpack_require__(24)
 	});
 
 /***/ },
@@ -948,25 +913,6 @@ module.exports =
 /* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
-	obj || (obj = {});
-	var __t, __p = '', __e = _.escape;
-	with (obj) {
-	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ' +
-	__e( activeSchool ) +
-	'\n      </a>\n    </div>\n    <ul class="nav navbar-nav navbar-right">\n      <li class="user_name">\n        ' +
-	__e( userName ) +
-	'\n      </li>\n    </ul>\n  </div>\n</div>';
-
-	}
-	return __p
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -978,7 +924,7 @@ module.exports =
 
 	var _backbone2 = __webpack_require__(2);
 
-	var _views = __webpack_require__(26);
+	var _views = __webpack_require__(25);
 
 	var PromptRegion = exports.PromptRegion = _backbone2.Region.extend({
 	  el: '#prompt-hook',
@@ -996,7 +942,7 @@ module.exports =
 	});
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1014,14 +960,14 @@ module.exports =
 
 	var Prompt = _backbone2.default.LayoutView.extend({
 	  className: 'alert alert-info',
-	  template: __webpack_require__(27)
+	  template: __webpack_require__(26)
 	});
 
 	var PromptView = exports.PromptView = _backbone2.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(28),
+	  template: __webpack_require__(27),
 
 	  initialize: function initialize() {
 	    var _this = this;
@@ -1043,7 +989,7 @@ module.exports =
 	});
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
@@ -1062,7 +1008,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj) {
@@ -1076,7 +1022,7 @@ module.exports =
 	};
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1086,26 +1032,24 @@ module.exports =
 	});
 	exports.TopbarRegion = undefined;
 
-	var _backbone = __webpack_require__(20);
+	var _backbone = __webpack_require__(2);
 
-	var _backbone2 = __webpack_require__(2);
+	var _models = __webpack_require__(29);
 
-	var _models = __webpack_require__(30);
+	var _collections = __webpack_require__(30);
 
 	var _views = __webpack_require__(31);
 
-	var TopbarRegion = exports.TopbarRegion = _backbone2.Region.extend({
-	  el: '#topbar-hook',
+	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
+	  el: '#navbar',
 
 	  showTopbar: function showTopbar(user, options) {
-	    var NotificationCollection = _backbone.Collection.extend({
-	      model: _models.NotificationModel,
-	      url: '/notifications/'
-	    });
+	    var model = new _models.TopbarModel();
+	    model.setUser(user);
 
 	    this.show(new _views.TopbarView({
-	      model: user,
-	      collection: new NotificationCollection(),
+	      model: model,
+	      collection: new _collections.NotificationCollection(),
 	      organisationName: options.organisationName,
 	      organisationUrl: options.organisationUrl
 	    }));
@@ -1113,7 +1057,7 @@ module.exports =
 	});
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1121,7 +1065,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NotificationModel = undefined;
+	exports.TopbarModel = exports.NotificationModel = undefined;
 
 	var _underscore = __webpack_require__(4);
 
@@ -1141,6 +1085,47 @@ module.exports =
 	  isCleared: function isCleared() {
 	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
 	  }
+	});
+
+	var TopbarModel = exports.TopbarModel = _backbone.Model.extend({
+	  defaults: {
+	    activeSchool: '',
+	    userName: ''
+	  },
+
+	  /** Assign the user to the top bar to re-render it cleanly. */
+	  setUser: function setUser(user) {
+	    var username = user.pick('first_name', 'last_name');
+	    this.set({
+	      user: user,
+	      userName: username.first_name + ' ' + username.last_name,
+	      activeSchool: user.getActiveSchoolName()
+	    });
+	  }
+	});
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NotificationCollection = undefined;
+
+	var _backbone = __webpack_require__(20);
+
+	var _models = __webpack_require__(29);
+
+	var _models2 = _interopRequireDefault(_models);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
+	  model: _models2.default,
+	  url: '/notifications/'
 	});
 
 /***/ },
@@ -1180,20 +1165,17 @@ module.exports =
 	  template: __webpack_require__(33),
 
 	  initialize: function initialize() {
-	    var _this = this;
-
-	    var user = this.model;
+	    var user = this.model.getUser();
 
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'global',
-	        active_school: user.get('activeSchool')
+	        active_school: user.getActiveSchool()
 	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
 	          collection.add({ text: 'No notifications' });
 	        }
-	        _this.render();
 	      }
 	    });
 	  },
@@ -1216,7 +1198,7 @@ module.exports =
 
 	var TopbarView = exports.TopbarView = _backbone2.default.LayoutView.extend({
 	  attributes: {
-	    'id': '#topbar-hook'
+	    'id': 'navbar-container'
 	  },
 
 	  template: __webpack_require__(34),
@@ -1225,16 +1207,9 @@ module.exports =
 	    bell: '.nav-bell-hook'
 	  },
 
-	  templateHelpers: function templateHelpers() {
-	    return {
-	      organisationName: this.getOption('organisationName'),
-	      organisationUrl: this.getOption('organisationUrl')
-	    };
-	  },
-
 	  onRender: function onRender() {
 	    var bell = new Bell({
-	      model: this.model,
+	      model: this.model.getUser(),
 	      collection: this.collection
 	    });
 
@@ -1294,11 +1269,11 @@ module.exports =
 	obj || (obj = {});
 	var __t, __p = '', __e = _.escape;
 	with (obj) {
-	__p += '<header id="navbar">\n  <div id="navbar-container">\n    <div class="navbar-header">\n      <a class="navbar-brand" href="{% url "index" %}"></a>\n    </div>\n    <div class="navbar-content clearfix">\n      <div class="col-lg-12">\n        <div class="navbar-left menu-button">\n          <a href="" class="mainnav-toggle">\n            <i class="fa fa-navicon fa-lg"></i>\n          </a>\n        </div>\n        <ul class="nav navbar-nav navbar-right">\n          <li><div class="nav-bell-hook"></div></li>\n          <li class="user_name">\n            <a href="' +
-	__e( organisationUrl ) +
-	'">\n              ' +
-	__e( organisationName ) +
-	'\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</header>\n';
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ' +
+	__e( activeSchool ) +
+	'\n      </a>\n    </div>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">' +
+	__e( userName ) +
+	'</li>\n\n    </ul>\n  </div>\n</div>\n';
 
 	}
 	return __p

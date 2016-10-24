@@ -23,18 +23,17 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
-    const user = this.model;
+    const user = this.model.getUser();
 
     this.collection.fetch({
       data: {
         notification_type: 'global',
-        active_school: user.get('activeSchool')
+        active_school: user.getActiveSchool()
       },
       success: (collection) => {
         if (collection.length == 0) {
           collection.add({text: 'No notifications'});
         }
-        this.render();
       }
     });
   },
@@ -58,7 +57,7 @@ const Bell = Marionette.CompositeView.extend({
 
 export const TopbarView = Marionette.LayoutView.extend({
   attributes: {
-    'id': '#topbar-hook'
+    'id': 'navbar-container'
   },
 
   template: require('./templates/topbar.html'),
@@ -67,16 +66,9 @@ export const TopbarView = Marionette.LayoutView.extend({
     bell: '.nav-bell-hook'
   },
 
-  templateHelpers: function() {
-    return {
-      organisationName: this.getOption('organisationName'),
-      organisationUrl: this.getOption('organisationUrl')
-    };
-  },
-
   onRender: function() {
     const bell = new Bell({
-      model: this.model,
+      model: this.model.getUser(),
       collection: this.collection
     });
 

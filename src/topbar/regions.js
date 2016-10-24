@@ -1,22 +1,19 @@
-import {Collection} from 'backbone';
 import {Region} from 'backbone.marionette';
 
-import {NotificationModel} from './models';
-
+import {TopbarModel} from './models';
+import {NotificationCollection} from './collections';
 import {TopbarView} from './views';
 
 
 export const TopbarRegion = Region.extend({
-  el: '#topbar-hook',
+  el: '#navbar',
 
   showTopbar: function(user, options) {
-    const NotificationCollection = Collection.extend({
-      model: NotificationModel,
-      url: '/notifications/'
-    });
+    const model = new TopbarModel();
+    model.setUser(user);
 
     this.show(new TopbarView({
-      model: user,
+      model: model,
       collection: new NotificationCollection(),
       organisationName: options.organisationName,
       organisationUrl: options.organisationUrl
