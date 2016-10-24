@@ -8,7 +8,7 @@ export const PromptRegion = Region.extend({
 
   showPrompts: function(user, options) {
     this.show(new PromptView({
-      user: user,
+      model: user,
       notificationsUrl: options.notificationsUrl
     }));
   }

@@ -147,7 +147,7 @@ module.exports =
 	  });
 	});
 
-	var _regions2 = __webpack_require__(26);
+	var _regions2 = __webpack_require__(24);
 
 	Object.keys(_regions2).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -159,7 +159,7 @@ module.exports =
 	  });
 	});
 
-	var _regions3 = __webpack_require__(32);
+	var _regions3 = __webpack_require__(28);
 
 	Object.keys(_regions3).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(30);
+	var _models = __webpack_require__(34);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -821,7 +821,7 @@ module.exports =
 	    'id': '#mainnav'
 	  },
 
-	  template: __webpack_require__(25),
+	  template: __webpack_require__(23),
 
 	  templateHelpers: function templateHelpers() {
 	    var _this = this;
@@ -841,9 +841,7 @@ module.exports =
 	});
 
 /***/ },
-/* 23 */,
-/* 24 */,
-/* 25 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -902,7 +900,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 26 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -914,21 +912,21 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _views = __webpack_require__(27);
+	var _views = __webpack_require__(25);
 
 	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
 	  el: '#prompt-hook',
 
 	  showPrompts: function showPrompts(user, options) {
 	    this.show(new _views.PromptView({
-	      user: user,
+	      model: user,
 	      notificationsUrl: options.notificationsUrl
 	    }));
 	  }
 	});
 
 /***/ },
-/* 27 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -950,19 +948,19 @@ module.exports =
 
 	var Prompt = _backbone4.default.LayoutView.extend({
 	  className: 'alert alert-info',
-	  template: __webpack_require__(28)
+	  template: __webpack_require__(26)
 	});
 
 	var PromptView = exports.PromptView = _backbone4.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(29),
+	  template: __webpack_require__(27),
 
 	  initialize: function initialize() {
 	    var _this = this;
 
-	    var user = this.getOption('user');
+	    var user = this.model;
 
 	    this.collection = new _backbone2.default.Collection();
 	    this.collection.url = this.getOption('notificationsUrl');
@@ -982,7 +980,7 @@ module.exports =
 	});
 
 /***/ },
-/* 28 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -999,7 +997,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 29 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -1011,73 +1009,7 @@ module.exports =
 	};
 
 /***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.User = undefined;
-
-	var _windowOrGlobal = __webpack_require__(19);
-
-	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
-
-	var _backbone = __webpack_require__(20);
-
-	var _backbone2 = __webpack_require__(31);
-
-	var _backbone3 = _interopRequireDefault(_backbone2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var User = exports.User = _backbone.Model.extend({
-	  idAttribute: 'email',
-	  localStorage: new _backbone3.default('User'),
-
-	  setCredentials: function setCredentials(jwt) {
-	    var data = jwt.user;
-	    data.token = jwt.token;
-	    this.save(data);
-	  },
-
-	  getToken: function getToken() {
-	    return this.get('token');
-	  },
-
-	  /** Looks up the window.location.href and figures out what the school id
-	   * should be. If the school id isn't set, then this makes no change.
-	   */
-	  setActiveSchool: function setActiveSchool() {
-	    var path = _windowOrGlobal2.default.location.pathname;
-	    if (path) {
-	      var parts = path.split('/');
-	      if (parts[1] == 'school') {
-	        var schoolId = parseInt(parts[2]);
-	        this.save({ activeSchool: schoolId });
-	      }
-	    }
-	  },
-
-	  getActiveSchool: function getActiveSchool() {
-	    return this.get('activeSchool');
-	  },
-
-	  getSchools: function getSchools() {
-	    return this.get('organisations') || [];
-	  }
-	});
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	module.exports = require("backbone.localstorage");
-
-/***/ },
-/* 32 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1089,14 +1021,14 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _views = __webpack_require__(33);
+	var _views = __webpack_require__(29);
 
 	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
 	  el: '#topbar-hook',
 
 	  showTopbar: function showTopbar(user, options) {
 	    this.show(new _views.TopbarView({
-	      user: user,
+	      model: user,
 	      organisationName: options.organisationName,
 	      organisationUrl: options.organisationUrl
 	    }));
@@ -1104,7 +1036,7 @@ module.exports =
 	});
 
 /***/ },
-/* 33 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1122,13 +1054,13 @@ module.exports =
 
 	var _backbone4 = _interopRequireDefault(_backbone3);
 
-	var _models = __webpack_require__(34);
+	var _models = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone4.default.LayoutView.extend({
 	  // tagName: 'li',
-	  template: __webpack_require__(35),
+	  template: __webpack_require__(31),
 
 	  templateHelpers: function templateHelpers() {
 	    var link = this.model.get('link');
@@ -1144,12 +1076,12 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(36),
+	  template: __webpack_require__(32),
 
 	  initialize: function initialize() {
 	    var _this = this;
 
-	    var user = this.getOption('user');
+	    var user = this.model;
 
 	    var NotificationCollection = _backbone2.default.Collection.extend({
 	      model: _models.NotificationModel
@@ -1194,7 +1126,7 @@ module.exports =
 	    'id': '#topbar-hook'
 	  },
 
-	  template: __webpack_require__(37),
+	  template: __webpack_require__(33),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
@@ -1209,7 +1141,7 @@ module.exports =
 
 	  onRender: function onRender() {
 	    var bell = new Bell({
-	      user: this.getOption('user')
+	      model: this.model
 	    });
 
 	    this.showChildView('bell', bell);
@@ -1217,7 +1149,7 @@ module.exports =
 	});
 
 /***/ },
-/* 34 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1248,7 +1180,7 @@ module.exports =
 	});
 
 /***/ },
-/* 35 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1271,7 +1203,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 36 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1288,7 +1220,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 37 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1303,6 +1235,72 @@ module.exports =
 	return __p;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.User = undefined;
+
+	var _windowOrGlobal = __webpack_require__(19);
+
+	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = __webpack_require__(35);
+
+	var _backbone3 = _interopRequireDefault(_backbone2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var User = exports.User = _backbone.Model.extend({
+	  idAttribute: 'email',
+	  localStorage: new _backbone3.default('User'),
+
+	  setCredentials: function setCredentials(jwt) {
+	    var data = jwt.user;
+	    data.token = jwt.token;
+	    this.save(data);
+	  },
+
+	  getToken: function getToken() {
+	    return this.get('token');
+	  },
+
+	  /** Looks up the window.location.href and figures out what the school id
+	   * should be. If the school id isn't set, then this makes no change.
+	   */
+	  setActiveSchool: function setActiveSchool() {
+	    var path = _windowOrGlobal2.default.location.pathname;
+	    if (path) {
+	      var parts = path.split('/');
+	      if (parts[1] == 'school') {
+	        var schoolId = parseInt(parts[2]);
+	        this.save({ activeSchool: schoolId });
+	      }
+	    }
+	  },
+
+	  getActiveSchool: function getActiveSchool() {
+	    return this.get('activeSchool');
+	  },
+
+	  getSchools: function getSchools() {
+	    return this.get('organisations') || [];
+	  }
+	});
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone.localstorage");
 
 /***/ }
 /******/ ]);

@@ -15,7 +15,7 @@ export const PromptView = Marionette.CompositeView.extend({
   template: require('./templates/prompts.html'),
 
   initialize: function() {
-    const user = this.getOption('user');
+    const user = this.model;
 
     this.collection = new Backbone.Collection();
     this.collection.url = this.getOption('notificationsUrl');

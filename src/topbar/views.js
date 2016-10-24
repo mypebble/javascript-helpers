@@ -27,7 +27,7 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
-    const user = this.getOption('user');
+    const user = this.model;
 
     const NotificationCollection = Backbone.Collection.extend({
       model: NotificationModel
@@ -88,7 +88,7 @@ export const TopbarView = Marionette.LayoutView.extend({
 
   onRender: function() {
     const bell = new Bell({
-      user: this.getOption('user')
+      model: this.model
     });
 
     this.showChildView('bell', bell);

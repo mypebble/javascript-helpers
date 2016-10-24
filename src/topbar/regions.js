@@ -8,7 +8,7 @@ export const TopbarRegion = Region.extend({
 
   showTopbar: function(user, options) {
     this.show(new TopbarView({
-      user: user,
+      model: user,
       organisationName: options.organisationName,
       organisationUrl: options.organisationUrl
     }));
