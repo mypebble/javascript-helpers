@@ -910,16 +910,23 @@ module.exports =
 	});
 	exports.PromptRegion = undefined;
 
-	var _backbone = __webpack_require__(2);
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = __webpack_require__(2);
 
 	var _views = __webpack_require__(25);
 
-	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
+	var PromptRegion = exports.PromptRegion = _backbone2.Region.extend({
 	  el: '#prompt-hook',
 
 	  showPrompts: function showPrompts(user) {
+	    var PromptCollection = _backbone.Collection.extend({
+	      url: '/notifications/'
+	    });
+
 	    this.show(new _views.PromptView({
-	      model: user
+	      model: user,
+	      collection: new PromptCollection()
 	    }));
 	  }
 	});
@@ -935,22 +942,18 @@ module.exports =
 	});
 	exports.PromptView = undefined;
 
-	var _backbone = __webpack_require__(20);
+	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _backbone3 = __webpack_require__(2);
-
-	var _backbone4 = _interopRequireDefault(_backbone3);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Prompt = _backbone4.default.LayoutView.extend({
+	var Prompt = _backbone2.default.LayoutView.extend({
 	  className: 'alert alert-info',
 	  template: __webpack_require__(26)
 	});
 
-	var PromptView = exports.PromptView = _backbone4.default.CompositeView.extend({
+	var PromptView = exports.PromptView = _backbone2.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
@@ -960,11 +963,6 @@ module.exports =
 	    var _this = this;
 
 	    var user = this.model;
-
-	    var PromptCollection = _backbone2.default.Collection.extend({
-	      url: '/notifications/'
-	    });
-	    this.collection = new PromptCollection();
 
 	    this.collection.fetch({
 	      data: {
@@ -1020,16 +1018,26 @@ module.exports =
 	});
 	exports.TopbarRegion = undefined;
 
-	var _backbone = __webpack_require__(2);
+	var _backbone = __webpack_require__(20);
 
-	var _views = __webpack_require__(29);
+	var _backbone2 = __webpack_require__(2);
 
-	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
+	var _models = __webpack_require__(29);
+
+	var _views = __webpack_require__(30);
+
+	var TopbarRegion = exports.TopbarRegion = _backbone2.Region.extend({
 	  el: '#topbar-hook',
 
 	  showTopbar: function showTopbar(user, options) {
+	    var NotificationCollection = _backbone.Collection.extend({
+	      model: _models.NotificationModel,
+	      url: '/notifications/'
+	    });
+
 	    this.show(new _views.TopbarView({
 	      model: user,
+	      collection: new NotificationCollection(),
 	      organisationName: options.organisationName,
 	      organisationUrl: options.organisationUrl
 	    }));
@@ -1045,21 +1053,46 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TopbarView = undefined;
+	exports.NotificationModel = undefined;
+
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
 
 	var _backbone = __webpack_require__(20);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
+	  defaults: {
+	    datetime_cleared: '',
+	    link: '',
+	    notification_class: ''
+	  },
+
+	  isCleared: function isCleared() {
+	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
+	  }
+	});
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.TopbarView = undefined;
+
+	var _backbone = __webpack_require__(2);
+
 	var _backbone2 = _interopRequireDefault(_backbone);
-
-	var _backbone3 = __webpack_require__(2);
-
-	var _backbone4 = _interopRequireDefault(_backbone3);
-
-	var _models = __webpack_require__(30);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Notification = _backbone4.default.LayoutView.extend({
+	var Notification = _backbone2.default.LayoutView.extend({
 	  template: __webpack_require__(31),
 
 	  templateHelpers: function templateHelpers() {
@@ -1072,7 +1105,7 @@ module.exports =
 	  }
 	});
 
-	var Bell = _backbone4.default.CompositeView.extend({
+	var Bell = _backbone2.default.CompositeView.extend({
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
@@ -1082,12 +1115,6 @@ module.exports =
 	    var _this = this;
 
 	    var user = this.model;
-
-	    var NotificationCollection = _backbone2.default.Collection.extend({
-	      model: _models.NotificationModel,
-	      url: '/notifications/'
-	    });
-	    this.collection = new NotificationCollection();
 
 	    this.collection.fetch({
 	      data: {
@@ -1119,7 +1146,7 @@ module.exports =
 	  }
 	});
 
-	var TopbarView = exports.TopbarView = _backbone4.default.LayoutView.extend({
+	var TopbarView = exports.TopbarView = _backbone2.default.LayoutView.extend({
 	  attributes: {
 	    'id': '#topbar-hook'
 	  },
@@ -1139,41 +1166,11 @@ module.exports =
 
 	  onRender: function onRender() {
 	    var bell = new Bell({
-	      model: this.model
+	      model: this.model,
+	      collection: this.collection
 	    });
 
 	    this.showChildView('bell', bell);
-	  }
-	});
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NotificationModel = undefined;
-
-	var _underscore = __webpack_require__(4);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	var _backbone = __webpack_require__(20);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
-	  defaults: {
-	    datetime_cleared: '',
-	    link: '',
-	    notification_class: ''
-	  },
-
-	  isCleared: function isCleared() {
-	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
 	  }
 	});
 

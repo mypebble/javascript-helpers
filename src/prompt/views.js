@@ -1,4 +1,3 @@
-import Backbone from 'backbone';
 import Marionette from 'backbone.marionette';
 
 
@@ -16,11 +15,6 @@ export const PromptView = Marionette.CompositeView.extend({
 
   initialize: function() {
     const user = this.model;
-
-    const PromptCollection = Backbone.Collection.extend({
-      url: '/notifications/'
-    });
-    this.collection = new PromptCollection();
 
     this.collection.fetch({
       data: {
