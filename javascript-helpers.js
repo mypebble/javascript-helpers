@@ -1268,13 +1268,20 @@ module.exports =
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
 	obj || (obj = {});
-	var __t, __p = '', __e = _.escape;
+	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ' +
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ';
+	 if (activeSchool) { ;
+	__p += '\n        ' +
 	__e( activeSchool ) +
-	'\n      </a>\n    </div>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">' +
+	'\n        ';
+	 } else { ;
+	__p += '\n        Choose School\n        ';
+	 } ;
+	__p += '\n      </a>\n    </div>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li><div class="nav-bell-hook"></div></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          <i class="fa fa-user"></i>\n          ' +
 	__e( userName ) +
-	'</li>\n\n    </ul>\n  </div>\n</div>\n';
+	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 
 	}
 	return __p
