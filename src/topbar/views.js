@@ -19,6 +19,11 @@ const Notification = Marionette.LayoutView.extend({
 const Bell = Marionette.CompositeView.extend({
   childView: Notification,
   childViewContainer: 'ul',
+  className: 'dropdown',
+
+  attributes: {
+    style: 'margin:15px 0px;padding:0px 6px;border-right:1px solid gray;border-left:1px solid gray;'
+  },
 
   template: require('./templates/bell.html'),
 

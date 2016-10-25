@@ -1153,6 +1153,11 @@ module.exports =
 	var Bell = _backbone2.default.CompositeView.extend({
 	  childView: Notification,
 	  childViewContainer: 'ul',
+	  className: 'dropdown',
+
+	  attributes: {
+	    style: 'margin:15px 0px;padding:0px 6px;border-right:1px solid gray;border-left:1px solid gray;'
+	  },
 
 	  template: __webpack_require__(33),
 
@@ -1246,11 +1251,11 @@ module.exports =
 	obj || (obj = {});
 	var __t, __p = '', __e = _.escape;
 	with (obj) {
-	__p += '<div>\n  <li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n    <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n      <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n      <span class="label label-danger pos-abt ' +
+	__p += '<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n  <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n  <span class="label label-danger pos-abt ' +
 	__e( hidden ) +
-	'"\n        style="top:5px; right:5px; padding:3px 5px;">\n        ' +
+	'"\n    style="top:5px; right:5px; padding:3px 5px;">\n    ' +
 	__e( unreadCount ) +
-	'\n      </span>\n    </a>\n    <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n      <div class="bg-dark wrapper">\n        <strong>Notifications</strong>\n      </div>\n      <ul class="list-unstyled">\n      </ul>\n    </div>\n  </li>\n</div>';
+	'\n  </span>\n</a>\n<div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <strong>Notifications</strong>\n  </div>\n  <ul class="list-unstyled">\n  </ul>\n</div>\n';
 
 	}
 	return __p
