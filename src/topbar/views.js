@@ -71,5 +71,11 @@ export const TopbarView = Marionette.LayoutView.extend({
     });
 
     this.showChildView('bell', bell);
+  },
+
+  templateHelpers: function() {
+    return {
+      multipleOrgs: this.model.multipleOrgs()
+    }
   }
 });

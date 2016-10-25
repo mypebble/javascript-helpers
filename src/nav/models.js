@@ -6,8 +6,19 @@ import {reverse} from './routes';
 
 
 export const NavModel = Model.extend({
+  defaults: {
+    activeSchool: '',
+    userName: ''
+  },
+
   setUser: function(user) {
-    this.set({user: user});
+    const username = user.pick('first_name', 'last_name');
+
+    this.set({
+      user: user,
+      userName: `${username.first_name} ${username.last_name}`,
+      activeSchool: user.getActiveSchoolName()
+    });
   },
 
   getUser: function() {

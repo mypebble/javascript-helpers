@@ -715,8 +715,19 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var NavModel = exports.NavModel = _backbone.Model.extend({
+	  defaults: {
+	    activeSchool: '',
+	    userName: ''
+	  },
+
 	  setUser: function setUser(user) {
-	    this.set({ user: user });
+	    var username = user.pick('first_name', 'last_name');
+
+	    this.set({
+	      user: user,
+	      userName: username.first_name + ' ' + username.last_name,
+	      activeSchool: user.getActiveSchoolName()
+	    });
 	  },
 
 	  getUser: function getUser() {
@@ -1034,9 +1045,9 @@ module.exports =
 
 	var _backbone = __webpack_require__(2);
 
-	var _models = __webpack_require__(29);
+	var _models = __webpack_require__(17);
 
-	var _collections = __webpack_require__(30);
+	var _collections = __webpack_require__(29);
 
 	var _views = __webpack_require__(31);
 
@@ -1044,7 +1055,7 @@ module.exports =
 	  el: '#navbar',
 
 	  showTopbar: function showTopbar(user) {
-	    var model = new _models.TopbarModel();
+	    var model = new _models.NavModel();
 	    model.setUser(user);
 
 	    this.show(new _views.TopbarView({
@@ -1063,7 +1074,31 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TopbarModel = exports.NotificationModel = undefined;
+	exports.NotificationCollection = undefined;
+
+	var _backbone = __webpack_require__(20);
+
+	var _models = __webpack_require__(30);
+
+	var _models2 = _interopRequireDefault(_models);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
+	  model: _models2.default,
+	  url: '/notifications/'
+	});
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NotificationModel = undefined;
 
 	var _underscore = __webpack_require__(4);
 
@@ -1083,52 +1118,6 @@ module.exports =
 	  isCleared: function isCleared() {
 	    return !_underscore2.default.isNull(this.get('datetime_cleared'));
 	  }
-	});
-
-	var TopbarModel = exports.TopbarModel = _backbone.Model.extend({
-	  defaults: {
-	    activeSchool: '',
-	    userName: ''
-	  },
-
-	  /** Assign the user to the top bar to re-render it cleanly. */
-	  setUser: function setUser(user) {
-	    var username = user.pick('first_name', 'last_name');
-	    this.set({
-	      user: user,
-	      userName: username.first_name + ' ' + username.last_name,
-	      activeSchool: user.getActiveSchoolName()
-	    });
-	  },
-
-	  /** Returns the user model attached to the topbar. */
-	  getUser: function getUser() {
-	    return this.get('user') || null;
-	  }
-	});
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NotificationCollection = undefined;
-
-	var _backbone = __webpack_require__(20);
-
-	var _models = __webpack_require__(29);
-
-	var _models2 = _interopRequireDefault(_models);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
-	  model: _models2.default,
-	  url: '/notifications/'
 	});
 
 /***/ },
@@ -1215,6 +1204,12 @@ module.exports =
 	    });
 
 	    this.showChildView('bell', bell);
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      multipleOrgs: this.model.multipleOrgs()
+	    };
 	  }
 	});
 
@@ -1271,15 +1266,19 @@ module.exports =
 	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ';
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <ul class="nav navbar-nav navbar-left">\n      <a href="/main/schools/change/">\n        ';
 	 if (activeSchool) { ;
 	__p += '\n        ' +
 	__e( activeSchool ) +
 	'\n        ';
+	 if (multipleOrgs) { ;
+	__p += '\n        &ndash; Change School\n        ';
+	 } ;
+	__p += '\n        ';
 	 } else { ;
 	__p += '\n        Choose School\n        ';
 	 } ;
-	__p += '\n      </a>\n    </div>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li><div class="nav-bell-hook"></div></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          <i class="fa fa-user"></i>\n          ' +
+	__p += '\n      </a>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li><div class="nav-bell-hook"></div></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
 	__e( userName ) +
 	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 
