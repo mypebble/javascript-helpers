@@ -28,7 +28,7 @@
           <i class="arrow"></i>
         </a>
         <ul class="collapse">
-          <li class="">
+          <li>
             <a href="<%- getUrl('donation', activeOrganisation) %>create">
               Record Donation
             </a>
@@ -95,12 +95,50 @@
       <% } %>
 
       <li class="list-divider"></li>
-      <li class="">
+      <li>
         <a href="/logout/">
           <i class="fa fa-off"></i>
           <span class="menu-title">Logout</span>
         </a>
       </li>
     </ul>
+
+    <div class="pos-abt" style="bottom:0px; width:100%;">
+      <span class="block font-bold text-white"
+        style="padding-left:20px; margin-bottom:10px;">
+          See what's coming soon!
+      </span>
+
+      <ul id="mainnav-menu" class="list-group m-b-none">
+        <li>
+          <a href="/reports/" class="b-b b-t">
+            <span class="menu-title">
+              Reports
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/clubs/" class="b-b">
+            <span class="menu-title">
+              Clubs &amp; Events
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/services/" class="b-b">
+            <span class="menu-title">
+              Services &amp; Lettings
+            </span>
+          </a>
+        </li>
+        <li>
+          <div style="background:gray; padding:10px;">
+            <strong class="text-white" style="padding-left:20px;">
+              &copy; Arro by Pebble
+            </strong>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
