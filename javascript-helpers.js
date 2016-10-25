@@ -1168,12 +1168,10 @@ module.exports =
 	  template: __webpack_require__(33),
 
 	  initialize: function initialize() {
-	    var user = this.model.getUser();
-
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'global',
-	        active_school: user.getActiveSchool()
+	        active_school: this.model.getActiveSchool()
 	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {

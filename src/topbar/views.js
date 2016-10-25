@@ -23,12 +23,10 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   initialize: function() {
-    const user = this.model.getUser();
-
     this.collection.fetch({
       data: {
         notification_type: 'global',
-        active_school: user.getActiveSchool()
+        active_school: this.model.getActiveSchool()
       },
       success: (collection) => {
         if (collection.length == 0) {
