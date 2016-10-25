@@ -1156,7 +1156,7 @@ module.exports =
 	  className: 'dropdown',
 
 	  attributes: {
-	    style: 'margin:15px 0px;padding:0px 6px;border-right:1px solid gray;border-left:1px solid gray;'
+	    style: 'margin:15px 0px;border-right:2px solid #f1f1f1;border-left:2px solid #f1f1f1;'
 	  },
 
 	  template: __webpack_require__(33),
