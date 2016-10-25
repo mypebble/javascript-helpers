@@ -679,7 +679,7 @@ module.exports =
 	var _views = __webpack_require__(22);
 
 	var NavRegion = exports.NavRegion = _backbone.Region.extend({
-	  el: 'mainnav-container',
+	  el: '#mainnav-container',
 
 	  showNav: function showNav(user) {
 	    var model = new _models.NavModel({ user: user });
