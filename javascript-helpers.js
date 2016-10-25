@@ -1246,11 +1246,11 @@ module.exports =
 	obj || (obj = {});
 	var __t, __p = '', __e = _.escape;
 	with (obj) {
-	__p += '<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt ' +
+	__p += '<div>\n  <li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n    <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n      <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n      <span class="label label-danger pos-abt ' +
 	__e( hidden ) +
-	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      ' +
+	'"\n        style="top:5px; right:5px; padding:3px 5px;">\n        ' +
 	__e( unreadCount ) +
-	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	'\n      </span>\n    </a>\n    <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n      <div class="bg-dark wrapper">\n        <strong>Notifications</strong>\n      </div>\n      <ul class="list-unstyled">\n      </ul>\n    </div>\n  </li>\n</div>';
 
 	}
 	return __p
@@ -1266,19 +1266,19 @@ module.exports =
 	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 	function print() { __p += __j.call(arguments, '') }
 	with (obj) {
-	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <ul class="nav navbar-nav navbar-left">\n      <a href="/main/schools/change/">\n        ';
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <ul class="nav navbar-nav navbar-left">\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ';
 	 if (activeSchool) { ;
-	__p += '\n        ' +
+	__p += '\n          ' +
 	__e( activeSchool ) +
-	'\n        ';
+	'\n          ';
 	 if (multipleOrgs) { ;
-	__p += '\n        &ndash; Change School\n        ';
+	__p += '\n          &ndash; Change School\n          ';
 	 } ;
-	__p += '\n        ';
+	__p += '\n          ';
 	 } else { ;
-	__p += '\n        Choose School\n        ';
+	__p += '\n          Choose School\n          ';
 	 } ;
-	__p += '\n      </a>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li><div class="nav-bell-hook"></div></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
+	__p += '\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
 	__e( userName ) +
 	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 
