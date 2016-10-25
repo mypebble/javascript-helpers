@@ -1043,15 +1043,13 @@ module.exports =
 	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
 	  el: '#navbar',
 
-	  showTopbar: function showTopbar(user, options) {
+	  showTopbar: function showTopbar(user) {
 	    var model = new _models.TopbarModel();
 	    model.setUser(user);
 
 	    this.show(new _views.TopbarView({
 	      model: model,
-	      collection: new _collections.NotificationCollection(),
-	      organisationName: options.organisationName,
-	      organisationUrl: options.organisationUrl
+	      collection: new _collections.NotificationCollection()
 	    }));
 	  }
 	});

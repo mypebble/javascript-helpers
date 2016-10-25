@@ -34,7 +34,12 @@ When adding new regions, be sure to keep the following:
   * `title` - Title region
   * `footer` - Footer region
 
-## Navigation Panel
+## Navigation
+
+The JavaScript Helpers library provides the tools for rendering the navigation
+panel and top-bar.
+
+### Navigation Panel
 
 The navigation panel renders the HTML side-bar and keeps it consistent between
 all Pebble systems. To initialise the nav panel, simply import the navigation
@@ -66,6 +71,39 @@ const app = new Mn.Application({
   }
 });
 ```
+
+### Topbar
+
+The top bar renders the user's active school, name, and other details, with
+links to let the user modify their profile in Arro.
+
+The following example details how to set this up:
+
+```javascript
+import Mn from 'backbone.marionette';
+
+import {TopbarRegion} from 'javascript-helpers';
+
+import {User} from 'user/models';
+
+
+const app = new Mn.Application({
+  onStart: function(options) {
+    const user = new User();
+    user.fetch();
+
+    this.regionManager = new Mn.RegionManager({
+      regions: {
+        topbar: TopbarRegion
+      }
+    });
+
+    this.regionManager.get('topbar').showTopbar(user);
+  }
+});
+```
+
+This example will mostly be blended with the navigation panel above.
 
 ## User
 
