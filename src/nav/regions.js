@@ -5,12 +5,13 @@ import {NavView} from './views';
 
 
 export const NavRegion = Region.extend({
-  el: '#mainnav-container',
+  el: 'mainnav-container',
 
-  showNav: function(user, options) {
+  showNav: function(user) {
     const model = new NavModel({user: user});
     this.show(new NavView({
       model: model
     }));
   }
 });
+

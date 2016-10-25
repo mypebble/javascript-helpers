@@ -61,7 +61,6 @@
 
       <li class="nav-admin <%- getActive('admin') %>">
         <a href="#">
-          <i class="fa fa-wrench"></i>
           <span class="menu-title">Admin</span>
           <i class="arrow"></i>
         </a>
@@ -82,20 +81,16 @@
       <li class="list-divider"></li>
       <li class="nav-stakeholder <%- getActive('support') %>">
         <a href="<%- getUrl('support') %>">
-        <i class="fa fa-crosshairs"></i>
-        <span class="menu-title">Support</span>
-        <i class="arrow"></i>
+          <span class="menu-title">Support</span>
         </a>
       </li>
       <% } %>
 
       <% if (multipleOrgs) { %>
       <li class="nav-admin <%- getActive('choose') %>">
-          <a href="<%- getUrl('choose') %>">
-          <i class="fa fa-home"></i>
+        <a href="<%- getUrl('choose') %>">
           <span class="menu-title">School</span>
-          <i class="arrow"></i>
-          </a>
+        </a>
       </li>
       <% } %>
 

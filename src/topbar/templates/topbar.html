@@ -1,24 +1,21 @@
-<header id="navbar">
-  <div id="navbar-container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{% url "index" %}"></a>
+<div class="navbar-header">
+  <a class="navbar-brand" href="/"></a>
+</div>
+
+<div class="navbar-content clearfix">
+  <div class="col-lg-12">
+    <div class="navbar-left">
+      <a href="/main/schools/change/">
+        <%- activeSchool %>
+      </a>
     </div>
-    <div class="navbar-content clearfix">
-      <div class="col-lg-12">
-        <div class="navbar-left menu-button">
-          <a href="" class="mainnav-toggle">
-            <i class="fa fa-navicon fa-lg"></i>
-          </a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><div class="nav-bell-hook"></div></li>
-          <li class="user_name">
-            <a href="<%- organisationUrl %>">
-              <%- organisationName %>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+
+    <ul class="nav navbar-nav navbar-right">
+
+      <li class="nav-bell-hook"></li>
+
+      <li class="user_name"><%- userName %></li>
+
+    </ul>
   </div>
-</header>
+</div>

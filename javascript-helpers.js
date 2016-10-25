@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(34);
+	var _models = __webpack_require__(35);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -553,22 +553,25 @@ module.exports =
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<img src="'+
-	((__t=( image_url ))==null?'':_.escape(__t))+
-	'">\n<div class="title">'+
-	((__t=( title ))==null?'':_.escape(__t))+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+	__p += '<img src="' +
+	__e( image_url ) +
+	'">\n<div class="title">' +
+	__e( title ) +
 	'</div>\n';
-	 if (hasProjects(projects)) { 
-	__p+='\n<span class="label label-info">'+
-	((__t=( project(projects) ))==null?'':_.escape(__t))+
+	 if (hasProjects(projects)) { ;
+	__p += '\n<span class="label label-info">' +
+	__e( project(projects) ) +
 	'</span>\n';
-	 } 
-	__p+='\n';
+	 } ;
+	__p += '\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -576,42 +579,46 @@ module.exports =
 /* 12 */
 /***/ function(module, exports) {
 
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">\n  <a class="btn btn-block btn-modal-option text-danger close-modal">\n    <i class="fa fa-times"></i> <span class="block">Close</span>\n  </a>\n</li>\n';
+	module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<li class="col-lg-4 col-md-4 col-sm-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">\n  <a class="btn btn-block btn-modal-option text-danger close-modal">\n    <i class="fa fa-times"></i> <span class="block">Close</span>\n  </a>\n</li>\n';
+
 	}
-	return __p;
+	return __p
 	};
 
 /***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<div class="modal modal-hook" role="dialog">\n  <div class="modal-dialog">\n    <div class="modal-content">\n      <div class="modal-header modal-header-clear">\n        <button aria-label="Close" class="close close-modal" type="button">\n          <span aria-hidden="true">x</span>\n        </button>\n      </div>\n      <div class="modal-body modal-body-clear">\n\n        <div class="title-hook"></div>\n\n        <ul class="row list-unstyled list-inline list-facts-three">\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-trophy block"></i>\n            '+
-	((__t=( award ))==null?'':_.escape(__t))+
-	'\n            <small>'+
-	((__t=( display_grant ))==null?'':_.escape(__t))+
-	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4 rating">\n            <i class="fa fa-bolt block"></i>\n            '+
-	((__t=( grant_difficulty ))==null?'':_.escape(__t))+
-	'\n            <small>'+
-	((__t=( time_to_complete ))==null?'':_.escape(__t))+
-	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-clock-o block"></i>\n            '+
-	((__t=( fromNow(deadline) ))==null?'':_.escape(__t))+
-	'\n            <small class="block">Deadline</small>\n          </li>\n        </ul>\n\n        <div class="row">\n          <div class="col-lg-12 col-md-12">\n\n            <div class="text-summary">\n              <p class="text-center">'+
-	((__t=( renderMarkdown(summary) ))==null?'':__t)+
-	'</p>\n            </div>\n\n            <div class="actions-row">\n              <a class="read-more">Read More</a>\n            </div>\n            <div class="hide grant-detail">\n              <div class="panel">\n                <div class="panel-title">Who is Eligible?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(who_is_eligible) ))==null?'':__t)+
-	'\n                </div>\n                <div class="panel-title">What Will I Get?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(what_will_i_get) ))==null?'':__t)+
-	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  '+
-	((__t=( renderMarkdown(now_what) ))==null?'':__t)+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<div class="modal modal-hook" role="dialog">\n  <div class="modal-dialog">\n    <div class="modal-content">\n      <div class="modal-header modal-header-clear">\n        <button aria-label="Close" class="close close-modal" type="button">\n          <span aria-hidden="true">x</span>\n        </button>\n      </div>\n      <div class="modal-body modal-body-clear">\n\n        <div class="title-hook"></div>\n\n        <ul class="row list-unstyled list-inline list-facts-three">\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-trophy block"></i>\n            ' +
+	__e( award ) +
+	'\n            <small>' +
+	__e( display_grant ) +
+	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4 rating">\n            <i class="fa fa-bolt block"></i>\n            ' +
+	__e( grant_difficulty ) +
+	'\n            <small>' +
+	__e( time_to_complete ) +
+	'</small>\n          </li>\n          <li class="col-lg-4 col-md-4 col-sm-4">\n            <i class="fa fa-clock-o block"></i>\n            ' +
+	__e( fromNow(deadline) ) +
+	'\n            <small class="block">Deadline</small>\n          </li>\n        </ul>\n\n        <div class="row">\n          <div class="col-lg-12 col-md-12">\n\n            <div class="text-summary">\n              <p class="text-center">' +
+	((__t = ( renderMarkdown(summary) )) == null ? '' : __t) +
+	'</p>\n            </div>\n\n            <div class="actions-row">\n              <a class="read-more">Read More</a>\n            </div>\n            <div class="hide grant-detail">\n              <div class="panel">\n                <div class="panel-title">Who is Eligible?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(who_is_eligible) )) == null ? '' : __t) +
+	'\n                </div>\n                <div class="panel-title">What Will I Get?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(what_will_i_get) )) == null ? '' : __t) +
+	'\n                </div>\n                <div class="panel-title">What Next?</div>\n                <div class="panel-body">\n                  ' +
+	((__t = ( renderMarkdown(now_what) )) == null ? '' : __t) +
 	'\n                </div>\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      <div class="modal-footer footer-hook"></div>\n    </div>\n  </div>\n</div>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -672,9 +679,9 @@ module.exports =
 	var _views = __webpack_require__(22);
 
 	var NavRegion = exports.NavRegion = _backbone.Region.extend({
-	  el: '#mainnav-container',
+	  el: 'mainnav-container',
 
-	  showNav: function showNav(user, options) {
+	  showNav: function showNav(user) {
 	    var model = new _models.NavModel({ user: user });
 	    this.show(new _views.NavView({
 	      model: model
@@ -818,7 +825,7 @@ module.exports =
 
 	var NavView = exports.NavView = _backbone2.default.LayoutView.extend({
 	  attributes: {
-	    'id': '#mainnav'
+	    'id': 'mainnav'
 	  },
 
 	  template: __webpack_require__(23),
@@ -844,58 +851,61 @@ module.exports =
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects '+
-	((__t=( getActive('project') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
-	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
-	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-grants '+
-	((__t=( getActive('grant') ))==null?'':_.escape(__t))+
-	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-donations '+
-	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
-	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
-	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
-	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="'+
-	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
-	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-stakeholder '+
-	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
-	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
-	((__t=( getActive('admin') ))==null?'':_.escape(__t))+
-	'">\n        <a href="#">\n          <i class="fa fa-wrench"></i>\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="'+
-	((__t=( getUrl('costcentre', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">Accounts</a>\n        </li>\n        <li>\n          <a href="'+
-	((__t=( getUrl('bank', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="'+
-	((__t=( getUrl('group', activeOrganisation) ))==null?'':_.escape(__t))+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+	function print() { __p += __j.call(arguments, '') }
+	with (obj) {
+	__p += '<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects ' +
+	__e( getActive('project') ) +
+	'">\n          <a href="' +
+	__e( getUrl('project', activeOrganisation) ) +
+	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-grants ' +
+	__e( getActive('grant') ) +
+	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-donations ' +
+	__e( getActive('donation') ) +
+	'">\n        <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
+	__e( getUrl('donation', activeOrganisation) ) +
+	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-stakeholder ' +
+	__e( getActive('contact') ) +
+	'">\n        <a href="' +
+	__e( getUrl('contact', activeOrganisation) ) +
+	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin ' +
+	__e( getActive('admin') ) +
+	'">\n        <a href="#">\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="' +
+	__e( getUrl('costcentre', activeOrganisation) ) +
+	'">Accounts</a>\n        </li>\n        <li>\n          <a href="' +
+	__e( getUrl('bank', activeOrganisation) ) +
+	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="' +
+	__e( getUrl('group', activeOrganisation) ) +
 	'">Groups</a>\n        </li>\n        </ul>\n      </li>\n\n      ';
-	 if (isStaff) { 
-	__p+='\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder '+
-	((__t=( getActive('support') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
-	((__t=( getUrl('support') ))==null?'':_.escape(__t))+
-	'">\n        <i class="fa fa-crosshairs"></i>\n        <span class="menu-title">Support</span>\n        <i class="arrow"></i>\n        </a>\n      </li>\n      ';
-	 } 
-	__p+='\n\n      ';
-	 if (multipleOrgs) { 
-	__p+='\n      <li class="nav-admin '+
-	((__t=( getActive('choose') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
-	((__t=( getUrl('choose') ))==null?'':_.escape(__t))+
-	'">\n          <i class="fa fa-home"></i>\n          <span class="menu-title">School</span>\n          <i class="arrow"></i>\n          </a>\n      </li>\n      ';
-	 } 
-	__p+='\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
+	 if (isStaff) { ;
+	__p += '\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder ' +
+	__e( getActive('support') ) +
+	'">\n        <a href="' +
+	__e( getUrl('support') ) +
+	'">\n          <span class="menu-title">Support</span>\n        </a>\n      </li>\n      ';
+	 } ;
+	__p += '\n\n      ';
+	 if (multipleOrgs) { ;
+	__p += '\n      <li class="nav-admin ' +
+	__e( getActive('choose') ) +
+	'">\n        <a href="' +
+	__e( getUrl('choose') ) +
+	'">\n          <span class="menu-title">School</span>\n        </a>\n      </li>\n      ';
+	 } ;
+	__p += '\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -982,16 +992,18 @@ module.exports =
 /* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<a href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<a href="' +
+	__e( link ) +
+	'">' +
+	__e( text ) +
 	'</a>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -999,12 +1011,14 @@ module.exports =
 /* 27 */
 /***/ function(module, exports) {
 
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<ul class="list-unstyled"></ul>\n';
+	module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '';
+	with (obj) {
+	__p += '<ul class="list-unstyled"></ul>\n';
+
 	}
-	return __p;
+	return __p
 	};
 
 /***/ },
@@ -1018,26 +1032,24 @@ module.exports =
 	});
 	exports.TopbarRegion = undefined;
 
-	var _backbone = __webpack_require__(20);
-
-	var _backbone2 = __webpack_require__(2);
+	var _backbone = __webpack_require__(2);
 
 	var _models = __webpack_require__(29);
 
-	var _views = __webpack_require__(30);
+	var _collections = __webpack_require__(30);
 
-	var TopbarRegion = exports.TopbarRegion = _backbone2.Region.extend({
-	  el: '#topbar-hook',
+	var _views = __webpack_require__(31);
+
+	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
+	  el: '#navbar',
 
 	  showTopbar: function showTopbar(user, options) {
-	    var NotificationCollection = _backbone.Collection.extend({
-	      model: _models.NotificationModel,
-	      url: '/notifications/'
-	    });
+	    var model = new _models.TopbarModel();
+	    model.setUser(user);
 
 	    this.show(new _views.TopbarView({
-	      model: user,
-	      collection: new NotificationCollection(),
+	      model: model,
+	      collection: new _collections.NotificationCollection(),
 	      organisationName: options.organisationName,
 	      organisationUrl: options.organisationUrl
 	    }));
@@ -1053,7 +1065,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NotificationModel = undefined;
+	exports.TopbarModel = exports.NotificationModel = undefined;
 
 	var _underscore = __webpack_require__(4);
 
@@ -1075,8 +1087,49 @@ module.exports =
 	  }
 	});
 
+	var TopbarModel = exports.TopbarModel = _backbone.Model.extend({
+	  defaults: {
+	    activeSchool: '',
+	    userName: ''
+	  },
+
+	  /** Assign the user to the top bar to re-render it cleanly. */
+	  setUser: function setUser(user) {
+	    var username = user.pick('first_name', 'last_name');
+	    this.set({
+	      user: user,
+	      userName: username.first_name + ' ' + username.last_name,
+	      activeSchool: user.getActiveSchoolName()
+	    });
+	  }
+	});
+
 /***/ },
 /* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NotificationCollection = undefined;
+
+	var _backbone = __webpack_require__(20);
+
+	var _models = __webpack_require__(29);
+
+	var _models2 = _interopRequireDefault(_models);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
+	  model: _models2.default,
+	  url: '/notifications/'
+	});
+
+/***/ },
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1093,7 +1146,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(31),
+	  template: __webpack_require__(32),
 
 	  templateHelpers: function templateHelpers() {
 	    var link = this.model.get('link');
@@ -1109,23 +1162,20 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(32),
+	  template: __webpack_require__(33),
 
 	  initialize: function initialize() {
-	    var _this = this;
-
-	    var user = this.model;
+	    var user = this.model.getUser();
 
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'global',
-	        active_school: user.get('activeSchool')
+	        active_school: user.getActiveSchool()
 	      },
 	      success: function success(collection) {
 	        if (collection.length == 0) {
 	          collection.add({ text: 'No notifications' });
 	        }
-	        _this.render();
 	      }
 	    });
 	  },
@@ -1148,25 +1198,18 @@ module.exports =
 
 	var TopbarView = exports.TopbarView = _backbone2.default.LayoutView.extend({
 	  attributes: {
-	    'id': '#topbar-hook'
+	    'id': 'navbar-container'
 	  },
 
-	  template: __webpack_require__(33),
+	  template: __webpack_require__(34),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
 	  },
 
-	  templateHelpers: function templateHelpers() {
-	    return {
-	      organisationName: this.getOption('organisationName'),
-	      organisationUrl: this.getOption('organisationUrl')
-	    };
-	  },
-
 	  onRender: function onRender() {
 	    var bell = new Bell({
-	      model: this.model,
+	      model: this.model.getUser(),
 	      collection: this.collection
 	    });
 
@@ -1175,42 +1218,27 @@ module.exports =
 	});
 
 /***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li class="'+
-	((__t=( notification_class ))==null?'':_.escape(__t))+
-	'" style="'+
-	((__t=( readClass ))==null?'':_.escape(__t))+
-	'">\n  <a class="'+
-	((__t=( mutedText ))==null?'':_.escape(__t))+
-	'" '+
-	((__t=( getLink ))==null?'':_.escape(__t))+
-	' style="color:#555555">\n    '+
-	((__t=( text ))==null?'':__t)+
-	'\n  </a>\n</li>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
 /* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt '+
-	((__t=( hidden ))==null?'':_.escape(__t))+
-	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
-	((__t=( unreadCount ))==null?'':_.escape(__t))+
-	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<li class="' +
+	__e( notification_class ) +
+	'" style="' +
+	__e( readClass ) +
+	'">\n  <a class="' +
+	__e( mutedText ) +
+	'" ' +
+	__e( getLink ) +
+	' style="color:#555555">\n    ' +
+	((__t = ( text )) == null ? '' : __t) +
+	'\n  </a>\n</li>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
@@ -1218,21 +1246,42 @@ module.exports =
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<header id="navbar">\n  <div id="navbar-container">\n    <div class="navbar-header">\n      <a class="navbar-brand" href="{% url "index" %}"></a>\n    </div>\n    <div class="navbar-content clearfix">\n      <div class="col-lg-12">\n        <div class="navbar-left menu-button">\n          <a href="" class="mainnav-toggle">\n            <i class="fa fa-navicon fa-lg"></i>\n          </a>\n        </div>\n        <ul class="nav navbar-nav navbar-right">\n          <li><div class="nav-bell-hook"></div></li>\n          <li class="user_name">\n            <a href="'+
-	((__t=( organisationUrl ))==null?'':_.escape(__t))+
-	'">\n              '+
-	((__t=( organisationName ))==null?'':_.escape(__t))+
-	'\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</header>\n';
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<li style="margin:0px 15px; border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;" class="dropdown">\n  <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n    <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n    <span class="label label-danger pos-abt ' +
+	__e( hidden ) +
+	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      ' +
+	__e( unreadCount ) +
+	'\n    </span>\n  </a>\n  <div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n    <div class="bg-dark wrapper">\n      <strong>Notifications</strong>\n    </div>\n    <ul class="list-unstyled">\n    </ul>\n  </div>\n</li>\n';
+
 	}
-	return __p;
+	return __p
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj) {
+	obj || (obj = {});
+	var __t, __p = '', __e = _.escape;
+	with (obj) {
+	__p += '<div class="navbar-header">\n  <a class="navbar-brand" href="/"></a>\n</div>\n\n<div class="navbar-content clearfix">\n  <div class="col-lg-12">\n    <div class="navbar-left">\n      <a href="/main/schools/change/">\n        ' +
+	__e( activeSchool ) +
+	'\n      </a>\n    </div>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">' +
+	__e( userName ) +
+	'</li>\n\n    </ul>\n  </div>\n</div>\n';
+
+	}
+	return __p
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1242,28 +1291,37 @@ module.exports =
 	});
 	exports.User = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _windowOrGlobal = __webpack_require__(19);
 
 	var _windowOrGlobal2 = _interopRequireDefault(_windowOrGlobal);
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(35);
+	var _backbone2 = __webpack_require__(36);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/** The User model forces the current user into local storage so we can easily
+	 * maintain their session with JWT.
+	 */
 	var User = exports.User = _backbone.Model.extend({
 	  idAttribute: 'email',
 	  localStorage: new _backbone3.default('User'),
 
+	  /** Attach the JWT and payload to this user. */
 	  setCredentials: function setCredentials(jwt) {
 	    var data = jwt.user;
 	    data.token = jwt.token;
 	    this.save(data);
 	  },
 
+	  /** Return the JWT for this user to pass into the Authorization header. */
 	  getToken: function getToken() {
 	    return this.get('token');
 	  },
@@ -1282,17 +1340,41 @@ module.exports =
 	    }
 	  },
 
+	  /** Return the ID of the current active school */
 	  getActiveSchool: function getActiveSchool() {
 	    return this.get('activeSchool');
 	  },
 
+	  /** Return the name of the current active school or an empty string.
+	   * Note that for staff users this may return empty as they don't necessarily
+	   * list the school in their organisations list.
+	   */
+	  getActiveSchoolName: function getActiveSchoolName() {
+	    var activeSchool = this.getActiveSchool();
+	    var schoolName = '';
+
+	    if (activeSchool) {
+	      var school = (0, _underscore2.default)(this.getSchools()).findWhere({ id: activeSchool });
+	      if (school) {
+	        schoolName = school.name;
+	      }
+	    }
+
+	    return schoolName;
+	  },
+
+	  /** Return the list of schools that this user can see.
+	   * For staff users, this only returns the schools that they are attached to
+	   * in the database. The server will not send a list of every school, for
+	   * obvious reasons.
+	   */
 	  getSchools: function getSchools() {
 	    return this.get('organisations') || [];
 	  }
 	});
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");
