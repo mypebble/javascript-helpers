@@ -81,6 +81,6 @@ export const TopbarView = Marionette.LayoutView.extend({
   templateHelpers: function() {
     return {
       multipleOrgs: this.model.multipleOrgs()
-    }
+    };
   }
 });
