@@ -8,15 +8,13 @@ import {TopbarView} from './views';
 export const TopbarRegion = Region.extend({
   el: '#navbar',
 
-  showTopbar: function(user, options) {
+  showTopbar: function(user) {
     const model = new TopbarModel();
     model.setUser(user);
 
     this.show(new TopbarView({
       model: model,
-      collection: new NotificationCollection(),
-      organisationName: options.organisationName,
-      organisationUrl: options.organisationUrl
+      collection: new NotificationCollection()
     }));
   }
 });
