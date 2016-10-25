@@ -1099,6 +1099,11 @@ module.exports =
 	      userName: username.first_name + ' ' + username.last_name,
 	      activeSchool: user.getActiveSchoolName()
 	    });
+	  },
+
+	  /** Returns the user model attached to the topbar. */
+	  getUser: function getUser() {
+	    return this.get('user') || null;
 	  }
 	});
 
