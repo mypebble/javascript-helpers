@@ -913,7 +913,7 @@ module.exports =
 	__e( getUrl('choose') ) +
 	'">\n          <span class="menu-title">School</span>\n        </a>\n      </li>\n      ';
 	 } ;
-	__p += '\n\n      <li class="list-divider"></li>\n      <li>\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n\n    <div class="pos-abt" style="bottom:0px; width:100%;">\n      <span class="block font-bold text-white"\n        style="padding-left:20px; margin-bottom:10px;">\n          See what\'s coming soon!\n      </span>\n\n      <ul id="mainnav-menu" class="list-group m-b-none">\n        <li>\n          <a href="/club/" class="b-b">\n            <span class="menu-title">\n              Clubs &amp; Events\n            </span>\n          </a>\n        </li>\n        <li>\n          <a href="/service/" class="b-b">\n            <span class="menu-title">\n              Services &amp; Lettings\n            </span>\n          </a>\n        </li>\n        <li>\n          <div style="background:gray; padding:10px;">\n            <strong class="text-white" style="padding-left:20px;">\n              &copy; Arro by Pebble\n            </strong>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n';
+	__p += '\n    </ul>\n\n    <div class="pos-abt" style="bottom:0px; width:100%;">\n      <span class="block font-bold text-white"\n        style="padding-left:20px; margin-bottom:10px;">\n          See what\'s coming soon!\n      </span>\n\n      <ul id="mainnav-menu" class="list-group m-b-none">\n        <li>\n          <a href="/club/" class="b-b">\n            <span class="menu-title">\n              Clubs &amp; Events\n            </span>\n          </a>\n        </li>\n        <li>\n          <a href="/service/" class="b-b">\n            <span class="menu-title">\n              Services &amp; Lettings\n            </span>\n          </a>\n        </li>\n        <li>\n          <div style="background:gray; padding:10px;">\n            <strong class="text-white" style="padding-left:20px;">\n              &copy; Arro by Pebble\n            </strong>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n';
 
 	}
 	return __p
@@ -1283,9 +1283,9 @@ module.exports =
 	 } else { ;
 	__p += '\n          Choose School\n          ';
 	 } ;
-	__p += '\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li style="padding-bottom:10px;border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;"\n        class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
+	__p += '\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li style="padding-bottom:10px;border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;"\n        class="nav-bell-hook"></li>\n\n      <li class="user_name dropdown">\n        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"\n          aria-haspopup="true" aria-expanded="false">\n          ' +
 	__e( userName ) +
-	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
+	'\n        </a>\n        <ul class="dropdown-menu">\n          <li>\n            <a href="/logout/">\n              <i class="fa fa-power-off"></i> Logout\n            </a>\n          </li>\n        </ul>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 
 	}
 	return __p
@@ -1326,6 +1326,10 @@ module.exports =
 	  idAttribute: 'email',
 	  localStorage: new _backbone3.default('User'),
 
+	  parse: function parse(data) {
+	    return data[0] ? data[0] : data;
+	  },
+
 	  /** Attach the JWT and payload to this user. */
 	  setCredentials: function setCredentials(jwt) {
 	    var data = jwt.user;
@@ -1343,10 +1347,12 @@ module.exports =
 	   */
 	  setActiveSchool: function setActiveSchool() {
 	    var path = _windowOrGlobal2.default.location.pathname;
+
 	    if (path) {
 	      var parts = path.split('/');
 	      if (parts[1] == 'school') {
 	        var schoolId = parseInt(parts[2]);
+
 	        this.save({ activeSchool: schoolId });
 	      }
 	    }
