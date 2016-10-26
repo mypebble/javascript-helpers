@@ -1156,7 +1156,7 @@ module.exports =
 	  className: 'dropdown',
 
 	  attributes: {
-	    style: 'margin:15px 0px;border-right:2px solid #f1f1f1;border-left:2px solid #f1f1f1;'
+	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
 	  template: __webpack_require__(33),
@@ -1283,7 +1283,7 @@ module.exports =
 	 } else { ;
 	__p += '\n          Choose School\n          ';
 	 } ;
-	__p += '\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
+	__p += '\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li style="padding-bottom:10px;border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;"\n        class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          ' +
 	__e( userName ) +
 	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 
