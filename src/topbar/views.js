@@ -22,7 +22,7 @@ const Bell = Marionette.CompositeView.extend({
   className: 'dropdown',
 
   attributes: {
-    style: 'margin:15px 0px;padding:0px 6px;border-right:1px solid gray;border-left:1px solid gray;'
+    style: 'padding: 15px 15px 5px 15px;'
   },
 
   template: require('./templates/bell.html'),

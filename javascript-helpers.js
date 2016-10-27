@@ -868,7 +868,7 @@ module.exports =
 	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
 	'">\n        <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li class="">\n            <a href="'+
+	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li>\n            <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
@@ -904,7 +904,7 @@ module.exports =
 	((__t=( getUrl('choose') ))==null?'':_.escape(__t))+
 	'">\n          <span class="menu-title">School</span>\n        </a>\n      </li>\n      ';
 	 } 
-	__p+='\n\n      <li class="list-divider"></li>\n      <li class="">\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n';
+	__p+='\n\n      <li class="list-divider"></li>\n      <li>\n        <a href="/logout/">\n          <i class="fa fa-off"></i>\n          <span class="menu-title">Logout</span>\n        </a>\n      </li>\n    </ul>\n\n    <div class="pos-abt" style="bottom:0px; width:100%;">\n      <span class="block font-bold text-white"\n        style="padding-left:20px; margin-bottom:10px;">\n          See what\'s coming soon!\n      </span>\n\n      <ul id="mainnav-menu" class="list-group m-b-none">\n        <li>\n          <a href="/club/" class="b-b">\n            <span class="menu-title">\n              Clubs &amp; Events\n            </span>\n          </a>\n        </li>\n        <li>\n          <a href="/service/" class="b-b">\n            <span class="menu-title">\n              Services &amp; Lettings\n            </span>\n          </a>\n        </li>\n        <li>\n          <div style="background:gray; padding:10px;">\n            <strong class="text-white" style="padding-left:20px;">\n              &copy; Arro by Pebble\n            </strong>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
@@ -1139,7 +1139,7 @@ module.exports =
 	  className: 'dropdown',
 
 	  attributes: {
-	    style: 'margin:15px 0px;padding:0px 6px;border-right:1px solid gray;border-left:1px solid gray;'
+	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
 	  template: __webpack_require__(33),
@@ -1264,7 +1264,7 @@ module.exports =
 	 } else { 
 	__p+='\n          Choose School\n          ';
 	 } 
-	__p+='\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          '+
+	__p+='\n        </a>\n      </li>\n    </ul>\n\n    <ul class="nav navbar-nav navbar-right">\n\n      <li style="padding-bottom:10px;border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;"\n        class="nav-bell-hook"></li>\n\n      <li class="user_name">\n        <a href="/main/schools/change/">\n          '+
 	((__t=( userName ))==null?'':_.escape(__t))+
 	'\n        </a>\n      </li>\n\n    </ul>\n  </div>\n</div>\n';
 	}
