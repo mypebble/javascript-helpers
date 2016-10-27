@@ -993,7 +993,8 @@ module.exports =
 	        active_school: user.get('activeSchool')
 	      },
 	      success: function success() {
-	        return _this.render();
+	        _this.render();
+	        console.log(_this);
 	      }
 	    });
 	  }
@@ -1080,12 +1081,8 @@ module.exports =
 
 	var _models = __webpack_require__(30);
 
-	var _models2 = _interopRequireDefault(_models);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
-	  model: _models2.default,
+	  model: _models.NotificationModel,
 	  url: '/notifications/'
 	});
 
@@ -1160,6 +1157,10 @@ module.exports =
 	  },
 
 	  template: __webpack_require__(33),
+
+	  collectionEvents: {
+	    'sync': 'render'
+	  },
 
 	  initialize: function initialize() {
 	    this.collection.fetch({
