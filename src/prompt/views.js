@@ -23,7 +23,10 @@ export const PromptView = Marionette.CompositeView.extend({
         location: window.location.pathname,
         active_school: user.get('activeSchool')
       },
-      success: () => this.render()
+      success: () => {
+        this.render();
+        console.log(this);
+      }
     });
   }
 });

@@ -27,6 +27,10 @@ const Bell = Marionette.CompositeView.extend({
 
   template: require('./templates/bell.html'),
 
+  collectionEvents: {
+    'sync': 'render'
+  },
+
   initialize: function() {
     this.collection.fetch({
       data: {
