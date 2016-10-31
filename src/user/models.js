@@ -13,6 +13,10 @@ export const User = Model.extend({
   idAttribute: 'email',
   localStorage: new LocalStorage('User'),
 
+  parse: function(data) {
+    return data[0] ? data[0] : data;
+  },
+
   /** Attach the JWT and payload to this user. */
   setCredentials: function(jwt) {
     const data = jwt.user;
@@ -30,10 +34,12 @@ export const User = Model.extend({
    */
   setActiveSchool: function() {
     const path = root.location.pathname;
+
     if (path) {
       const parts = path.split('/');
       if (parts[1] == 'school') {
         const schoolId = parseInt(parts[2]);
+
         this.save({activeSchool: schoolId});
       }
     }
