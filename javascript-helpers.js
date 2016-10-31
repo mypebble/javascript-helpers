@@ -871,13 +871,13 @@ module.exports =
 	__e( getActive('project') ) +
 	'">\n          <a href="' +
 	__e( getUrl('project', activeOrganisation) ) +
-	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n            <i class="arrow"></i>\n          </a>\n      </li>\n\n      <li class="nav-grants ' +
+	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n          </a>\n      </li>\n\n      <li class="nav-grants ' +
 	__e( getActive('grant') ) +
-	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n          <i class="arrow"></i>\n        </a>\n      </li>\n\n      <li class="nav-donations ' +
+	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n        </a>\n      </li>\n\n      <li class="nav-donations ' +
 	__e( getActive('donation') ) +
 	'">\n        <a href="' +
 	__e( getUrl('donation', activeOrganisation) ) +
-	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n            <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li>\n            <a href="' +
+	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n          <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li>\n            <a href="' +
 	__e( getUrl('donation', activeOrganisation) ) +
 	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="' +
 	__e( getUrl('donation', activeOrganisation) ) +
@@ -994,7 +994,6 @@ module.exports =
 	      },
 	      success: function success() {
 	        _this.render();
-	        console.log(_this);
 	      }
 	    });
 	  }
