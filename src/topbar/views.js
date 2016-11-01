@@ -31,7 +31,7 @@ const Bell = Marionette.CompositeView.extend({
     'sync': 'render'
   },
 
-  initialize: function() {
+  notifyLoop: function() {
     this.collection.fetch({
       data: {
         notification_type: 'global',
@@ -41,8 +41,14 @@ const Bell = Marionette.CompositeView.extend({
         if (collection.length == 0) {
           collection.add({text: 'No notifications'});
         }
+
+        setTimeout(() => this.notifyLoop(), 30000);
       }
     });
+  },
+
+  initialize: function() {
+    this.notifyLoop();
   },
 
   templateHelpers: function() {
