@@ -1127,6 +1127,10 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -1161,7 +1165,9 @@ module.exports =
 	    'sync': 'render'
 	  },
 
-	  initialize: function initialize() {
+	  notifyLoop: function notifyLoop() {
+	    var _this = this;
+
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'global',
@@ -1171,8 +1177,19 @@ module.exports =
 	        if (collection.length == 0) {
 	          collection.add({ text: 'No notifications' });
 	        }
+
+	        _underscore2.default.delay(function () {
+	          return _this.notifyLoop();
+	        }, 30000);
+	      },
+	      error: function error(collection) {
+	        collection.add({ text: 'There was an error getting your notifications.\n          Please try again later.' });
 	      }
 	    });
+	  },
+
+	  initialize: function initialize() {
+	    this.notifyLoop();
 	  },
 
 	  templateHelpers: function templateHelpers() {

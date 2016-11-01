@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
 
@@ -31,7 +32,7 @@ const Bell = Marionette.CompositeView.extend({
     'sync': 'render'
   },
 
-  initialize: function() {
+  notifyLoop: function() {
     this.collection.fetch({
       data: {
         notification_type: 'global',
@@ -41,8 +42,18 @@ const Bell = Marionette.CompositeView.extend({
         if (collection.length == 0) {
           collection.add({text: 'No notifications'});
         }
+
+        _.delay(() => this.notifyLoop(), 30000);
+      },
+      error: (collection) => {
+        collection.add({text: `There was an error getting your notifications.
+          Please try again later.`});
       }
     });
+  },
+
+  initialize: function() {
+    this.notifyLoop();
   },
 
   templateHelpers: function() {
