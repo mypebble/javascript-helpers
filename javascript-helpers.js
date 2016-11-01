@@ -1114,6 +1114,10 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -1161,7 +1165,7 @@ module.exports =
 	          collection.add({ text: 'No notifications' });
 	        }
 
-	        setTimeout(function () {
+	        _underscore2.default.delay(function () {
 	          return _this.notifyLoop();
 	        }, 30000);
 	      },

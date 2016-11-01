@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Marionette from 'backbone.marionette';
 
 
@@ -42,7 +43,7 @@ const Bell = Marionette.CompositeView.extend({
           collection.add({text: 'No notifications'});
         }
 
-        setTimeout(() => this.notifyLoop(), 30000);
+        _.delay(() => this.notifyLoop(), 30000);
       },
       error: (collection) => {
         collection.add({text: `There was an error getting your notifications.
