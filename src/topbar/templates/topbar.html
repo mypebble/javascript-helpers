@@ -24,10 +24,18 @@
       <li style="padding-bottom:10px;border-right: 2px solid #f1f1f1; border-left: 2px solid #f1f1f1;"
         class="nav-bell-hook"></li>
 
-      <li class="user_name">
-        <a href="/main/schools/change/">
+      <li class="user_name dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+          aria-haspopup="true" aria-expanded="false">
           <%- userName %>
         </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="/logout/">
+              <i class="fa fa-power-off"></i> Logout
+            </a>
+          </li>
+        </ul>
       </li>
 
     </ul>

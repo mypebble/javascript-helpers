@@ -25,7 +25,6 @@ export const PromptView = Marionette.CompositeView.extend({
       },
       success: () => {
         this.render();
-        console.log(this);
       }
     });
   }
