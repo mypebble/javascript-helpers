@@ -43,6 +43,10 @@ const Bell = Marionette.CompositeView.extend({
         }
 
         setTimeout(() => this.notifyLoop(), 30000);
+      },
+      error: (collection) => {
+        collection.add({text: `There was an error getting your notifications.
+          Please try again later.`});
       }
     });
   },
