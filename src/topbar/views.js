@@ -6,12 +6,11 @@ const Notification = Marionette.LayoutView.extend({
   template: require('./templates/notification.html'),
 
   templateHelpers: function() {
-    const link = this.model.get('link');
+    const notification_class = this.model.get('notification_class');
+    const read_class = this.model.isCleared() ? '' : 'notification-unread';
     return {
-      readClass: this.model.isCleared() ?
-        '' : 'background-color: #d6e5ed;',
-      getLink: link ? `href=${link}` : '',
-      mutedText: link ? '' : 'text-muted'
+      mutedText: this.model.get('link') ? '' : 'text-muted',
+      notification_class: `${notification_class} ${read_class}`
     };
   }
 });
