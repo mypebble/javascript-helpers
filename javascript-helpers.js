@@ -1154,6 +1154,7 @@ module.exports =
 	  notifyLoop: function notifyLoop() {
 	    var _this = this;
 
+	    console.log('Fetching notifications'); //eslint-disable-line no-console
 	    this.collection.fetch({
 	      data: {
 	        notification_type: 'global',
