@@ -32,6 +32,7 @@ const Bell = Marionette.CompositeView.extend({
   },
 
   notifyLoop: function() {
+    console.log('Fetching notifications'); //eslint-disable-line no-console
     this.collection.fetch({
       data: {
         notification_type: 'global',
