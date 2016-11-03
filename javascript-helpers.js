@@ -1148,7 +1148,12 @@ module.exports =
 	  template: __webpack_require__(33),
 
 	  collectionEvents: {
-	    'sync': 'render'
+	    'sync': 'notificationUpdate'
+	  },
+
+	  notificationUpdate: function notificationUpdate() {
+	    console.log(this.collection); //eslint-disable-line no-console
+	    this.render();
 	  },
 
 	  notifyLoop: function notifyLoop() {

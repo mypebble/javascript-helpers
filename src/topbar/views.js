@@ -28,7 +28,12 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   collectionEvents: {
-    'sync': 'render'
+    'sync': 'notificationUpdate'
+  },
+
+  notificationUpdate: function () {
+    console.log(this.collection); //eslint-disable-line no-console
+    this.render();
   },
 
   notifyLoop: function() {
