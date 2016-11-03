@@ -1148,7 +1148,12 @@ module.exports =
 	  template: __webpack_require__(33),
 
 	  collectionEvents: {
-	    'sync': 'render'
+	    'sync': 'notificationUpdate'
+	  },
+
+	  notificationUpdate: function notificationUpdate() {
+	    console.log(this.collection); //eslint-disable-line no-console
+	    this.render();
 	  },
 
 	  notifyLoop: function notifyLoop() {
@@ -1161,8 +1166,6 @@ module.exports =
 	        active_school: this.model.getActiveSchool()
 	      },
 	      success: function success(collection) {
-	        console.log(collection); //eslint-disable-line no-console
-
 	        if (collection.length == 0) {
 	          collection.add({ text: 'No notifications' });
 	        }

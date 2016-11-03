@@ -28,7 +28,12 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   collectionEvents: {
-    'sync': 'render'
+    'sync': 'notificationUpdate'
+  },
+
+  notificationUpdate: function () {
+    console.log(this.collection); //eslint-disable-line no-console
+    this.render();
   },
 
   notifyLoop: function() {
@@ -39,8 +44,6 @@ const Bell = Marionette.CompositeView.extend({
         active_school: this.model.getActiveSchool()
       },
       success: (collection) => {
-        console.log(collection); //eslint-disable-line no-console
-
         if (collection.length == 0) {
           collection.add({text: 'No notifications'});
         }
