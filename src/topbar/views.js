@@ -52,7 +52,7 @@ const Bell = Marionette.CompositeView.extend({
           collection.add({text: 'No notifications'});
         }
 
-        _.delay(() => this.notifyLoop(), 30000);
+        _.delay(_.bind(this.notifyLoop, this), 30000);
       },
       error: (collection) => {
         collection.add({text: `There was an error getting your notifications.

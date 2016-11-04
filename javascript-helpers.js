@@ -1174,9 +1174,7 @@ module.exports =
 	          collection.add({ text: 'No notifications' });
 	        }
 
-	        _underscore2.default.delay(function () {
-	          return _this.notifyLoop();
-	        }, 30000);
+	        _underscore2.default.delay(_underscore2.default.bind(_this.notifyLoop, _this), 30000);
 	      },
 	      error: function error(collection) {
 	        collection.add({ text: 'There was an error getting your notifications.\n          Please try again later.' });
