@@ -1,6 +1,6 @@
 {
   "name": "javascript-helpers",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "A collection of helpers and widgets for our JS front end applications",
   "main": "javascript-helpers.js",
   "scripts": {
@@ -40,5 +40,8 @@
     "underscore": "^1.8.3",
     "url-parse": "^1.1.6",
     "window-or-global": "^1.0.1"
+  },
+  "dependencies": {
+    "backbone-poller": "^1.1.3"
   }
 }

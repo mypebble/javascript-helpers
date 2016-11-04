@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
 
 
@@ -37,32 +37,16 @@ const Bell = Marionette.CompositeView.extend({
     this.render();
   },
 
-  notifyLoop: function() {
-    console.log('Fetching notifications'); //eslint-disable-line no-console
-    this.collection.fetch({
+  initialize: function() {
+    const poller = Poller.get(this.collection, {
+      delay: 30000,
       data: {
         notification_type: 'global',
         active_school: this.model.getActiveSchool()
-      },
-      success: (collection) => {
-        console.log('The incoming collection:'); //eslint-disable-line no-console
-        console.log(collection); //eslint-disable-line no-console
-
-        if (collection.length == 0) {
-          collection.add({text: 'No notifications'});
-        }
-
-        _.delay(_.bind(this.notifyLoop, this), 30000);
-      },
-      error: (collection) => {
-        collection.add({text: `There was an error getting your notifications.
-          Please try again later.`});
       }
     });
-  },
 
-  initialize: function() {
-    this.notifyLoop();
+    poller.start();
   },
 
   templateHelpers: function() {
