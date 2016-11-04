@@ -32,6 +32,7 @@ const Bell = Marionette.CompositeView.extend({
   },
 
   notificationUpdate: function () {
+    console.log('My collection:'); //eslint-disable-line no-console
     console.log(this.collection); //eslint-disable-line no-console
     this.render();
   },
@@ -44,6 +45,9 @@ const Bell = Marionette.CompositeView.extend({
         active_school: this.model.getActiveSchool()
       },
       success: (collection) => {
+        console.log('The incoming collection:'); //eslint-disable-line no-console
+        console.log(collection); //eslint-disable-line no-console
+
         if (collection.length == 0) {
           collection.add({text: 'No notifications'});
         }

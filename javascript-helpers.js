@@ -1152,6 +1152,7 @@ module.exports =
 	  },
 
 	  notificationUpdate: function notificationUpdate() {
+	    console.log('My collection:'); //eslint-disable-line no-console
 	    console.log(this.collection); //eslint-disable-line no-console
 	    this.render();
 	  },
@@ -1166,6 +1167,9 @@ module.exports =
 	        active_school: this.model.getActiveSchool()
 	      },
 	      success: function success(collection) {
+	        console.log('The incoming collection:'); //eslint-disable-line no-console
+	        console.log(collection); //eslint-disable-line no-console
+
 	        if (collection.length == 0) {
 	          collection.add({ text: 'No notifications' });
 	        }
