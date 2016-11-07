@@ -1148,17 +1148,14 @@ module.exports =
 	  template: __webpack_require__(34),
 
 	  collectionEvents: {
-	    'sync': 'notificationUpdate'
-	  },
-
-	  notificationUpdate: function notificationUpdate() {
-	    console.log('My collection:'); //eslint-disable-line no-console
-	    console.log(this.collection); //eslint-disable-line no-console
-	    this.render();
+	    'sync': 'render'
 	  },
 
 	  initialize: function initialize() {
+	    var _this = this;
+
 	    var poller = _backbonePoller2.default.get(this.collection, {
+	      continueOnError: false,
 	      delay: 30000,
 	      data: {
 	        notification_type: 'global',
@@ -1166,9 +1163,9 @@ module.exports =
 	      }
 	    });
 
-	    poller.on('success', function (collection) {
-	      console.log('Incoming collection'); //eslint-disable-line no-console
-	      console.log(collection); //eslint-disable-line no-console
+	    poller.on('error', function () {
+	      _this.collection.reset();
+	      _this.collection.add({ text: 'There was an error getting your\n        notifications. Please try again later.' });
 	    });
 
 	    poller.start();

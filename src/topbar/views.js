@@ -28,17 +28,12 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   collectionEvents: {
-    'sync': 'notificationUpdate'
-  },
-
-  notificationUpdate: function () {
-    console.log('My collection:'); //eslint-disable-line no-console
-    console.log(this.collection); //eslint-disable-line no-console
-    this.render();
+    'sync': 'render'
   },
 
   initialize: function() {
     const poller = Poller.get(this.collection, {
+      continueOnError: false,
       delay: 30000,
       data: {
         notification_type: 'global',
@@ -46,9 +41,10 @@ const Bell = Marionette.CompositeView.extend({
       }
     });
 
-    poller.on('success', (collection) => {
-      console.log('Incoming collection'); //eslint-disable-line no-console
-      console.log(collection); //eslint-disable-line no-console
+    poller.on('error', () => {
+      this.collection.reset();
+      this.collection.add({text: `There was an error getting your
+        notifications. Please try again later.`});
     });
 
     poller.start();
