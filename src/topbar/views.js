@@ -46,6 +46,11 @@ const Bell = Marionette.CompositeView.extend({
       }
     });
 
+    poller.on('success', (collection) => {
+      console.log('Incoming collection'); //eslint-disable-line no-console
+      console.log(collection); //eslint-disable-line no-console
+    });
+
     poller.start();
   },
 
