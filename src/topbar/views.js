@@ -31,6 +31,11 @@ const Bell = Marionette.CompositeView.extend({
     'sync': 'render'
   },
 
+  reportError: function() {
+    this.collection.set([{text: `There was an error getting your notifications.
+      Please try again later.`}]);
+  },
+
   initialize: function() {
     const poller = Poller.get(this.collection, {
       continueOnError: false,
@@ -41,12 +46,7 @@ const Bell = Marionette.CompositeView.extend({
       }
     });
 
-    poller.on('error', () => {
-      this.collection.reset();
-      this.collection.add({text: `There was an error getting your
-        notifications. Please try again later.`});
-    });
-
+    this.listenTo(poller, 'error', this.reportError);
     poller.start();
   },
 
