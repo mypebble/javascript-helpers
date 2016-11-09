@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(35);
+	var _models = __webpack_require__(36);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -1113,9 +1113,9 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
-	var _underscore = __webpack_require__(4);
+	var _backbonePoller = __webpack_require__(32);
 
-	var _underscore2 = _interopRequireDefault(_underscore);
+	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
 
 	var _backbone = __webpack_require__(2);
 
@@ -1124,7 +1124,7 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(32),
+	  template: __webpack_require__(33),
 
 	  templateHelpers: function templateHelpers() {
 	    var notification_class = this.model.get('notification_class');
@@ -1145,47 +1145,38 @@ module.exports =
 	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
-	  template: __webpack_require__(33),
+	  template: __webpack_require__(34),
 
 	  collectionEvents: {
-	    'sync': 'notificationUpdate'
+	    'sync': 'render'
 	  },
 
-	  notificationUpdate: function notificationUpdate() {
-	    console.log('My collection:'); //eslint-disable-line no-console
-	    console.log(this.collection); //eslint-disable-line no-console
-	    this.render();
+	  reportError: function reportError() {
+	    this.collection.set([{ text: 'There was an error getting your notifications.\n      Please try again later.' }]);
 	  },
 
-	  notifyLoop: function notifyLoop() {
-	    var _this = this;
-
-	    console.log('Fetching notifications'); //eslint-disable-line no-console
-	    this.collection.fetch({
-	      data: {
-	        notification_type: 'global',
-	        active_school: this.model.getActiveSchool()
-	      },
-	      success: function success(collection) {
-	        console.log('The incoming collection:'); //eslint-disable-line no-console
-	        console.log(collection); //eslint-disable-line no-console
-
-	        if (collection.length == 0) {
-	          collection.add({ text: 'No notifications' });
-	        }
-
-	        _underscore2.default.delay(function () {
-	          return _this.notifyLoop();
-	        }, 30000);
-	      },
-	      error: function error(collection) {
-	        collection.add({ text: 'There was an error getting your notifications.\n          Please try again later.' });
-	      }
-	    });
+	  noNotifications: function noNotifications() {
+	    if (this.collection.length == 0) {
+	      this.collection.set([{
+	        text: 'No notifications',
+	        link: null
+	      }]);
+	    }
 	  },
 
 	  initialize: function initialize() {
-	    this.notifyLoop();
+	    var poller = _backbonePoller2.default.get(this.collection, {
+	      continueOnError: false,
+	      delay: 30000,
+	      data: {
+	        notification_type: 'global',
+	        active_school: this.model.getActiveSchool()
+	      }
+	    });
+
+	    this.listenTo(poller, 'error', this.reportError);
+	    this.listenTo(poller, 'success', this.noNotifications);
+	    poller.start();
 	  },
 
 	  templateHelpers: function templateHelpers() {
@@ -1209,7 +1200,7 @@ module.exports =
 	    'id': 'navbar-container'
 	  },
 
-	  template: __webpack_require__(34),
+	  template: __webpack_require__(35),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
@@ -1233,6 +1224,12 @@ module.exports =
 
 /***/ },
 /* 32 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone-poller");
+
+/***/ },
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1253,7 +1250,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1270,7 +1267,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1297,7 +1294,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1317,7 +1314,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(36);
+	var _backbone2 = __webpack_require__(37);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1396,7 +1393,7 @@ module.exports =
 	});
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");

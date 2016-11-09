@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
 
 
@@ -28,41 +28,36 @@ const Bell = Marionette.CompositeView.extend({
   template: require('./templates/bell.html'),
 
   collectionEvents: {
-    'sync': 'notificationUpdate'
+    'sync': 'render'
   },
 
-  notificationUpdate: function () {
-    console.log('My collection:'); //eslint-disable-line no-console
-    console.log(this.collection); //eslint-disable-line no-console
-    this.render();
+  reportError: function() {
+    this.collection.set([{text: `There was an error getting your notifications.
+      Please try again later.`}]);
   },
 
-  notifyLoop: function() {
-    console.log('Fetching notifications'); //eslint-disable-line no-console
-    this.collection.fetch({
-      data: {
-        notification_type: 'global',
-        active_school: this.model.getActiveSchool()
-      },
-      success: (collection) => {
-        console.log('The incoming collection:'); //eslint-disable-line no-console
-        console.log(collection); //eslint-disable-line no-console
-
-        if (collection.length == 0) {
-          collection.add({text: 'No notifications'});
-        }
-
-        _.delay(() => this.notifyLoop(), 30000);
-      },
-      error: (collection) => {
-        collection.add({text: `There was an error getting your notifications.
-          Please try again later.`});
-      }
-    });
+  noNotifications: function() {
+    if (this.collection.length == 0) {
+      this.collection.set([{
+        text: 'No notifications',
+        link: null
+      }]);
+    }
   },
 
   initialize: function() {
-    this.notifyLoop();
+    const poller = Poller.get(this.collection, {
+      continueOnError: false,
+      delay: 30000,
+      data: {
+        notification_type: 'global',
+        active_school: this.model.getActiveSchool()
+      }
+    });
+
+    this.listenTo(poller, 'error', this.reportError);
+    this.listenTo(poller, 'success', this.noNotifications);
+    poller.start();
   },
 
   templateHelpers: function() {
