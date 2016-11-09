@@ -36,6 +36,15 @@ const Bell = Marionette.CompositeView.extend({
       Please try again later.`}]);
   },
 
+  noNotifications: function() {
+    if (this.collection.length == 0) {
+      this.collection.set([{
+        text: 'No notifications',
+        link: null
+      }]);
+    }
+  },
+
   initialize: function() {
     const poller = Poller.get(this.collection, {
       continueOnError: false,
@@ -47,6 +56,7 @@ const Bell = Marionette.CompositeView.extend({
     });
 
     this.listenTo(poller, 'error', this.reportError);
+    this.listenTo(poller, 'success', this.noNotifications);
     poller.start();
   },
 
