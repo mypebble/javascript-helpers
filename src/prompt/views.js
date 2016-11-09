@@ -19,7 +19,7 @@ export const PromptView = Marionette.CompositeView.extend({
       data: {
         notification_type: 'prompt',
         read: false,
-        location: window.location.pathname,
+        location: window.location.pathname + window.location.hash,
         active_school: user.get('activeSchool')
       },
       success: () => {
