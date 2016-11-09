@@ -1155,6 +1155,15 @@ module.exports =
 	    this.collection.set([{ text: 'There was an error getting your notifications.\n      Please try again later.' }]);
 	  },
 
+	  noNotifications: function noNotifications() {
+	    if (this.collection.length == 0) {
+	      this.collection.set([{
+	        text: 'No notifications',
+	        link: null
+	      }]);
+	    }
+	  },
+
 	  initialize: function initialize() {
 	    var poller = _backbonePoller2.default.get(this.collection, {
 	      continueOnError: false,
@@ -1166,6 +1175,7 @@ module.exports =
 	    });
 
 	    this.listenTo(poller, 'error', this.reportError);
+	    this.listenTo(poller, 'success', this.noNotifications);
 	    poller.start();
 	  },
 
