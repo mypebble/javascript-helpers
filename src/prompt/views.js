@@ -2,7 +2,6 @@ import Marionette from 'backbone.marionette';
 
 
 const Prompt = Marionette.LayoutView.extend({
-  className: 'alert alert-info',
   template: require('./templates/prompt.html')
 });
 
