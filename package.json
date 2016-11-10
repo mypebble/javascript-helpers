@@ -1,6 +1,6 @@
 {
   "name": "javascript-helpers",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "A collection of helpers and widgets for our JS front end applications",
   "main": "javascript-helpers.js",
   "scripts": {
