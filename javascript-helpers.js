@@ -960,7 +960,6 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Prompt = _backbone2.default.LayoutView.extend({
-	  className: 'alert alert-info',
 	  template: __webpack_require__(26)
 	});
 
@@ -979,7 +978,7 @@ module.exports =
 	      data: {
 	        notification_type: 'prompt',
 	        read: false,
-	        location: window.location.pathname,
+	        location: window.location.pathname + window.location.hash,
 	        active_school: user.get('activeSchool')
 	      },
 	      success: function success() {
@@ -996,11 +995,15 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a href="'+
+	__p+='<div title="'+
+	((__t=( alt_text ))==null?'':__t)+
+	'" class="prompt prompt-info">\n  <div class="step">Next Step</div>\n  <div class="prompt-body">\n    '+
+	((__t=( text ))==null?'':__t)+
+	'\n  </div>\n  <div class="action">\n    <a class="btn" href="'+
 	((__t=( link ))==null?'':_.escape(__t))+
 	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a>\n';
+	((__t=( button_text ))==null?'':_.escape(__t))+
+	'</a>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
