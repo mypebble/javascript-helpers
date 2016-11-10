@@ -51,6 +51,14 @@
         </ul>
       </li>
 
+      <li class="nav-projects <%- getActive('volunteer') %>">
+          <a href="<%- getUrl('volunteer', activeOrganisation) %>"
+            class="b-b" style="padding:20px;">
+            <i class="fa fa-sitemap"></i>
+            <span class="menu-title">Volunteers</span>
+          </a>
+      </li>
+
       <li class="nav-stakeholder <%- getActive('contact') %>">
         <a href="<%- getUrl('contact', activeOrganisation) %>">
           <span class="menu-title">SRM</span>
