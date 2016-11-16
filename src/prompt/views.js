@@ -1,8 +1,8 @@
+import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
 
 
 const Prompt = Marionette.LayoutView.extend({
-  className: 'alert alert-info',
   template: require('./templates/prompt.html')
 });
 
@@ -16,16 +16,18 @@ export const PromptView = Marionette.CompositeView.extend({
   initialize: function() {
     const user = this.model;
 
-    this.collection.fetch({
+    const poller = Poller.get(this.collection, {
+      continueOnError: false,
+      delay: 30000,
       data: {
         notification_type: 'prompt',
         read: false,
-        location: window.location.pathname,
+        location: window.location.pathname + window.location.hash,
         active_school: user.get('activeSchool')
-      },
-      success: () => {
-        this.render();
       }
     });
+
+    this.listenTo(poller, 'success', this.render);
+    poller.start();
   }
 });

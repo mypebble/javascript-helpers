@@ -159,7 +159,7 @@ module.exports =
 	  });
 	});
 
-	var _regions3 = __webpack_require__(28);
+	var _regions3 = __webpack_require__(29);
 
 	Object.keys(_regions3).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -953,6 +953,10 @@ module.exports =
 	});
 	exports.PromptView = undefined;
 
+	var _backbonePoller = __webpack_require__(26);
+
+	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -960,54 +964,63 @@ module.exports =
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Prompt = _backbone2.default.LayoutView.extend({
-	  className: 'alert alert-info',
-	  template: __webpack_require__(26)
+	  template: __webpack_require__(27)
 	});
 
 	var PromptView = exports.PromptView = _backbone2.default.CompositeView.extend({
 	  childView: Prompt,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(27),
+	  template: __webpack_require__(28),
 
 	  initialize: function initialize() {
-	    var _this = this;
-
 	    var user = this.model;
 
-	    this.collection.fetch({
+	    var poller = _backbonePoller2.default.get(this.collection, {
+	      continueOnError: false,
+	      delay: 30000,
 	      data: {
 	        notification_type: 'prompt',
 	        read: false,
-	        location: window.location.pathname,
+	        location: window.location.pathname + window.location.hash,
 	        active_school: user.get('activeSchool')
-	      },
-	      success: function success() {
-	        _this.render();
 	      }
 	    });
+
+	    this.listenTo(poller, 'success', this.render);
+	    poller.start();
 	  }
 	});
 
 /***/ },
 /* 26 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone-poller");
+
+/***/ },
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a href="'+
+	__p+='<div title="'+
+	((__t=( alt_text ))==null?'':__t)+
+	'" class="prompt prompt-info">\n  <div class="step">Next Step</div>\n  <div class="prompt-body">\n    '+
+	((__t=( text ))==null?'':__t)+
+	'\n  </div>\n  <div class="action">\n    <a class="btn" href="'+
 	((__t=( link ))==null?'':_.escape(__t))+
 	'">'+
-	((__t=( text ))==null?'':_.escape(__t))+
-	'</a>\n';
+	((__t=( button_text ))==null?'':_.escape(__t))+
+	'</a>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
@@ -1019,7 +1032,7 @@ module.exports =
 	};
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1033,9 +1046,9 @@ module.exports =
 
 	var _models = __webpack_require__(17);
 
-	var _collections = __webpack_require__(29);
+	var _collections = __webpack_require__(30);
 
-	var _views = __webpack_require__(31);
+	var _views = __webpack_require__(32);
 
 	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
 	  el: '#navbar',
@@ -1052,7 +1065,7 @@ module.exports =
 	});
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1064,7 +1077,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _models = __webpack_require__(30);
+	var _models = __webpack_require__(31);
 
 	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
 	  model: _models.NotificationModel,
@@ -1072,7 +1085,7 @@ module.exports =
 	});
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1103,7 +1116,7 @@ module.exports =
 	});
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1113,7 +1126,7 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
-	var _backbonePoller = __webpack_require__(32);
+	var _backbonePoller = __webpack_require__(26);
 
 	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
 
@@ -1155,6 +1168,15 @@ module.exports =
 	    this.collection.set([{ text: 'There was an error getting your notifications.\n      Please try again later.' }]);
 	  },
 
+	  noNotifications: function noNotifications() {
+	    if (this.collection.length == 0) {
+	      this.collection.set([{
+	        text: 'No notifications',
+	        link: null
+	      }]);
+	    }
+	  },
+
 	  initialize: function initialize() {
 	    var poller = _backbonePoller2.default.get(this.collection, {
 	      continueOnError: false,
@@ -1166,6 +1188,7 @@ module.exports =
 	    });
 
 	    this.listenTo(poller, 'error', this.reportError);
+	    this.listenTo(poller, 'success', this.noNotifications);
 	    poller.start();
 	  },
 
@@ -1211,12 +1234,6 @@ module.exports =
 	    };
 	  }
 	});
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	module.exports = require("backbone-poller");
 
 /***/ },
 /* 33 */

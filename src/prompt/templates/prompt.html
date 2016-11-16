@@ -1,1 +1,9 @@
-<a href="<%- link %>"><%- text %></a>
+<div title="<%= alt_text %>" class="prompt prompt-info">
+  <div class="step">Next Step</div>
+  <div class="prompt-body">
+    <%= text %>
+  </div>
+  <div class="action">
+    <a class="btn" href="<%- link %>"><%- button_text %></a>
+  </div>
+</div>
