@@ -753,6 +753,7 @@ module.exports =
 	      support: pathComponents[2] === 'support' || pathComponents[2] === 'schools' && pathComponents[3] !== 'change' || pathComponents[2] === 'users',
 	      choose: pathComponents[3] === 'change',
 	      project: pathComponents[3] === 'project',
+	      volunteer: pathComponents[3] === 'volunteer',
 	      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
 	      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
 	    };
@@ -799,6 +800,7 @@ module.exports =
 	    dashboard: schoolRoot,
 	    donation: schoolRoot + 'donation/',
 	    project: schoolRoot + 'project/',
+	    volunteer: schoolRoot + 'volunteer/',
 	    contact: schoolRoot + 'name/',
 	    costcentre: schoolRoot + 'account/',
 	    bank: schoolRoot + 'account/bank/',
@@ -858,53 +860,57 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n      <li class="nav-projects '+
+	__p+='<div id="mainnav-menu-wrap">\n  <div class="nano">\n    <div class="nano-content">\n      <ul id="mainnav-menu" class="list-group">\n\n        <li class="nav-projects '+
 	((__t=( getActive('project') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('project', activeOrganisation) ))==null?'':_.escape(__t))+
-	'"\n            class="b-b" style="padding:20px;">\n            <i class="fa fa-sitemap"></i>\n            <span class="menu-title">Projects</span>\n          </a>\n      </li>\n\n      <li class="nav-grants '+
+	'"\n             class="b-b" style="padding:20px;">\n             <i class="fa fa-sitemap"></i>\n             <span class="menu-title">Projects</span>\n          </a>\n        </li>\n\n        <li class="nav-grants '+
 	((__t=( getActive('grant') ))==null?'':_.escape(__t))+
-	'">\n        <a href="/grants/" class="b-b" style="padding:20px;">\n          <i class="fa fa-briefcase"></i>\n          <span class="menu-title">Grants</span>\n        </a>\n      </li>\n\n      <li class="nav-donations '+
+	'">\n          <a href="/grants/" class="b-b" style="padding:20px;">\n            <i class="fa fa-briefcase"></i>\n            <span class="menu-title">Grants</span>\n          </a>\n        </li>\n\n        <li class="nav-donations '+
 	((__t=( getActive('donation') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
+	'">\n          <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create"\n          class="b-b" style="padding:20px;">\n          <i class="fa fa-gift"></i>\n          <span class="menu-title">Donations</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n          <li>\n            <a href="'+
+	'create"\n             class="b-b" style="padding:20px;">\n             <i class="fa fa-gift"></i>\n             <span class="menu-title">Donations</span>\n             <i class="arrow"></i>\n          </a>\n          <ul class="collapse">\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'create">\n              Record Donation\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	'create">\n                Record Donation\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n              View Donations\n            </a>\n          </li>\n          <li>\n            <a href="'+
+	'">\n                View Donations\n              </a>\n            </li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'period/">\n              Gift Aid Claims\n            </a>\n          </li>\n          <li class="list-divider"></li>\n          <li>\n            <a href="'+
+	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n              Amend/Remove Donations\n            </a>\n          </li>\n        </ul>\n      </li>\n\n      <li class="nav-stakeholder '+
+	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteers '+
+	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n            <span class="menu-title">Volunteers</span>\n          </a>\n        </li>\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
+	'">\n          <a href="'+
 	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n          <span class="menu-title">SRM</span>\n        </a>\n      </li>\n\n      <li class="nav-admin '+
+	'">\n            <span class="menu-title">SRM</span>\n          </a>\n        </li>\n\n        <li class="nav-admin '+
 	((__t=( getActive('admin') ))==null?'':_.escape(__t))+
-	'">\n        <a href="#">\n          <span class="menu-title">Admin</span>\n          <i class="arrow"></i>\n        </a>\n        <ul class="collapse">\n        <li>\n          <a href="'+
+	'">\n          <a href="#">\n            <span class="menu-title">Admin</span>\n            <i class="arrow"></i>\n          </a>\n          <ul class="collapse">\n            <li>\n              <a href="'+
 	((__t=( getUrl('costcentre', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">Accounts</a>\n        </li>\n        <li>\n          <a href="'+
+	'">Accounts</a>\n            </li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('bank', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">Bank Account</a>\n        </li>\n        <li>\n          <a href="'+
+	'">Bank Account</a>\n            </li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('group', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">Groups</a>\n        </li>\n        </ul>\n      </li>\n\n      ';
+	'">Groups</a>\n            </li>\n          </ul>\n        </li>\n\n        ';
 	 if (isStaff) { 
-	__p+='\n      <li class="list-divider"></li>\n      <li class="nav-stakeholder '+
+	__p+='\n        <li class="list-divider"></li>\n        <li class="nav-stakeholder '+
 	((__t=( getActive('support') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
+	'">\n          <a href="'+
 	((__t=( getUrl('support') ))==null?'':_.escape(__t))+
-	'">\n          <span class="menu-title">Support</span>\n        </a>\n      </li>\n      ';
+	'">\n            <span class="menu-title">Support</span>\n          </a>\n        </li>\n        ';
 	 } 
-	__p+='\n\n      ';
+	__p+='\n\n        ';
 	 if (multipleOrgs) { 
-	__p+='\n      <li class="nav-admin '+
+	__p+='\n        <li class="nav-admin '+
 	((__t=( getActive('choose') ))==null?'':_.escape(__t))+
-	'">\n        <a href="'+
+	'">\n          <a href="'+
 	((__t=( getUrl('choose') ))==null?'':_.escape(__t))+
-	'">\n          <span class="menu-title">School</span>\n        </a>\n      </li>\n      ';
+	'">\n            <span class="menu-title">School</span>\n          </a>\n        </li>\n        ';
 	 } 
-	__p+='\n    </ul>\n\n    <div class="pos-abt" style="bottom:0px; width:100%;">\n      <span class="block font-bold text-white"\n        style="padding-left:20px; margin-bottom:10px;">\n          See what\'s coming soon!\n      </span>\n\n      <ul id="mainnav-menu" class="list-group m-b-none">\n        <li>\n          <a href="/club/" class="b-b">\n            <span class="menu-title">\n              Clubs &amp; Events\n            </span>\n          </a>\n        </li>\n        <li>\n          <a href="/service/" class="b-b">\n            <span class="menu-title">\n              Services &amp; Lettings\n            </span>\n          </a>\n        </li>\n        <li>\n          <div style="background:gray; padding:10px;">\n            <strong class="text-white" style="padding-left:20px;">\n              &copy; Arro by Pebble\n            </strong>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n';
+	__p+='\n      </ul>\n\n      <div class="pos-abt" style="bottom:0px; width:100%;">\n        <span class="block font-bold text-white"\n              style="padding-left:20px; margin-bottom:10px;">\n          See what\'s coming soon!\n        </span>\n\n        <ul id="mainnav-menu" class="list-group m-b-none">\n          <li>\n            <a href="/club/" class="b-b">\n              <span class="menu-title">\n                Clubs &amp; Events\n              </span>\n            </a>\n          </li>\n          <li>\n            <a href="/service/" class="b-b">\n              <span class="menu-title">\n                Services &amp; Lettings\n              </span>\n            </a>\n          </li>\n          <li>\n            <div style="background:gray; padding:10px;">\n              <strong class="text-white" style="padding-left:20px;">\n                &copy; Arro by Pebble\n              </strong>\n            </div>\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n';
 	}
 	return __p;
 	};
