@@ -878,7 +878,7 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteer '+
+	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteers '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
