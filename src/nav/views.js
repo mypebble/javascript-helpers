@@ -18,7 +18,7 @@ export const NavView = Mn.LayoutView.extend({
         this.model.reverse(urlName, {organisation: organisation}),
       isStaff: this.model.isStaff(),
       multipleOrgs: this.model.multipleOrgs(),
-      volunteer_enabled: this._active_feature('volunteer')
+      volunteers_enabled: this._active_feature('volunteers')
     };
   },
 

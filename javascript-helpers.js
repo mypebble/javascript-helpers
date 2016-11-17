@@ -850,7 +850,7 @@ module.exports =
 	      },
 	      isStaff: this.model.isStaff(),
 	      multipleOrgs: this.model.multipleOrgs(),
-	      volunteer_enabled: this._active_feature('volunteer')
+	      volunteers_enabled: this._active_feature('volunteers')
 	    };
 	  },
 
@@ -885,7 +885,7 @@ module.exports =
 	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
-	 if (volunteer_enabled) { 
+	 if (volunteers_enabled) { 
 	__p+='\n          <li class="nav-volunteers '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
 	'">\n            <a href="'+
