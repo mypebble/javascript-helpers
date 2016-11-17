@@ -7,10 +7,12 @@ import {NavView} from './views';
 export const NavRegion = Region.extend({
   el: '#mainnav-container',
 
-  showNav: function(user) {
+  showNav: function(user, active_feature_flags) {
     const model = new NavModel({user: user});
+    console.log(active_feature_flags);
     this.show(new NavView({
-      model: model
+      model: model,
+      active_feature_flags: active_feature_flags
     }));
   }
 });

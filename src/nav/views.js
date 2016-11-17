@@ -17,7 +17,12 @@ export const NavView = Mn.LayoutView.extend({
       getUrl: (urlName, organisation) =>
         this.model.reverse(urlName, {organisation: organisation}),
       isStaff: this.model.isStaff(),
-      multipleOrgs: this.model.multipleOrgs()
+      multipleOrgs: this.model.multipleOrgs(),
+      volunteer_enabled: this._active_feature('volunteer')
     };
+  },
+
+  _active_feature: function(feature) {
+    return !!(this.getOption('active_feature_flags').indexOf(feature) + 1);
   }
 });
