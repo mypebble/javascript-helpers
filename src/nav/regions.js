@@ -9,7 +9,6 @@ export const NavRegion = Region.extend({
 
   showNav: function(user, active_feature_flags) {
     const model = new NavModel({user: user});
-    console.log(active_feature_flags);
     this.show(new NavView({
       model: model,
       active_feature_flags: active_feature_flags

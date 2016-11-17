@@ -676,7 +676,6 @@ module.exports =
 
 	  showNav: function showNav(user, active_feature_flags) {
 	    var model = new _models.NavModel({ user: user });
-	    console.log(active_feature_flags);
 	    this.show(new _views.NavView({
 	      model: model,
 	      active_feature_flags: active_feature_flags
