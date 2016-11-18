@@ -824,6 +824,10 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -855,7 +859,8 @@ module.exports =
 	  },
 
 	  _active_feature: function _active_feature(feature) {
-	    return !!(this.getOption('active_feature_flags').indexOf(feature) + 1);
+	    var active_feature_flags = this.getOption('active_feature_flags');
+	    return _underscore2.default.isUndefined(active_feature_flags) ? false : active_feature_flags.indexOf(feature) !== -1;
 	  }
 	});
 
@@ -886,7 +891,7 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
 	 if (volunteers_enabled) { 
-	__p+='\n          <li class="nav-volunteers '+
+	__p+='\n          <li class="nav-volunteer '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
 	'">\n            <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+

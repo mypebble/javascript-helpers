@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Mn from 'backbone.marionette';
 
 
@@ -23,6 +24,8 @@ export const NavView = Mn.LayoutView.extend({
   },
 
   _active_feature: function(feature) {
-    return !!(this.getOption('active_feature_flags').indexOf(feature) + 1);
+    const active_feature_flags = this.getOption('active_feature_flags');
+    return _.isUndefined(active_feature_flags) ?
+      false : active_feature_flags.indexOf(feature) !== -1;
   }
 });
