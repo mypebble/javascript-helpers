@@ -51,11 +51,13 @@
           </ul>
         </li>
 
-        <li class="nav-volunteers <%- getActive('volunteer') %>">
-          <a href="<%- getUrl('volunteer', activeOrganisation) %>">
-            <span class="menu-title">Volunteers</span>
-          </a>
-        </li>
+        <% if (volunteers_enabled) { %>
+          <li class="nav-volunteer <%- getActive('volunteer') %>">
+            <a href="<%- getUrl('volunteer', activeOrganisation) %>">
+              <span class="menu-title">Volunteers</span>
+            </a>
+          </li>
+        <% } %>
 
         <li class="nav-stakeholder <%- getActive('contact') %>">
           <a href="<%- getUrl('contact', activeOrganisation) %>">

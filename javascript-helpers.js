@@ -674,10 +674,11 @@ module.exports =
 	var NavRegion = exports.NavRegion = _backbone.Region.extend({
 	  el: '#mainnav-container',
 
-	  showNav: function showNav(user) {
+	  showNav: function showNav(user, active_feature_flags) {
 	    var model = new _models.NavModel({ user: user });
 	    this.show(new _views.NavView({
-	      model: model
+	      model: model,
+	      active_feature_flags: active_feature_flags
 	    }));
 	  }
 	});
@@ -823,6 +824,10 @@ module.exports =
 	});
 	exports.NavView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbone = __webpack_require__(2);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
@@ -848,8 +853,14 @@ module.exports =
 	        return _this.model.reverse(urlName, { organisation: organisation });
 	      },
 	      isStaff: this.model.isStaff(),
-	      multipleOrgs: this.model.multipleOrgs()
+	      multipleOrgs: this.model.multipleOrgs(),
+	      volunteers_enabled: this._active_feature('volunteers')
 	    };
+	  },
+
+	  _active_feature: function _active_feature(feature) {
+	    var active_feature_flags = this.getOption('active_feature_flags');
+	    return _underscore2.default.isUndefined(active_feature_flags) ? false : active_feature_flags.indexOf(feature) !== -1;
 	  }
 	});
 
@@ -878,11 +889,15 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteers '+
+	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
+	 if (volunteers_enabled) { 
+	__p+='\n          <li class="nav-volunteer '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
+	'">\n            <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n            <span class="menu-title">Volunteers</span>\n          </a>\n        </li>\n\n        <li class="nav-stakeholder '+
+	'">\n              <span class="menu-title">Volunteers</span>\n            </a>\n          </li>\n        ';
+	 } 
+	__p+='\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+

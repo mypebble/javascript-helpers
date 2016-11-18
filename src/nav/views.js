@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Mn from 'backbone.marionette';
 
 
@@ -17,7 +18,14 @@ export const NavView = Mn.LayoutView.extend({
       getUrl: (urlName, organisation) =>
         this.model.reverse(urlName, {organisation: organisation}),
       isStaff: this.model.isStaff(),
-      multipleOrgs: this.model.multipleOrgs()
+      multipleOrgs: this.model.multipleOrgs(),
+      volunteers_enabled: this._active_feature('volunteers')
     };
+  },
+
+  _active_feature: function(feature) {
+    const active_feature_flags = this.getOption('active_feature_flags');
+    return _.isUndefined(active_feature_flags) ?
+      false : active_feature_flags.indexOf(feature) !== -1;
   }
 });
