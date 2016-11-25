@@ -51,6 +51,7 @@ export const NavModel = Model.extend({
       choose: pathComponents[3] === 'change',
       project: pathComponents[3] === 'project',
       volunteer: pathComponents[3] === 'volunteer',
+      sponsor: pathComponents[3] === 'sponsor',
       contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
       admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
     };

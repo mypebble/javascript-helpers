@@ -59,6 +59,14 @@
           </li>
         <% } %>
 
+        <% if (sponsors_enabled) { %>
+          <li class="nav-sponsorship <%- getActive('sponsor') %>">
+            <a href="<%- getUrl('sponsor', activeOrganisation) %>">
+              <span class="menu-title">Sponsors</span>
+            </a>
+          </li>
+        <% } %>
+
         <li class="nav-stakeholder <%- getActive('contact') %>">
           <a href="<%- getUrl('contact', activeOrganisation) %>">
             <span class="menu-title">SRM</span>
