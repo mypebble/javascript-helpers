@@ -755,6 +755,7 @@ module.exports =
 	      choose: pathComponents[3] === 'change',
 	      project: pathComponents[3] === 'project',
 	      volunteer: pathComponents[3] === 'volunteer',
+	      sponsor: pathComponents[3] === 'sponsor',
 	      contact: pathComponents[3] === 'name' && pathComponents[4] !== 'group',
 	      admin: pathComponents[3] === 'account' || pathComponents[4] === 'group'
 	    };
@@ -889,15 +890,15 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
-	 if (volunteers_enabled) { 
-	__p+='\n          <li class="nav-volunteer '+
+	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteers '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
-	'">\n            <a href="'+
+	'">\n          <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n              <span class="menu-title">Volunteers</span>\n            </a>\n          </li>\n        ';
-	 } 
-	__p+='\n\n        <li class="nav-stakeholder '+
+	'">\n            <span class="menu-title">Volunteers</span>\n          </a>\n        </li>\n\n        <li class="nav-sponsorship '+
+	((__t=( getActive('sponsor') ))==null?'':_.escape(__t))+
+	'">\n          <a href="'+
+	((__t=( getUrl('sponsor', activeOrganisation) ))==null?'':_.escape(__t))+
+	'">\n            <span class="menu-title">Sponsors</span>\n          </a>\n        </li>\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
