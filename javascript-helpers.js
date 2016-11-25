@@ -891,7 +891,7 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
 	 if (volunteers_enabled) { 
-	__p+='\n          <li class="nav-volunteer '+
+	__p+='\n          <li class="nav-volunteers '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
 	'">\n            <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
