@@ -7,6 +7,7 @@ export function reverse(name, routeArgs={}) {
     donation: `${schoolRoot}donation/`,
     project: `${schoolRoot}project/`,
     volunteer: `${schoolRoot}volunteer/`,
+    sponsor: `${schoolRoot}sponsor/`,
     contact: `${schoolRoot}name/`,
     costcentre: `${schoolRoot}account/`,
     bank: `${schoolRoot}account/bank/`,
