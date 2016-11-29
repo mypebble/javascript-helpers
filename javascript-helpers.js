@@ -858,7 +858,9 @@ module.exports =
 	      },
 	      isStaff: this.model.isStaff(),
 	      multipleOrgs: this.model.multipleOrgs(),
-	      volunteers_enabled: this._active_feature('volunteers')
+	      feature_enabled: function feature_enabled(feature) {
+	        return _this._active_feature(feature);
+	      }
 	    };
 	  },
 
@@ -893,19 +895,31 @@ module.exports =
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
 	'period/">\n                Gift Aid Claims\n              </a>\n            </li>\n            <li class="list-divider"></li>\n            <li>\n              <a href="'+
 	((__t=( getUrl('donation', activeOrganisation) ))==null?'':_.escape(__t))+
-	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        <li class="nav-volunteers '+
+	'amend/">\n                Amend/Remove Donations\n              </a>\n            </li>\n          </ul>\n        </li>\n\n        ';
+	 if (feature_enabled('volunteers')) { 
+	__p+='\n          <li class="nav-volunteers '+
 	((__t=( getActive('volunteer') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
+	'">\n            <a href="'+
 	((__t=( getUrl('volunteer', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n            <span class="menu-title">Volunteers</span>\n          </a>\n        </li>\n\n        <li class="nav-sponsorship '+
+	'">\n              <span class="menu-title">Volunteers</span>\n            </a>\n          </li>\n        ';
+	 } 
+	__p+='\n\n        ';
+	 if (feature_enabled('sponsors')) { 
+	__p+='\n          <li class="nav-sponsorship '+
 	((__t=( getActive('sponsor') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
+	'">\n            <a href="'+
 	((__t=( getUrl('sponsor', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n            <span class="menu-title">Sponsors</span>\n          </a>\n        </li>\n\n        <li class="nav-services '+
+	'">\n              <span class="menu-title">Sponsors</span>\n            </a>\n          </li>\n        ';
+	 } 
+	__p+='\n\n        ';
+	 if (feature_enabled('services_and_lettings')) { 
+	__p+='\n          <li class="nav-services '+
 	((__t=( getActive('letting') ))==null?'':_.escape(__t))+
-	'">\n          <a href="'+
+	'">\n            <a href="'+
 	((__t=( getUrl('letting', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n            <span class="menu-title">Services and Lettings</span>\n          </a>\n        </li>\n\n        <li class="nav-stakeholder '+
+	'">\n              <span class="menu-title">Services and Lettings</span>\n            </a>\n          </li>\n        ';
+	 } 
+	__p+='\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
 	'">\n          <a href="'+
 	((__t=( getUrl('contact', activeOrganisation) ))==null?'':_.escape(__t))+
