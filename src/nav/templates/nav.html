@@ -51,17 +51,29 @@
           </ul>
         </li>
 
-        <li class="nav-volunteers <%- getActive('volunteer') %>">
-          <a href="<%- getUrl('volunteer', activeOrganisation) %>">
-            <span class="menu-title">Volunteers</span>
-          </a>
-        </li>
+        <% if (feature_enabled('volunteers')) { %>
+          <li class="nav-volunteers <%- getActive('volunteer') %>">
+            <a href="<%- getUrl('volunteer', activeOrganisation) %>">
+              <span class="menu-title">Volunteers</span>
+            </a>
+          </li>
+        <% } %>
 
-        <li class="nav-sponsorship <%- getActive('sponsor') %>">
-          <a href="<%- getUrl('sponsor', activeOrganisation) %>">
-            <span class="menu-title">Sponsors</span>
-          </a>
-        </li>
+        <% if (feature_enabled('sponsors')) { %>
+          <li class="nav-sponsorship <%- getActive('sponsor') %>">
+            <a href="<%- getUrl('sponsor', activeOrganisation) %>">
+              <span class="menu-title">Sponsors</span>
+            </a>
+          </li>
+        <% } %>
+
+        <% if (feature_enabled('services_and_lettings')) { %>
+          <li class="nav-services <%- getActive('letting') %>">
+            <a href="<%- getUrl('letting', activeOrganisation) %>">
+              <span class="menu-title">Services and Lettings</span>
+            </a>
+          </li>
+        <% } %>
 
         <li class="nav-stakeholder <%- getActive('contact') %>">
           <a href="<%- getUrl('contact', activeOrganisation) %>">

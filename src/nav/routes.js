@@ -8,6 +8,7 @@ export function reverse(name, routeArgs={}) {
     project: `${schoolRoot}project/`,
     volunteer: `${schoolRoot}volunteer/`,
     sponsor: `${schoolRoot}sponsor/`,
+    letting: `${schoolRoot}letting/`,
     contact: `${schoolRoot}name/`,
     costcentre: `${schoolRoot}account/`,
     bank: `${schoolRoot}account/bank/`,
