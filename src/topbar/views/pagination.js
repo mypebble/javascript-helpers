@@ -16,7 +16,7 @@ export default Marionette.LayoutView.extend({
 
   ui: {
     previous: '.page-prev',
-    next: '.page-next',
+    next: '.page-next'
   },
 
   triggers: {
