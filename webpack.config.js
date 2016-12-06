@@ -17,6 +17,7 @@ module.exports = {
     underscore: true,
     'backbone.marionette': true,
     'backbone.localstorage': true,
+    'backbone.paginator': true,
     'backbone-poller': true,
     'url-parse': true,
     'window-or-global': true

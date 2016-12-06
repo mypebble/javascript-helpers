@@ -1,9 +1,9 @@
 import _ from 'underscore';
 
-import {Model} from 'backbone';
+import Form from 'base/models/form';
 
 
-export const NotificationModel = Model.extend({
+export const NotificationModel = Form.extend({
   defaults: {
     datetime_cleared: '',
     link: '',

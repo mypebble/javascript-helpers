@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(36);
+	var _models = __webpack_require__(44);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -1089,9 +1089,9 @@ module.exports =
 
 	var _models = __webpack_require__(17);
 
-	var _collections = __webpack_require__(30);
+	var _notification = __webpack_require__(30);
 
-	var _views = __webpack_require__(32);
+	var _layout = __webpack_require__(36);
 
 	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
 	  el: '#navbar',
@@ -1100,9 +1100,35 @@ module.exports =
 	    var model = new _models.NavModel();
 	    model.setUser(user);
 
-	    this.show(new _views.TopbarView({
+	    var notification_collection = new _notification.NotificationCollection([], {
+	      urlBase: '/notifications/',
+	      search_params: {
+	        notification_type: 'global',
+	        active_school: user.getActiveSchool()
+	      },
+	      state: {
+	        pageSize: 5,
+	        pagesInRange: 5
+	      }
+	    });
+
+	    var unread_collection = new _notification.NotificationCollection([], {
+	      urlBase: '/notifications/',
+	      search_params: {
+	        notification_type: 'global',
+	        active_school: user.getActiveSchool(),
+	        read: false
+	      },
+	      state: {
+	        pageSize: 5,
+	        pagesInRange: 5
+	      }
+	    });
+
+	    this.show(new _layout.TopbarView({
 	      model: model,
-	      collection: new _collections.NotificationCollection()
+	      collection: notification_collection,
+	      unread_collection: unread_collection
 	    }));
 	  }
 	});
@@ -1118,17 +1144,254 @@ module.exports =
 	});
 	exports.NotificationCollection = undefined;
 
-	var _backbone = __webpack_require__(20);
+	var _page = __webpack_require__(31);
 
-	var _models = __webpack_require__(31);
+	var _page2 = _interopRequireDefault(_page);
 
-	var NotificationCollection = exports.NotificationCollection = _backbone.Collection.extend({
-	  model: _models.NotificationModel,
-	  url: '/notifications/'
+	var _models = __webpack_require__(34);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationCollection = exports.NotificationCollection = _page2.default.extend({
+	  model: _models.NotificationModel
 	});
 
 /***/ },
 /* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _backbone = __webpack_require__(32);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _base = __webpack_require__(33);
+
+	var _base2 = _interopRequireDefault(_base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/** Provides some helper methods and default values for the pageable
+	* collection.
+	*/
+	var PagColProto = _backbone2.default.prototype;
+
+	var DefaultPageCollection = _backbone2.default.extend({
+	  model: _base2.default,
+	  mode: 'server',
+
+	  /* We don't need to send this information to the server
+	  */
+	  queryParams: {
+	    sortKey: 'ordering',
+	    totalRecords: null,
+	    totalPages: null
+	  },
+
+	  state: {
+	    pageSize: 20,
+	    pagesInRange: 10
+	  },
+
+	  pageSet: function pageSet() {
+	    if (!this.multiplePages()) {
+	      return [];
+	    }
+
+	    var middle = this.state.currentPage;
+	    if (middle <= this.state.pagesInRange) {
+	      middle = 1 + this.state.pagesInRange;
+	    }
+
+	    var max = middle + this.state.pagesInRange;
+	    if (max > this.state.totalPages) {
+	      max = this.state.totalPages + 1;
+	    }
+
+	    var pages = _underscore2.default.range(middle - this.state.pagesInRange, max);
+	    return pages;
+	  },
+
+	  parseRecords: function parseRecords(response) {
+	    return response.results;
+	  },
+
+	  parseState: function parseState(response) {
+	    var rtnState = {
+	      totalRecords: response.count,
+	      totalPages: response.page_count
+	    };
+
+	    if (response.per_page) {
+	      rtnState.pageSize = response.per_page;
+	    }
+
+	    return rtnState;
+	  },
+
+	  url: function url() {
+	    return this.urlBase;
+	  },
+
+	  initialize: function initialize(models, options) {
+	    this.options = options || {};
+	    this.urlBase = options.urlBase;
+	    this.search_params = options.search_params || {};
+	    var state = _underscore2.default.clone(this.state);
+
+	    if (_underscore2.default.isUndefined(this.urlBase)) {
+	      console.error('urlBase cannot be undefined');
+	    }
+
+	    if (options.state) {
+	      _underscore2.default.extend(state, options.state);
+	      this.state = state;
+	    }
+	  },
+
+	  /** Override the backbone paginator's fetch to always set search_params,
+	  * always reset and use the proper jQuery calls
+	  */
+	  fetch: function fetch(options) {
+	    options = options || {};
+	    var data = options.data || {};
+	    data = _underscore2.default.extend(data, this.search_params);
+	    options.data = data;
+	    options.traditional = true;
+	    PagColProto.fetch.call(this, options);
+	  },
+
+	  /** Clears the form.
+	  */
+	  clearForm: function clearForm() {
+	    this.search_params = {};
+
+	    this.fetch({ page: 1 });
+	    return this;
+	  },
+
+	  /** Empty the collection
+	  */
+	  empty: function empty() {
+	    this.set([]);
+	  },
+
+	  /**
+	  * Instruct the server to restrict collection based on category filters.
+	  */
+	  categoryFilter: function categoryFilter(categoryFilterTerms) {
+	    _underscore2.default.extend(this.search_params, categoryFilterTerms);
+
+	    this.state.currentPage = 1;
+	    this.fetch();
+	    return this;
+	  },
+
+	  /** Run a search against the API.
+	  */
+	  search: function search(term) {
+	    term = term || undefined;
+	    this.search_params.search = term;
+
+	    this.state.currentPage = 1;
+	    this.fetch();
+	    return this;
+	  },
+
+	  /** Handle cases of an initial empty state.
+	  */
+	  multiplePages: function multiplePages() {
+	    if (this.state.totalPages) {
+	      return this.state.totalPages > 1;
+	    }
+	    return false;
+	  },
+
+	  singlePage: function singlePage() {
+	    return !this.multiplePages();
+	  }
+	});
+
+	exports.default = DefaultPageCollection;
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone.paginator");
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _backbone = __webpack_require__(20);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _backbone2.default.Model.extend({
+	  initialize: function initialize(options) {
+	    options = options || {};
+
+	    if (_underscore2.default.isUndefined(this.options)) {
+	      this.options = {};
+	    }
+	    _underscore2.default.extend(this.options, options);
+	  },
+
+	  /** Handle the create/update cases in a single method.
+	  */
+	  url: function url() {
+	    var url = this.get('url');
+
+	    if (_underscore2.default.isUndefined(url)) {
+	      url = this.options.url;
+	    }
+
+	    if (_underscore2.default.isUndefined(url) && this.collection) {
+	      if (_underscore2.default.isFunction(this.collection.url)) {
+	        url = this.collection.url();
+	      } else {
+	        url = this.collection.url;
+	      }
+	    }
+
+	    if (_underscore2.default.isUndefined(url)) {
+	      console.error('url is undefined');
+	    }
+
+	    var last = url.slice(url.length - 1, url.length);
+
+	    if (last !== '/') {
+	      url += '/';
+	    }
+
+	    return url;
+	  }
+	});
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1142,11 +1405,13 @@ module.exports =
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _backbone = __webpack_require__(20);
+	var _form = __webpack_require__(35);
+
+	var _form2 = _interopRequireDefault(_form);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var NotificationModel = exports.NotificationModel = _backbone.Model.extend({
+	var NotificationModel = exports.NotificationModel = _form2.default.extend({
 	  defaults: {
 	    datetime_cleared: '',
 	    link: '',
@@ -1159,7 +1424,28 @@ module.exports =
 	});
 
 /***/ },
-/* 32 */
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _base = __webpack_require__(33);
+
+	var _base2 = _interopRequireDefault(_base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/** Generic form handler model that we can pass into any form view
+	* Extend this to add extra defaults, or module-specific logic.
+	*/
+	exports.default = _base2.default.extend();
+
+/***/ },
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1177,10 +1463,14 @@ module.exports =
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
+	var _pagination = __webpack_require__(37);
+
+	var _pagination2 = _interopRequireDefault(_pagination);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Notification = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(33),
+	  template: __webpack_require__(39),
 
 	  templateHelpers: function templateHelpers() {
 	    var notification_class = this.model.get('notification_class');
@@ -1192,23 +1482,108 @@ module.exports =
 	  }
 	});
 
-	var Bell = _backbone2.default.CompositeView.extend({
+	var NotificationList = _backbone2.default.CompositeView.extend({
 	  childView: Notification,
 	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(40)
+	});
+
+	var UnreadCountView = _backbone2.default.LayoutView.extend({
+	  template: __webpack_require__(41),
+
+	  collectionEvents: {
+	    'sync': 'render'
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    var unread_count = this.collection.state.totalRecords;
+	    return {
+	      unreadCount: unread_count,
+	      hidden: unread_count ? '' : 'hidden'
+	    };
+	  }
+	});
+
+	var BellLayout = _backbone2.default.LayoutView.extend({
 	  className: 'dropdown',
 
 	  attributes: {
 	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
-	  template: __webpack_require__(34),
+	  template: __webpack_require__(42),
 
-	  collectionEvents: {
-	    'sync': 'render'
+	  regions: {
+	    notificationList: '.notification-list-hook',
+	    unreadCount: '.unread-count-hook',
+	    page: '.page-hook'
 	  },
 
-	  reportError: function reportError() {
-	    this.collection.set([{ text: 'There was an error getting your notifications.\n      Please try again later.' }]);
+	  onShow: function onShow() {
+	    var notifications_view = new NotificationList({
+	      collection: this.collection
+	    });
+
+	    var unread_view = new UnreadCountView({
+	      collection: this.getOption('unread_collection')
+	    });
+
+	    var page_view = new _pagination2.default({
+	      collection: this.collection
+	    });
+
+	    this.showChildView('notificationList', notifications_view);
+	    this.showChildView('unreadCount', unread_view);
+	    this.showChildView('page', page_view);
+	  }
+	});
+
+	var TopbarView = exports.TopbarView = _backbone2.default.LayoutView.extend({
+	  attributes: {
+	    'id': 'navbar-container'
+	  },
+
+	  template: __webpack_require__(43),
+
+	  regions: {
+	    bell: '.nav-bell-hook'
+	  },
+
+	  collectionEvents: function collectionEvents() {
+	    var _this = this;
+
+	    return {
+	      sync: function sync() {
+	        return _this.getOption('unread_collection').fetch();
+	      }
+	    };
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      multipleOrgs: this.model.multipleOrgs()
+	    };
+	  },
+
+	  onRender: function onRender() {
+	    this.getOption('unread_collection').fetch();
+	    var poller = _backbonePoller2.default.get(this.collection, {
+	      continueOnError: false,
+	      delay: 30000
+	    });
+
+	    this.listenTo(poller, 'error', this.reportError);
+	    this.listenTo(poller, 'success', this.noNotifications);
+	    poller.start();
+
+	    var bell = new BellLayout({
+	      model: this.model.getUser(),
+	      collection: this.collection,
+	      unread_collection: this.getOption('unread_collection')
+	    });
+
+	    this.showChildView('bell', bell);
 	  },
 
 	  noNotifications: function noNotifications() {
@@ -1220,66 +1595,114 @@ module.exports =
 	    }
 	  },
 
-	  initialize: function initialize() {
-	    var poller = _backbonePoller2.default.get(this.collection, {
-	      continueOnError: false,
-	      delay: 30000,
-	      data: {
-	        notification_type: 'global',
-	        active_school: this.model.getActiveSchool()
-	      }
-	    });
-
-	    this.listenTo(poller, 'error', this.reportError);
-	    this.listenTo(poller, 'success', this.noNotifications);
-	    poller.start();
-	  },
-
-	  templateHelpers: function templateHelpers() {
-	    var unread_count = this._getUnread();
-	    return {
-	      unreadCount: unread_count,
-	      hidden: unread_count ? '' : 'hidden'
-	    };
-	  },
-
-	  _getUnread: function _getUnread() {
-	    var unread = this.collection.filter(function (notification) {
-	      return !notification.isCleared();
-	    });
-	    return unread.length;
-	  }
-	});
-
-	var TopbarView = exports.TopbarView = _backbone2.default.LayoutView.extend({
-	  attributes: {
-	    'id': 'navbar-container'
-	  },
-
-	  template: __webpack_require__(35),
-
-	  regions: {
-	    bell: '.nav-bell-hook'
-	  },
-
-	  onRender: function onRender() {
-	    var bell = new Bell({
-	      model: this.model.getUser(),
-	      collection: this.collection
-	    });
-
-	    this.showChildView('bell', bell);
-	  },
-
-	  templateHelpers: function templateHelpers() {
-	    return {
-	      multipleOrgs: this.model.multipleOrgs()
-	    };
+	  reportError: function reportError() {
+	    this.collection.set([{ text: 'There was an error getting your notifications.\n      Please try again later.' }]);
 	  }
 	});
 
 /***/ },
-/* 33 */
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _backbone = __webpack_require__(2);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Simplified version of Arro's page view for the notifications menu.
+	*/
+	exports.default = _backbone2.default.LayoutView.extend({
+	  tagName: 'ul',
+	  template: __webpack_require__(38),
+
+	  collectionEvents: {
+	    'reset': 'render',
+	    'fetch': 'render',
+	    'update': 'render'
+	  },
+
+	  ui: {
+	    previous: '.page-prev',
+	    next: '.page-next'
+	  },
+
+	  triggers: {
+	    'click @ui.previous': 'page:prev',
+	    'click @ui.next': 'page:next'
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    var model = null;
+
+	    if (!_underscore2.default.isUndefined(this.model)) {
+	      model = this.model;
+	    } else if (!_underscore2.default.isUndefined(this.collection)) {
+	      model = this.collection;
+	    } else {
+	      console.error('this.model or this.collection must be set');
+	    }
+
+	    return {
+	      disabledFirst: function disabledFirst() {
+	        if (!model.hasPreviousPage()) {
+	          return 'disabled';
+	        }
+	        return '';
+	      },
+
+	      disabledLast: function disabledLast() {
+	        if (!model.hasNextPage()) {
+	          return 'disabled';
+	        }
+	        return '';
+	      }
+	    };
+	  },
+
+	  onPageNext: function onPageNext() {
+	    if (this.collection.hasNextPage()) {
+	      this.collection.getNextPage();
+	    }
+	  },
+
+	  onPagePrev: function onPagePrev() {
+	    if (this.collection.hasPreviousPage()) {
+	      this.collection.getPreviousPage();
+	    }
+	  }
+	});
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<a data-page="prev" href="#" aria-label="Previous"\n                             class="page-prev '+
+	((__t=( disabledFirst() ))==null?'':_.escape(__t))+
+	'">\n  <span class="glyphicon glyphicon-chevron-left"></span>\n</a>\n\n<a data-page="next" href="#" aria-label="Next"\n                             class="page-next '+
+	((__t=( disabledLast() ))==null?'':_.escape(__t))+
+	'">\n  <span class="glyphicon glyphicon-chevron-right"></span>\n</a>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1300,24 +1723,48 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 34 */
+/* 40 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul class="list-unstyled"></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">\n  <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n  <span class="label label-danger pos-abt '+
+	__p+='<span class="label label-danger pos-abt '+
 	((__t=( hidden ))==null?'':_.escape(__t))+
-	'"\n    style="top:5px; right:5px; padding:3px 5px;">\n    '+
+	'"\n      style="top:5px; right:5px; padding:3px 5px;">\n      '+
 	((__t=( unreadCount ))==null?'':_.escape(__t))+
-	'\n  </span>\n</a>\n<div class="dropdown-menu" aria-labelledby="dropdownMenu1" style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <strong>Notifications</strong>\n  </div>\n  <ul class="list-unstyled">\n  </ul>\n</div>\n';
+	'\n</span>\n';
 	}
 	return __p;
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 35 */
+/* 42 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="pull-right">\n          <div class="page-hook"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n</div>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1344,7 +1791,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 36 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1364,7 +1811,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(37);
+	var _backbone2 = __webpack_require__(45);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1443,7 +1890,7 @@ module.exports =
 	});
 
 /***/ },
-/* 37 */
+/* 45 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");
