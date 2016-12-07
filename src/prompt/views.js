@@ -14,17 +14,9 @@ export const PromptView = Marionette.CompositeView.extend({
   template: require('./templates/prompts.html'),
 
   initialize: function() {
-    const user = this.model;
-
     const poller = Poller.get(this.collection, {
       continueOnError: false,
-      delay: 30000,
-      data: {
-        notification_type: 'prompt',
-        read: false,
-        location: window.location.pathname + window.location.hash,
-        active_school: user.get('activeSchool')
-      }
+      delay: 30000
     });
 
     this.listenTo(poller, 'success', this.render);
