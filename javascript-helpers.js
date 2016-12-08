@@ -159,7 +159,7 @@ module.exports =
 	  });
 	});
 
-	var _regions3 = __webpack_require__(29);
+	var _regions3 = __webpack_require__(32);
 
 	Object.keys(_regions3).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -964,23 +964,34 @@ module.exports =
 	});
 	exports.PromptRegion = undefined;
 
-	var _backbone = __webpack_require__(20);
+	var _backbone = __webpack_require__(2);
 
-	var _backbone2 = __webpack_require__(2);
+	var _page = __webpack_require__(25);
 
-	var _views = __webpack_require__(25);
+	var _page2 = _interopRequireDefault(_page);
 
-	var PromptRegion = exports.PromptRegion = _backbone2.Region.extend({
+	var _views = __webpack_require__(28);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var PromptRegion = exports.PromptRegion = _backbone.Region.extend({
 	  el: '#prompt-hook',
 
 	  showPrompts: function showPrompts(user) {
-	    var PromptCollection = _backbone.Collection.extend({
-	      url: '/notifications/'
+	    var PromptCollection = _page2.default.extend();
+	    var prompt_collection = new PromptCollection([], {
+	      urlBase: '/notifications/',
+	      search_params: {
+	        notification_type: 'prompt',
+	        active_school: user.getActiveSchool(),
+	        read: false,
+	        location: window.location.pathname + window.location.hash
+	      }
 	    });
 
 	    this.show(new _views.PromptView({
 	      model: user,
-	      collection: new PromptCollection()
+	      collection: prompt_collection
 	    }));
 	  }
 	});
@@ -994,187 +1005,16 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.PromptView = undefined;
-
-	var _backbonePoller = __webpack_require__(26);
-
-	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
-
-	var _backbone = __webpack_require__(2);
-
-	var _backbone2 = _interopRequireDefault(_backbone);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Prompt = _backbone2.default.LayoutView.extend({
-	  template: __webpack_require__(27)
-	});
-
-	var PromptView = exports.PromptView = _backbone2.default.CompositeView.extend({
-	  childView: Prompt,
-	  childViewContainer: 'ul',
-
-	  template: __webpack_require__(28),
-
-	  initialize: function initialize() {
-	    var user = this.model;
-
-	    var poller = _backbonePoller2.default.get(this.collection, {
-	      continueOnError: false,
-	      delay: 30000,
-	      data: {
-	        notification_type: 'prompt',
-	        read: false,
-	        location: window.location.pathname + window.location.hash,
-	        active_school: user.get('activeSchool')
-	      }
-	    });
-
-	    this.listenTo(poller, 'success', this.render);
-	    poller.start();
-	  }
-	});
-
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	module.exports = require("backbone-poller");
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<div title="'+
-	((__t=( alt_text ))==null?'':__t)+
-	'" class="prompt prompt-info">\n  <div class="step">Next Step</div>\n  <div class="prompt-body">\n    '+
-	((__t=( text ))==null?'':__t)+
-	'\n  </div>\n  <div class="action">\n    <a class="btn" href="'+
-	((__t=( link ))==null?'':_.escape(__t))+
-	'">'+
-	((__t=( button_text ))==null?'':_.escape(__t))+
-	'</a>\n  </div>\n</div>\n';
-	}
-	return __p;
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 28 */
-/***/ function(module, exports) {
-
-	module.exports = function(obj){
-	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-	with(obj||{}){
-	__p+='<ul class="list-unstyled"></ul>\n';
-	}
-	return __p;
-	};
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.TopbarRegion = undefined;
-
-	var _backbone = __webpack_require__(2);
-
-	var _models = __webpack_require__(17);
-
-	var _notification = __webpack_require__(30);
-
-	var _layout = __webpack_require__(36);
-
-	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
-	  el: '#navbar',
-
-	  showTopbar: function showTopbar(user) {
-	    var model = new _models.NavModel();
-	    model.setUser(user);
-
-	    var notification_collection = new _notification.NotificationCollection([], {
-	      urlBase: '/notifications/',
-	      search_params: {
-	        notification_type: 'global',
-	        active_school: user.getActiveSchool()
-	      },
-	      state: {
-	        pageSize: 5,
-	        pagesInRange: 5
-	      }
-	    });
-
-	    var unread_collection = new _notification.NotificationCollection([], {
-	      urlBase: '/notifications/',
-	      search_params: {
-	        notification_type: 'global',
-	        active_school: user.getActiveSchool(),
-	        read: false
-	      },
-	      state: {
-	        pageSize: 5,
-	        pagesInRange: 5
-	      }
-	    });
-
-	    this.show(new _layout.TopbarView({
-	      model: model,
-	      collection: notification_collection,
-	      unread_collection: unread_collection
-	    }));
-	  }
-	});
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NotificationCollection = undefined;
-
-	var _page = __webpack_require__(31);
-
-	var _page2 = _interopRequireDefault(_page);
-
-	var _models = __webpack_require__(34);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var NotificationCollection = exports.NotificationCollection = _page2.default.extend({
-	  model: _models.NotificationModel
-	});
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 
 	var _underscore = __webpack_require__(4);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _backbone = __webpack_require__(32);
+	var _backbone = __webpack_require__(26);
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
-	var _base = __webpack_require__(33);
+	var _base = __webpack_require__(27);
 
 	var _base2 = _interopRequireDefault(_base);
 
@@ -1324,13 +1164,13 @@ module.exports =
 	exports.default = DefaultPageCollection;
 
 /***/ },
-/* 32 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.paginator");
 
 /***/ },
-/* 33 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1391,6 +1231,169 @@ module.exports =
 	});
 
 /***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.PromptView = undefined;
+
+	var _backbonePoller = __webpack_require__(29);
+
+	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
+
+	var _backbone = __webpack_require__(2);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Prompt = _backbone2.default.LayoutView.extend({
+	  template: __webpack_require__(30)
+	});
+
+	var PromptView = exports.PromptView = _backbone2.default.CompositeView.extend({
+	  childView: Prompt,
+	  childViewContainer: 'ul',
+
+	  template: __webpack_require__(31),
+
+	  initialize: function initialize() {
+	    var poller = _backbonePoller2.default.get(this.collection, {
+	      continueOnError: false,
+	      delay: 30000
+	    });
+
+	    this.listenTo(poller, 'success', this.render);
+	    poller.start();
+	  }
+	});
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	module.exports = require("backbone-poller");
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<div title="'+
+	((__t=( alt_text ))==null?'':__t)+
+	'" class="prompt prompt-info">\n  <div class="step">Next Step</div>\n  <div class="prompt-body">\n    '+
+	((__t=( text ))==null?'':__t)+
+	'\n  </div>\n  <div class="action">\n    <a class="btn" href="'+
+	((__t=( link ))==null?'':_.escape(__t))+
+	'">'+
+	((__t=( button_text ))==null?'':_.escape(__t))+
+	'</a>\n  </div>\n</div>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<ul class="list-unstyled"></ul>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.TopbarRegion = undefined;
+
+	var _backbone = __webpack_require__(2);
+
+	var _models = __webpack_require__(17);
+
+	var _notification = __webpack_require__(33);
+
+	var _layout = __webpack_require__(36);
+
+	var TopbarRegion = exports.TopbarRegion = _backbone.Region.extend({
+	  el: '#navbar',
+
+	  showTopbar: function showTopbar(user) {
+	    var model = new _models.NavModel();
+	    model.setUser(user);
+
+	    var notification_collection = new _notification.NotificationCollection([], {
+	      urlBase: '/notifications/',
+	      search_params: {
+	        notification_type: 'global',
+	        active_school: user.getActiveSchool()
+	      },
+	      state: {
+	        pageSize: 5,
+	        pagesInRange: 5
+	      }
+	    });
+
+	    var unread_collection = new _notification.NotificationCollection([], {
+	      urlBase: '/notifications/',
+	      search_params: {
+	        notification_type: 'global',
+	        active_school: user.getActiveSchool(),
+	        read: false
+	      },
+	      state: {
+	        pageSize: 5,
+	        pagesInRange: 5
+	      }
+	    });
+
+	    this.show(new _layout.TopbarView({
+	      model: model,
+	      collection: notification_collection,
+	      unread_collection: unread_collection
+	    }));
+	  }
+	});
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NotificationCollection = undefined;
+
+	var _page = __webpack_require__(25);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	var _models = __webpack_require__(34);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotificationCollection = exports.NotificationCollection = _page2.default.extend({
+	  model: _models.NotificationModel
+	});
+
+/***/ },
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1433,7 +1436,7 @@ module.exports =
 	  value: true
 	});
 
-	var _base = __webpack_require__(33);
+	var _base = __webpack_require__(27);
 
 	var _base2 = _interopRequireDefault(_base);
 
@@ -1455,7 +1458,7 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
-	var _backbonePoller = __webpack_require__(26);
+	var _backbonePoller = __webpack_require__(29);
 
 	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
 
