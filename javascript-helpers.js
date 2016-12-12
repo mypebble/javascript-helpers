@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(44);
+	var _models = __webpack_require__(45);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -1458,6 +1458,10 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbonePoller = __webpack_require__(29);
 
 	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
@@ -1508,6 +1512,43 @@ module.exports =
 	  }
 	});
 
+	var BellIcon = _backbone2.default.LayoutView.extend({
+	  template: __webpack_require__(42),
+
+	  ui: {
+	    bell: '.fa-bell'
+	  },
+
+	  collectionEvents: {
+	    sync: 'animate'
+	  },
+
+	  events: function events() {
+	    var _this = this;
+
+	    var events = {};
+	    var animation_end_events = ['webkitAnimationEnd', 'mozAnimationEnd', 'MSAnimationEnd', 'onanimationend', 'animationend'];
+
+	    _underscore2.default.each(animation_end_events, function (event) {
+	      events[event + ' @ui.bell'] = function () {
+	        return _this.ui.bell.removeClass('animated swing');
+	      };
+	    });
+
+	    return events;
+	  },
+
+	  animate: function animate() {
+	    var old_count = this.count;
+	    this.count = this.collection.state.totalRecords;
+	    if (this.count == old_count || this.count == 0) {
+	      return;
+	    }
+
+	    this.ui.bell.addClass('animated swing');
+	  }
+	});
+
 	var BellLayout = _backbone2.default.LayoutView.extend({
 	  className: 'dropdown',
 
@@ -1515,15 +1556,16 @@ module.exports =
 	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
-	  template: __webpack_require__(42),
+	  template: __webpack_require__(43),
 
 	  regions: {
 	    notificationList: '.notification-list-hook',
 	    unreadCount: '.unread-count-hook',
-	    page: '.page-hook'
+	    page: '.page-hook',
+	    bellIcon: '.bell-icon-hook'
 	  },
 
-	  onShow: function onShow() {
+	  onRender: function onRender() {
 	    var notifications_view = new NotificationList({
 	      collection: this.collection
 	    });
@@ -1536,9 +1578,14 @@ module.exports =
 	      collection: this.collection
 	    });
 
+	    var bell_icon = new BellIcon({
+	      collection: this.getOption('unread_collection')
+	    });
+
 	    this.showChildView('notificationList', notifications_view);
 	    this.showChildView('unreadCount', unread_view);
 	    this.showChildView('page', page_view);
+	    this.showChildView('bellIcon', bell_icon);
 	  }
 	});
 
@@ -1547,18 +1594,18 @@ module.exports =
 	    'id': 'navbar-container'
 	  },
 
-	  template: __webpack_require__(43),
+	  template: __webpack_require__(44),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
 	  },
 
 	  collectionEvents: function collectionEvents() {
-	    var _this = this;
+	    var _this2 = this;
 
 	    return {
 	      sync: function sync() {
-	        return _this.getOption('unread_collection').fetch();
+	        return _this2.getOption('unread_collection').fetch();
 	      }
 	    };
 	  },
@@ -1761,13 +1808,25 @@ module.exports =
 	module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <i class="fa fa-lg fa-bell" style="color:gray;"></i>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="pull-right">\n          <div class="page-hook"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n</div>\n';
+	__p+='<i class="fa fa-lg fa-bell" style="color:gray;"></i>\n';
 	}
 	return __p;
 	};
 
 /***/ },
 /* 43 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <div class="bell-icon-hook"></div>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="pull-right">\n          <div class="page-hook"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n</div>\n';
+	}
+	return __p;
+	};
+
+/***/ },
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1794,7 +1853,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1814,7 +1873,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(45);
+	var _backbone2 = __webpack_require__(46);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1893,7 +1952,7 @@ module.exports =
 	});
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");

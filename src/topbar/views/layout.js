@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
 
@@ -43,6 +44,42 @@ const UnreadCountView = Marionette.LayoutView.extend({
 });
 
 
+const BellIcon = Marionette.LayoutView.extend({
+  template: require('topbar/templates/bell_icon.html'),
+
+  ui: {
+    bell: '.fa-bell'
+  },
+
+  collectionEvents: {
+    sync: 'animate'
+  },
+
+  events: function() {
+    const events = {};
+    const animation_end_events = ['webkitAnimationEnd', 'mozAnimationEnd',
+      'MSAnimationEnd', 'onanimationend', 'animationend'];
+
+    _.each(animation_end_events, event => {
+      events[`${event} @ui.bell`] = () =>
+        this.ui.bell.removeClass('animated swing');
+    });
+
+    return events;
+  },
+
+  animate: function() {
+    const old_count = this.count;
+    this.count = this.collection.state.totalRecords;
+    if (this.count == old_count || this.count == 0) {
+      return;
+    }
+
+    this.ui.bell.addClass('animated swing');
+  }
+});
+
+
 const BellLayout = Marionette.LayoutView.extend({
   className: 'dropdown',
 
@@ -55,10 +92,11 @@ const BellLayout = Marionette.LayoutView.extend({
   regions: {
     notificationList: '.notification-list-hook',
     unreadCount: '.unread-count-hook',
-    page: '.page-hook'
+    page: '.page-hook',
+    bellIcon: '.bell-icon-hook'
   },
 
-  onShow: function() {
+  onRender: function() {
     const notifications_view = new NotificationList({
       collection: this.collection
     });
@@ -71,9 +109,14 @@ const BellLayout = Marionette.LayoutView.extend({
       collection: this.collection
     });
 
+    const bell_icon = new BellIcon({
+      collection: this.getOption('unread_collection')
+    });
+
     this.showChildView('notificationList', notifications_view);
     this.showChildView('unreadCount', unread_view);
     this.showChildView('page', page_view);
+    this.showChildView('bellIcon', bell_icon);
   }
 });
 
