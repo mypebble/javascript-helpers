@@ -1458,6 +1458,10 @@ module.exports =
 	});
 	exports.TopbarView = undefined;
 
+	var _underscore = __webpack_require__(4);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
 	var _backbonePoller = __webpack_require__(29);
 
 	var _backbonePoller2 = _interopRequireDefault(_backbonePoller);
@@ -1519,19 +1523,29 @@ module.exports =
 	    sync: 'animate'
 	  },
 
-	  animate: function animate() {
+	  events: function events() {
 	    var _this = this;
 
+	    var events = {};
+	    var animation_end_events = ['webkitAnimationEnd', 'mozAnimationEnd', 'MSAnimationEnd', 'onanimationend', 'animationend'];
+
+	    _underscore2.default.each(animation_end_events, function (event) {
+	      events[event + ' @ui.bell'] = function () {
+	        return _this.ui.bell.removeClass('animated swing');
+	      };
+	    });
+
+	    return events;
+	  },
+
+	  animate: function animate() {
 	    var old_count = this.count;
 	    this.count = this.collection.state.totalRecords;
 	    if (this.count == old_count || this.count == 0) {
 	      return;
 	    }
 
-	    var animation_end = 'webkitAnimationEnd mozAnimationEnd ' + 'MSAnimationEnd oanimationend animationend';
-	    this.ui.bell.addClass('animated swing').on(animation_end, function () {
-	      _this.ui.bell.removeClass('animated swing');
-	    });
+	    this.ui.bell.addClass('animated swing');
 	  }
 	});
 

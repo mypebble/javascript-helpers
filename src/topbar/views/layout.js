@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
 
@@ -54,6 +55,19 @@ const BellIcon = Marionette.LayoutView.extend({
     sync: 'animate'
   },
 
+  events: function() {
+    const events = {};
+    const animation_end_events = ['webkitAnimationEnd', 'mozAnimationEnd',
+      'MSAnimationEnd', 'onanimationend', 'animationend'];
+
+    _.each(animation_end_events, event => {
+      events[`${event} @ui.bell`] = () =>
+        this.ui.bell.removeClass('animated swing');
+    });
+
+    return events;
+  },
+
   animate: function() {
     const old_count = this.count;
     this.count = this.collection.state.totalRecords;
@@ -61,11 +75,7 @@ const BellIcon = Marionette.LayoutView.extend({
       return;
     }
 
-    const animation_end = 'webkitAnimationEnd mozAnimationEnd '
-                          + 'MSAnimationEnd oanimationend animationend';
-    this.ui.bell.addClass('animated swing').on(animation_end, () => {
-      this.ui.bell.removeClass('animated swing');
-    });
+    this.ui.bell.addClass('animated swing');
   }
 });
 
