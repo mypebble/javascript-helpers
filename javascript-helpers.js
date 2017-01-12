@@ -1881,7 +1881,7 @@ module.exports =
 	with(obj||{}){
 	__p+='<div class="pull-right" '+
 	((__t=( disable_clear ))==null?'':_.escape(__t))+
-	'>\n  <a class="clear-all">clear all</a>\n</div>\n';
+	'>\n  <a class="clear-all"\n     style="\n     border-radius: 500px;\n     border-color: #fff;\n     text-decoration:none;\n     color:#555555 !important;\n     font-size:12px;\n     font-weight:bold;\n     padding:0 15px;\n     line-height:32px;\n     height: auto;\n     display:inline-block;\n     text-align:center;\n     background-color:#DDDDDD;\n     ">\n    Clear All\n  </a>\n</div>\n';
 	}
 	return __p;
 	};
@@ -1894,7 +1894,7 @@ module.exports =
 	module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <div class="bell-icon-hook"></div>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="clear-hook"></div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n  <div class="bg-dark wrapper-sm">\n    <div class="page-hook"></div>\n  </div>\n</div>\n';
+	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <div class="bell-icon-hook"></div>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper" style="min-height: 62px;">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left" style="line-height: 32px;">\n          <strong>Notifications</strong>\n        </div>\n        <div class="clear-hook"></div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n  <div class="bg-dark wrapper-sm">\n    <div class="page-hook"></div>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
