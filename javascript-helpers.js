@@ -1881,7 +1881,7 @@ module.exports =
 	with(obj||{}){
 	__p+='<div class="pull-right" '+
 	((__t=( disable_clear ))==null?'':_.escape(__t))+
-	'>\n  <a class="clear-all"\n     style="\n     border-radius: 500px;\n     border-color: #fff;\n     text-decoration:none;\n     color:#555555 !important;\n     font-size:12px;\n     font-weight:bold;\n     padding:0 15px;\n     line-height:32px;\n     height: auto;\n     display:inline-block;\n     text-align:center;\n     background-color:#DDDDDD;\n     ">\n    Clear All\n  </a>\n</div>\n';
+	'>\n  <a class="clear-all">Clear All</a>\n</div>\n';
 	}
 	return __p;
 	};

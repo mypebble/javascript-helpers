@@ -164,7 +164,7 @@ const BellLayout = Marionette.LayoutView.extend({
 
     const clear_button = new ClearView({
       collection: this.getOption('unread_collection'),
-      full_collection: this.collection,
+      full_collection: this.collection
     });
 
     this.showChildView('notificationList', notifications_view);
