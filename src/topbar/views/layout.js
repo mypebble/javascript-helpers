@@ -1,6 +1,7 @@
 import _ from 'underscore';
 import Poller from 'backbone-poller';
 import Marionette from 'backbone.marionette';
+import Backbone from 'backbone';
 
 import Page from 'topbar/views/pagination';
 
@@ -23,7 +24,11 @@ const NotificationList = Marionette.CompositeView.extend({
   childView: Notification,
   childViewContainer: 'ul',
 
-  template: require('topbar/templates/notification_list.html')
+  template: require('topbar/templates/notification_list.html'),
+
+  collectionEvents: {
+    change: 'render'
+  }
 });
 
 
@@ -80,6 +85,49 @@ const BellIcon = Marionette.LayoutView.extend({
 });
 
 
+const ClearView = Marionette.LayoutView.extend({
+  template: require('topbar/templates/clear.html'),
+
+  ui: {
+    clearAll: '.clear-all'
+  },
+
+  events: {
+    'click @ui.clearAll': 'clearAll'
+  },
+
+  collectionEvents: {
+    sync: 'render'
+  },
+
+  templateHelpers: function() {
+    return {
+      disable_clear: this.collection.state.totalRecords > 5 ? '' : 'hidden'
+    };
+  },
+
+  clearAll: function() {
+    const full_collection = this.getOption('full_collection');
+
+    const query_params = full_collection.search_params;
+    const school = query_params.active_school;
+    const type = query_params.notification_type;
+
+    const base_url = 'http://localhost/notifications/markread/';
+    const url = `${base_url}?active_school=${school}&notification_type=${type}`;
+
+    Backbone.sync(
+      'create',
+      new Backbone.Model(),
+      {
+        url: url,
+        success: () => full_collection.fetch()
+      }
+    );
+  }
+});
+
+
 const BellLayout = Marionette.LayoutView.extend({
   className: 'dropdown',
 
@@ -93,7 +141,8 @@ const BellLayout = Marionette.LayoutView.extend({
     notificationList: '.notification-list-hook',
     unreadCount: '.unread-count-hook',
     page: '.page-hook',
-    bellIcon: '.bell-icon-hook'
+    bellIcon: '.bell-icon-hook',
+    clear: '.clear-hook'
   },
 
   onRender: function() {
@@ -113,10 +162,16 @@ const BellLayout = Marionette.LayoutView.extend({
       collection: this.getOption('unread_collection')
     });
 
+    const clear_button = new ClearView({
+      collection: this.getOption('unread_collection'),
+      full_collection: this.collection,
+    });
+
     this.showChildView('notificationList', notifications_view);
     this.showChildView('unreadCount', unread_view);
     this.showChildView('page', page_view);
     this.showChildView('bellIcon', bell_icon);
+    this.showChildView('clear', clear_button);
   }
 });
 

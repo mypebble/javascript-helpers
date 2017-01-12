@@ -1,9 +1,23 @@
-<a data-page="prev" href="#" aria-label="Previous"
-                             class="page-prev <%- disabledFirst() %>">
-  <span class="glyphicon glyphicon-chevron-left"></span>
-</a>
+<div class="col-md-2 col-md-offset-3">
+  <div class="pull-right">
+    <a data-page="prev" href="#" aria-label="Previous"
+                                 class="page-prev <%- disabledFirst() %>">
+       <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+  </div>
+</div>
 
-<a data-page="next" href="#" aria-label="Next"
-                             class="page-next <%- disabledLast() %>">
-  <span class="glyphicon glyphicon-chevron-right"></span>
-</a>
+<div class="col-md-2">
+  <div class="text-center">
+    <%- page %>
+  </div>
+</div>
+
+<div class="col-md-2">
+  <div class="pull-left">
+    <a data-page="next" href="#" aria-label="Next"
+                                 class="page-next <%- disabledLast() %>">
+     <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </div>
+</div>

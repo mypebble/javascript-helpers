@@ -171,7 +171,7 @@ module.exports =
 	  });
 	});
 
-	var _models = __webpack_require__(45);
+	var _models = __webpack_require__(46);
 
 	Object.keys(_models).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -1470,6 +1470,10 @@ module.exports =
 
 	var _backbone2 = _interopRequireDefault(_backbone);
 
+	var _backbone3 = __webpack_require__(20);
+
+	var _backbone4 = _interopRequireDefault(_backbone3);
+
 	var _pagination = __webpack_require__(37);
 
 	var _pagination2 = _interopRequireDefault(_pagination);
@@ -1493,7 +1497,11 @@ module.exports =
 	  childView: Notification,
 	  childViewContainer: 'ul',
 
-	  template: __webpack_require__(40)
+	  template: __webpack_require__(40),
+
+	  collectionEvents: {
+	    change: 'render'
+	  }
 	});
 
 	var UnreadCountView = _backbone2.default.LayoutView.extend({
@@ -1549,6 +1557,46 @@ module.exports =
 	  }
 	});
 
+	var ClearView = _backbone2.default.LayoutView.extend({
+	  template: __webpack_require__(43),
+
+	  ui: {
+	    clearAll: '.clear-all'
+	  },
+
+	  events: {
+	    'click @ui.clearAll': 'clearAll'
+	  },
+
+	  collectionEvents: {
+	    sync: 'render'
+	  },
+
+	  templateHelpers: function templateHelpers() {
+	    return {
+	      disable_clear: this.collection.state.totalRecords > 5 ? '' : 'hidden'
+	    };
+	  },
+
+	  clearAll: function clearAll() {
+	    var full_collection = this.getOption('full_collection');
+
+	    var query_params = full_collection.search_params;
+	    var school = query_params.active_school;
+	    var type = query_params.notification_type;
+
+	    var base_url = 'http://localhost/notifications/markread/';
+	    var url = base_url + '?active_school=' + school + '&notification_type=' + type;
+
+	    _backbone4.default.sync('create', new _backbone4.default.Model(), {
+	      url: url,
+	      success: function success() {
+	        return full_collection.fetch();
+	      }
+	    });
+	  }
+	});
+
 	var BellLayout = _backbone2.default.LayoutView.extend({
 	  className: 'dropdown',
 
@@ -1556,13 +1604,14 @@ module.exports =
 	    style: 'padding: 15px 15px 5px 15px;'
 	  },
 
-	  template: __webpack_require__(43),
+	  template: __webpack_require__(44),
 
 	  regions: {
 	    notificationList: '.notification-list-hook',
 	    unreadCount: '.unread-count-hook',
 	    page: '.page-hook',
-	    bellIcon: '.bell-icon-hook'
+	    bellIcon: '.bell-icon-hook',
+	    clear: '.clear-hook'
 	  },
 
 	  onRender: function onRender() {
@@ -1582,10 +1631,16 @@ module.exports =
 	      collection: this.getOption('unread_collection')
 	    });
 
+	    var clear_button = new ClearView({
+	      collection: this.getOption('unread_collection'),
+	      full_collection: this.collection
+	    });
+
 	    this.showChildView('notificationList', notifications_view);
 	    this.showChildView('unreadCount', unread_view);
 	    this.showChildView('page', page_view);
 	    this.showChildView('bellIcon', bell_icon);
+	    this.showChildView('clear', clear_button);
 	  }
 	});
 
@@ -1594,7 +1649,7 @@ module.exports =
 	    'id': 'navbar-container'
 	  },
 
-	  template: __webpack_require__(44),
+	  template: __webpack_require__(45),
 
 	  regions: {
 	    bell: '.nav-bell-hook'
@@ -1670,11 +1725,17 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Simplified version of Arro's page view for the notifications menu.
+	/** The pagination view renders the collection and handles paging with the
+	*   server. This also contains an extra collection listener to deal with the
+	*   underlying contents of the collection changing for whatever reason.
+	*
+	*   collection listeners:
+	*     - reset
+	*     - fetch
+	*     - update
 	*/
 	exports.default = _backbone2.default.LayoutView.extend({
-	  tagName: 'ul',
+	  className: 'row',
 	  template: __webpack_require__(38),
 
 	  collectionEvents: {
@@ -1685,12 +1746,17 @@ module.exports =
 
 	  ui: {
 	    previous: '.page-prev',
-	    next: '.page-next'
+	    next: '.page-next',
+	    page: '.page'
 	  },
 
 	  triggers: {
 	    'click @ui.previous': 'page:prev',
 	    'click @ui.next': 'page:next'
+	  },
+
+	  events: {
+	    'click @ui.page': 'handlePageChange'
 	  },
 
 	  templateHelpers: function templateHelpers() {
@@ -1705,6 +1771,13 @@ module.exports =
 	    }
 
 	    return {
+	      active: function active(page) {
+	        var active = page == model.state.currentPage;
+	        return active ? 'active' : '';
+	      },
+
+	      page: model.state.currentPage,
+
 	      disabledFirst: function disabledFirst() {
 	        if (!model.hasPreviousPage()) {
 	          return 'disabled';
@@ -1721,16 +1794,90 @@ module.exports =
 	    };
 	  },
 
+	  handleSelectAll: function handleSelectAll(is_checked) {
+	    if (_underscore2.default.isUndefined(is_checked)) {
+	      return;
+	    }
+
+	    var table = this.options.table;
+	    var selectAll = table.ui.selectAll;
+	    _underscore2.default.delay(function () {
+	      if (is_checked) {
+	        if (!selectAll[0].checked) {
+	          selectAll.trigger('click');
+	        }
+	      } else {
+	        selectAll[0].checked = false;
+	      }
+	    }, 50);
+	  },
+
+	  _getSelectStatus: function _getSelectStatus() {
+	    var table = this.options.table;
+	    if (!table) {
+	      return;
+	    }
+
+	    return table.ui.selectAll[0].checked;
+	  },
+
 	  onPageNext: function onPageNext() {
+	    var _this = this;
+
 	    if (this.collection.hasNextPage()) {
-	      this.collection.getNextPage();
+	      (function () {
+	        var select_is_checked = _this._getSelectStatus();
+	        _this.collection.getNextPage({ success: function success() {
+	            _this.handleSelectAll(select_is_checked);
+	          }
+	        });
+	      })();
 	    }
 	  },
 
 	  onPagePrev: function onPagePrev() {
+	    var _this2 = this;
+
 	    if (this.collection.hasPreviousPage()) {
-	      this.collection.getPreviousPage();
+	      (function () {
+	        var select_is_checked = _this2._getSelectStatus();
+	        _this2.collection.getPreviousPage({ success: function success() {
+	            _this2.handleSelectAll(select_is_checked);
+	          }
+	        });
+	      })();
 	    }
+	  },
+
+	  handlePageChange: function handlePageChange(event) {
+	    event.preventDefault();
+	    var $el = $(event.target);
+
+	    var page = $el.data('page');
+	    this.triggerMethod('change:page', parseInt(page));
+	  },
+
+	  onChangePage: function onChangePage(page) {
+	    var _this3 = this;
+
+	    if (_underscore2.default.isNaN(page) || this._outOfRange(page)) {
+	      return;
+	    }
+
+	    var select_is_checked = this._getSelectStatus();
+	    this.collection.getPage(page, { success: function success() {
+	        _this3.handleSelectAll(select_is_checked);
+	      }
+	    });
+	  },
+
+	  _getPageOptions: function _getPageOptions() {
+	    return {};
+	  },
+
+	  _outOfRange: function _outOfRange(page) {
+	    var state = this.collection.state;
+	    return page > state.lastPage || page < state.firstPage;
 	  }
 	});
 
@@ -1741,11 +1888,13 @@ module.exports =
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a data-page="prev" href="#" aria-label="Previous"\n                             class="page-prev '+
+	__p+='<div class="col-md-2 col-md-offset-3">\n  <div class="pull-right">\n    <a data-page="prev" href="#" aria-label="Previous"\n                                 class="page-prev '+
 	((__t=( disabledFirst() ))==null?'':_.escape(__t))+
-	'">\n  <span class="glyphicon glyphicon-chevron-left"></span>\n</a>\n\n<a data-page="next" href="#" aria-label="Next"\n                             class="page-next '+
+	'">\n       <span class="glyphicon glyphicon-chevron-left"></span>\n    </a>\n  </div>\n</div>\n\n<div class="col-md-2">\n  <div class="text-center">\n    '+
+	((__t=( page ))==null?'':_.escape(__t))+
+	'\n  </div>\n</div>\n\n<div class="col-md-2">\n  <div class="pull-left">\n    <a data-page="next" href="#" aria-label="Next"\n                                 class="page-next '+
 	((__t=( disabledLast() ))==null?'':_.escape(__t))+
-	'">\n  <span class="glyphicon glyphicon-chevron-right"></span>\n</a>\n';
+	'">\n     <span class="glyphicon glyphicon-chevron-right"></span>\n    </a>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
@@ -1815,18 +1964,33 @@ module.exports =
 
 /***/ },
 /* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+	with(obj||{}){
+	__p+='<div class="pull-right" '+
+	((__t=( disable_clear ))==null?'':_.escape(__t))+
+	'>\n  <a class="clear-all">clear all</a>\n</div>\n';
+	}
+	return __p;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = function(obj){
 	var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 	with(obj||{}){
-	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <div class="bell-icon-hook"></div>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="pull-right">\n          <div class="page-hook"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n</div>\n';
+	__p+='<a class="dropdown-toggle" type="button" id="dropdownMenu1"\n                                         data-toggle="dropdown"\n                                         aria-haspopup="true"\n                                         aria-expanded="true">\n  <div class="bell-icon-hook"></div>\n  <div class="unread-count-hook"></div>\n</a>\n<div class="notification-header dropdown-menu" aria-labelledby="dropdownMenu1"\n                                              style="min-width:300px;">\n  <div class="bg-dark wrapper">\n    <div class="row">\n      <div class="col-md-12">\n        <div class="pull-left">\n          <strong>Notifications</strong>\n        </div>\n        <div class="clear-hook"></div>\n      </div>\n    </div>\n  </div>\n  <div class="notification-list-hook"></div>\n  <div class="bg-dark wrapper-sm">\n    <div class="page-hook"></div>\n  </div>\n</div>\n';
 	}
 	return __p;
 	};
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
@@ -1853,7 +2017,7 @@ module.exports =
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1873,7 +2037,7 @@ module.exports =
 
 	var _backbone = __webpack_require__(20);
 
-	var _backbone2 = __webpack_require__(46);
+	var _backbone2 = __webpack_require__(47);
 
 	var _backbone3 = _interopRequireDefault(_backbone2);
 
@@ -1952,7 +2116,7 @@ module.exports =
 	});
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 	module.exports = require("backbone.localstorage");
