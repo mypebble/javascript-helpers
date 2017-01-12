@@ -1725,14 +1725,8 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/** The pagination view renders the collection and handles paging with the
-	*   server. This also contains an extra collection listener to deal with the
-	*   underlying contents of the collection changing for whatever reason.
-	*
-	*   collection listeners:
-	*     - reset
-	*     - fetch
-	*     - update
+	/**
+	 * Simplified version of Arro's page view for the notifications menu.
 	*/
 	exports.default = _backbone2.default.LayoutView.extend({
 	  className: 'row',
@@ -1746,17 +1740,12 @@ module.exports =
 
 	  ui: {
 	    previous: '.page-prev',
-	    next: '.page-next',
-	    page: '.page'
+	    next: '.page-next'
 	  },
 
 	  triggers: {
 	    'click @ui.previous': 'page:prev',
 	    'click @ui.next': 'page:next'
-	  },
-
-	  events: {
-	    'click @ui.page': 'handlePageChange'
 	  },
 
 	  templateHelpers: function templateHelpers() {
@@ -1771,11 +1760,6 @@ module.exports =
 	    }
 
 	    return {
-	      active: function active(page) {
-	        var active = page == model.state.currentPage;
-	        return active ? 'active' : '';
-	      },
-
 	      page: model.state.currentPage,
 
 	      disabledFirst: function disabledFirst() {
@@ -1794,90 +1778,16 @@ module.exports =
 	    };
 	  },
 
-	  handleSelectAll: function handleSelectAll(is_checked) {
-	    if (_underscore2.default.isUndefined(is_checked)) {
-	      return;
-	    }
-
-	    var table = this.options.table;
-	    var selectAll = table.ui.selectAll;
-	    _underscore2.default.delay(function () {
-	      if (is_checked) {
-	        if (!selectAll[0].checked) {
-	          selectAll.trigger('click');
-	        }
-	      } else {
-	        selectAll[0].checked = false;
-	      }
-	    }, 50);
-	  },
-
-	  _getSelectStatus: function _getSelectStatus() {
-	    var table = this.options.table;
-	    if (!table) {
-	      return;
-	    }
-
-	    return table.ui.selectAll[0].checked;
-	  },
-
 	  onPageNext: function onPageNext() {
-	    var _this = this;
-
 	    if (this.collection.hasNextPage()) {
-	      (function () {
-	        var select_is_checked = _this._getSelectStatus();
-	        _this.collection.getNextPage({ success: function success() {
-	            _this.handleSelectAll(select_is_checked);
-	          }
-	        });
-	      })();
+	      this.collection.getNextPage();
 	    }
 	  },
 
 	  onPagePrev: function onPagePrev() {
-	    var _this2 = this;
-
 	    if (this.collection.hasPreviousPage()) {
-	      (function () {
-	        var select_is_checked = _this2._getSelectStatus();
-	        _this2.collection.getPreviousPage({ success: function success() {
-	            _this2.handleSelectAll(select_is_checked);
-	          }
-	        });
-	      })();
+	      this.collection.getPreviousPage();
 	    }
-	  },
-
-	  handlePageChange: function handlePageChange(event) {
-	    event.preventDefault();
-	    var $el = $(event.target);
-
-	    var page = $el.data('page');
-	    this.triggerMethod('change:page', parseInt(page));
-	  },
-
-	  onChangePage: function onChangePage(page) {
-	    var _this3 = this;
-
-	    if (_underscore2.default.isNaN(page) || this._outOfRange(page)) {
-	      return;
-	    }
-
-	    var select_is_checked = this._getSelectStatus();
-	    this.collection.getPage(page, { success: function success() {
-	        _this3.handleSelectAll(select_is_checked);
-	      }
-	    });
-	  },
-
-	  _getPageOptions: function _getPageOptions() {
-	    return {};
-	  },
-
-	  _outOfRange: function _outOfRange(page) {
-	    var state = this.collection.state;
-	    return page > state.lastPage || page < state.firstPage;
 	  }
 	});
 
