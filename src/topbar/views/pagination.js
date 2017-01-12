@@ -5,7 +5,7 @@ import Marionette from 'backbone.marionette';
  * Simplified version of Arro's page view for the notifications menu.
 */
 export default Marionette.LayoutView.extend({
-  tagName: 'ul',
+  className: 'row',
   template: require('topbar/templates/page.html'),
 
   collectionEvents: {
@@ -38,6 +38,8 @@ export default Marionette.LayoutView.extend({
     }
 
     return {
+      page: model.state.currentPage,
+
       disabledFirst: function() {
         if (!model.hasPreviousPage()) {
           return 'disabled';
