@@ -28,7 +28,7 @@ export const TopbarRegion = Region.extend({
       urlBase: '/notifications/unread/',
       search_params: {
         notification_type: 'global',
-        active_school: user.getActiveSchool(),
+        active_school: user.getActiveSchool()
       },
       state: {
         pageSize: 5,
