@@ -1490,8 +1490,12 @@ module.exports =
 	    return {
 	      mutedText: link ? '' : 'text-muted',
 	      notification_class: notification_class + ' ' + read_class,
-	      link: link + '?auth=' + this.getOption('user').getToken()
+	      link: link + '?auth=' + this._getToken()
 	    };
+	  },
+
+	  _getToken: function _getToken() {
+	    return this.getOption('user').getToken();
 	  }
 	});
 

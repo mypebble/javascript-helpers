@@ -17,8 +17,12 @@ const Notification = Marionette.LayoutView.extend({
     return {
       mutedText: link ? '' : 'text-muted',
       notification_class: `${notification_class} ${read_class}`,
-      link: `${link}?auth=${this.getOption('user').getToken()}`
+      link: `${link}?auth=${this._getToken()}`
     };
+  },
+
+  _getToken: function() {
+    return this.getOption('user').getToken();
   }
 });
 
