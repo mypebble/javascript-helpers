@@ -1350,11 +1350,10 @@ module.exports =
 	    });
 
 	    var unread_collection = new _notification.NotificationCollection([], {
-	      urlBase: '/notifications/',
+	      urlBase: '/notifications/unread/',
 	      search_params: {
 	        notification_type: 'global',
-	        active_school: user.getActiveSchool(),
-	        read: false
+	        active_school: user.getActiveSchool()
 	      },
 	      state: {
 	        pageSize: 5,
@@ -1486,16 +1485,29 @@ module.exports =
 	  templateHelpers: function templateHelpers() {
 	    var notification_class = this.model.get('notification_class');
 	    var read_class = this.model.isCleared() ? '' : 'notification-unread';
+	    var link = this.model.get('link');
+
 	    return {
-	      mutedText: this.model.get('link') ? '' : 'text-muted',
-	      notification_class: notification_class + ' ' + read_class
+	      mutedText: link ? '' : 'text-muted',
+	      notification_class: notification_class + ' ' + read_class,
+	      link: link + '?auth=' + this._getToken()
 	    };
+	  },
+
+	  _getToken: function _getToken() {
+	    return this.getOption('user').getToken();
 	  }
 	});
 
 	var NotificationList = _backbone2.default.CompositeView.extend({
 	  childView: Notification,
 	  childViewContainer: 'ul',
+
+	  childViewOptions: function childViewOptions() {
+	    return {
+	      user: this.model
+	    };
+	  },
 
 	  template: __webpack_require__(40),
 
@@ -1616,7 +1628,8 @@ module.exports =
 
 	  onRender: function onRender() {
 	    var notifications_view = new NotificationList({
-	      collection: this.collection
+	      collection: this.collection,
+	      model: this.model
 	    });
 
 	    var unread_view = new UnreadCountView({

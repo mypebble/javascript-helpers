@@ -12,10 +12,17 @@ const Notification = Marionette.LayoutView.extend({
   templateHelpers: function() {
     const notification_class = this.model.get('notification_class');
     const read_class = this.model.isCleared() ? '' : 'notification-unread';
+    const link = this.model.get('link');
+
     return {
-      mutedText: this.model.get('link') ? '' : 'text-muted',
-      notification_class: `${notification_class} ${read_class}`
+      mutedText: link ? '' : 'text-muted',
+      notification_class: `${notification_class} ${read_class}`,
+      link: `${link}?auth=${this._getToken()}`
     };
+  },
+
+  _getToken: function() {
+    return this.getOption('user').getToken();
   }
 });
 
@@ -23,6 +30,12 @@ const Notification = Marionette.LayoutView.extend({
 const NotificationList = Marionette.CompositeView.extend({
   childView: Notification,
   childViewContainer: 'ul',
+
+  childViewOptions: function() {
+    return {
+      user: this.model
+    };
+  },
 
   template: require('topbar/templates/notification_list.html'),
 
@@ -147,7 +160,8 @@ const BellLayout = Marionette.LayoutView.extend({
 
   onRender: function() {
     const notifications_view = new NotificationList({
-      collection: this.collection
+      collection: this.collection,
+      model: this.model
     });
 
     const unread_view = new UnreadCountView({
