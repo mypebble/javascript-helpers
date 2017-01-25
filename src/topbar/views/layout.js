@@ -126,7 +126,7 @@ const ClearView = Marionette.LayoutView.extend({
     const school = query_params.active_school;
     const type = query_params.notification_type;
 
-    const base_url = 'http://localhost/notifications/markread/';
+    const base_url = '/notifications/markread/';
     const url = `${base_url}?active_school=${school}&notification_type=${type}`;
 
     Backbone.sync(
