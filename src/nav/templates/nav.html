@@ -67,10 +67,10 @@
           </li>
         <% } %>
 
-        <% if (feature_enabled('services_and_lettings')) { %>
-          <li class="nav-services <%- getActive('letting') %>">
+        <% if (feature_enabled('lettings')) { %>
+          <li class="nav-admin <%- getActive('letting') %>">
             <a href="<%- getUrl('letting', activeOrganisation) %>">
-              <span class="menu-title">Services and Lettings</span>
+              <span class="menu-title">Lettings</span>
             </a>
           </li>
         <% } %>

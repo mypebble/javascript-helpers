@@ -912,12 +912,12 @@ module.exports =
 	'">\n              <span class="menu-title">Sponsors</span>\n            </a>\n          </li>\n        ';
 	 } 
 	__p+='\n\n        ';
-	 if (feature_enabled('services_and_lettings')) { 
-	__p+='\n          <li class="nav-services '+
+	 if (feature_enabled('lettings')) { 
+	__p+='\n          <li class="nav-admin '+
 	((__t=( getActive('letting') ))==null?'':_.escape(__t))+
 	'">\n            <a href="'+
 	((__t=( getUrl('letting', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n              <span class="menu-title">Services and Lettings</span>\n            </a>\n          </li>\n        ';
+	'">\n              <span class="menu-title">Lettings</span>\n            </a>\n          </li>\n        ';
 	 } 
 	__p+='\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
