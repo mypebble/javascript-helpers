@@ -917,7 +917,7 @@ module.exports =
 	((__t=( getActive('letting') ))==null?'':_.escape(__t))+
 	'">\n            <a href="'+
 	((__t=( getUrl('letting', activeOrganisation) ))==null?'':_.escape(__t))+
-	'">\n              <span class="menu-title">Lettings</span>\n            </a>\n          </li>\n        ';
+	'">\n              <span class="menu-title">Services and Lettings</span>\n            </a>\n          </li>\n        ';
 	 } 
 	__p+='\n\n        <li class="nav-stakeholder '+
 	((__t=( getActive('contact') ))==null?'':_.escape(__t))+
