@@ -1,12 +1,16 @@
 import { clone, isUndefined } from 'underscore';
 import commonmark from 'commonmark';
 
+
 export const markdown = {
-  toHTML: function (mdText) {
-    const reader = new commonmark.Parser();
-    const writer = new commonmark.HtmlRenderer({safe: true, smart: true});
-    const parsed = reader.parse(mdText);
-    return writer.render(parsed);
+  /**
+   * Output mdText as HTML.
+   * @param {string} mdText The text to output to HTML.
+   * @returns {string} The HTML output from mdText.
+   */
+  toHTML(mdText) {
+    const renderer = new MarkdownRenderer();
+    return renderer.render(mdText);
   }
 };
 
