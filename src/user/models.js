@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import root from 'window-or-global';
 
-import {Model} from 'backbone';
+import { Model } from 'backbone';
 
 import LocalStorage from 'backbone.localstorage';
 
@@ -13,26 +13,37 @@ export const User = Model.extend({
   idAttribute: 'email',
   localStorage: new LocalStorage('User'),
 
-  parse: function(data) {
+  /**
+   * Override Model#parse to unpack Arrays from localStorage.
+   *
+   * @param {Array|Object} data The data returned from the localStorage.
+   * @returns {Object} The data parsed from localStorage into a user.
+   */
+  parse(data) {
     return data[0] ? data[0] : data;
   },
 
-  /** Attach the JWT and payload to this user. */
-  setCredentials: function(jwt) {
+  /** Attach the JWT and payload to this user.
+   * @param {Object} jwt The Token containing `user` and `token` attributes.
+   * @returns {undefined}
+  */
+  setCredentials(jwt) {
     const data = jwt.user;
     data.token = jwt.token;
     this.save(data);
   },
 
   /** Return the JWT for this user to pass into the Authorization header. */
-  getToken: function() {
+  getToken() {
     return this.get('token');
   },
 
   /** Looks up the window.location.href and figures out what the school id
    * should be. If the school id isn't set, then this makes no change.
+   *
+   * @returns {undefined}
    */
-  setActiveSchool: function() {
+  setActiveSchool() {
     const path = root.location.pathname;
 
     if (path) {
@@ -45,16 +56,20 @@ export const User = Model.extend({
     }
   },
 
-  /** Return the ID of the current active school */
-  getActiveSchool: function() {
+  /** Return the ID of the current active school
+   * @returns {number} The school ID.
+  */
+  getActiveSchool() {
     return this.get('activeSchool');
   },
 
   /** Return the name of the current active school or an empty string.
    * Note that for staff users this may return empty as they don't necessarily
    * list the school in their organisations list.
+   *
+   * @returns {string} The name of the school.
    */
-  getActiveSchoolName: function() {
+  getActiveSchoolName() {
     const activeSchool = this.getActiveSchool();
     let schoolName = '';
 
@@ -72,8 +87,10 @@ export const User = Model.extend({
    * For staff users, this only returns the schools that they are attached to
    * in the database. The server will not send a list of every school, for
    * obvious reasons.
+   *
+   * @returns {Model[]} The list of organisations for the user.
    */
-  getSchools: function() {
+  getSchools() {
     return this.get('organisations') || [];
   }
 });

@@ -57,7 +57,7 @@ import {User} from 'user/models';
 
 
 const app = new Mn.Application({
-  onStart: function(options) {
+  onStart(options) {
     const user = new User();
     user.fetch();
 
@@ -88,7 +88,7 @@ import {User} from 'user/models';
 
 
 const app = new Mn.Application({
-  onStart: function(options) {
+  onStart(options) {
     const user = new User();
     user.fetch();
 
