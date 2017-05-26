@@ -255,7 +255,8 @@ const mdString = '# Title\n\nSome text';
 console.log(markdown.toHTML(mdString));
 ```
 
-The output will be standard HTML according to the CommonMark rules.
+The output will be standard HTML according to the
+[CommonMark rules](http://commonmark.org/).
 
 The default `toHTML` function won't render HTML at all (defaulting to safe).
 
