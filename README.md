@@ -241,3 +241,39 @@ const year = formatObj(date, 'YYYY');
 const fullOutput = formatDate('2016-01-03', 'DD/MM');
 // fullOutput is 03/01
 ```
+
+### Markdown Rendering
+
+To render Markdown, import the `markdown` object and run `toHTML`:
+
+```javascript
+import {markdown} from 'javascript-helpers'
+
+
+const mdString = '# Title\n\nSome text';
+
+console.log(markdown.toHTML(mdString));
+```
+
+The output will be standard HTML according to the
+[CommonMark rules](http://commonmark.org/).
+
+The default `toHTML` function won't render HTML at all (defaulting to safe).
+
+#### Advanced Options
+
+The markdown plugin also includes a simple helper class that lets you tweak
+more options:
+
+```javascript
+import {MarkdownRenderer} from 'javascript-helpers';
+
+
+const renderer = new MarkdownRenderer({
+  safe: false  // Output HTML from the input string
+});
+
+console.log(renderer.render('# Title\n\n<table><tr><th>My table</th></tr>'));
+```
+
+* `setOption(key, value)` - Sets an option to pass to the renderer.
